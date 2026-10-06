@@ -1434,3 +1434,13 @@ Publish dual product surfaces: **web** optimized for websites/webapps; **applica
 
 - App Store / Play / Microsoft Store uploads: DOCUMENTED_NOT_TESTED (accounts outside free contract)
 - Pages deploy succeeds only after GitHub Pages is enabled for the repo
+
+## 2026-10-06 — Increment 0.1.51: CI harden recommend + surfaces workflow
+
+### Intent
+
+Fix GitHub Actions failure on `recommend accept` (run 37517450106). Harden Windows/CI: ASCII JSON print, CI-lite doctor (skip CIM/Playwright), bash steps, assert report JSON files.
+
+### Acceptance
+
+Local: `CI=true python -m mainframe recommend accept` and `surfaces accept` exit 0. Push triggers Actions re-run.

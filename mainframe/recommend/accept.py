@@ -76,7 +76,20 @@ def run_recommend_accept() -> dict[str, Any]:
                     "does_not_outperform_or_unmeasured"
                 )
             ),
-            "detail": (payload.get("workloads") or {}).get("vs_baselines"),
+            "detail": {
+                "outperforms_n": len(
+                    ((payload.get("workloads") or {}).get("vs_baselines") or {}).get(
+                        "outperforms_measured_baselines"
+                    )
+                    or []
+                ),
+                "does_not_n": len(
+                    ((payload.get("workloads") or {}).get("vs_baselines") or {}).get(
+                        "does_not_outperform_or_unmeasured"
+                    )
+                    or []
+                ),
+            },
         }
     )
     checks.append(

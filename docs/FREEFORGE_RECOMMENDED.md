@@ -1,6 +1,6 @@
 # Recommended FreeForge configuration
 
-Generated: `2026-10-06T19:09:44.076957+00:00`
+Generated: `2026-10-06T19:30:21.316770+00:00`
 Recommended mode: **`deterministic_offline`**
 
 ## Objective
@@ -57,15 +57,15 @@ Unlimited frontier performance is **not claimed**.
 
 ## Hardware observations (this host)
 
-- CPU: `12th Gen Intel(R) Core(TM) i7-12700H` (20 logical)
-- RAM available GiB: `12.61` / total `31.69`
-- Optional CPU inference budget GiB: `8.11`
-- Free disk GiB: `104.61`
+- CPU: `Intel64 Family 6 Model 154 Stepping 3, GenuineIntel` (20 logical)
+- RAM available GiB: `None` / total `None`
+- Optional CPU inference budget GiB: `None`
+- Free disk GiB: `None`
 - AI probe: `paused`
 
 ## Where this build outperforms measured baselines
 
-- FreeForge correct rate ≫ minimal free agent on held-out repair / site / docreport (n=5)
+- FreeForge correct rate >> minimal free agent on held-out repair / site / docreport (n=5)
 - FreeForge matches manual correctness with less active human time on those workloads
 - Retrieval improves site + docreport; review improves docreport (ablations)
 

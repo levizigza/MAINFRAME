@@ -1,6 +1,6 @@
 {
   "ok": true,
-  "generated_at": "2026-10-06T19:09:44.076957+00:00",
+  "generated_at": "2026-10-06T19:30:21.316770+00:00",
   "modes": {
     "modes": {
       "deterministic_offline": {
@@ -143,15 +143,16 @@
       }
     },
     "hardware_observations": {
-      "cpu_name": "12th Gen Intel(R) Core(TM) i7-12700H",
+      "cpu_name": "Intel64 Family 6 Model 154 Stepping 3, GenuineIntel",
       "logical_cpus": 20,
-      "available_gib": 12.61,
-      "total_gib": 31.69,
-      "free_disk_gib": 104.61,
-      "cpu_inference_budget_gib": 8.11,
+      "available_gib": null,
+      "total_gib": null,
+      "free_disk_gib": null,
+      "cpu_inference_budget_gib": null,
       "ai_probe_status": "paused",
       "ai_probe_detail": "No free local inference at http://127.0.0.1:11434/api/tags (TCP unreachable for 127.0.0.1:11434). Progress preserved; AI-dependent steps paused.",
-      "host_context": "native_windows"
+      "host_context": "ci_runner",
+      "doctor_suite": "mainframe-doctor-ci-lite"
     },
     "heldout_workload_ids": [
       "repository_repair",
@@ -329,7 +330,7 @@
     ],
     "vs_baselines": {
       "outperforms_measured_baselines": [
-        "FreeForge correct rate \u226b minimal free agent on held-out repair / site / docreport (n=5)",
+        "FreeForge correct rate >> minimal free agent on held-out repair / site / docreport (n=5)",
         "FreeForge matches manual correctness with less active human time on those workloads",
         "Retrieval improves site + docreport; review improves docreport (ablations)"
       ],
@@ -650,15 +651,16 @@
     }
   },
   "hardware": {
-    "cpu_name": "12th Gen Intel(R) Core(TM) i7-12700H",
+    "cpu_name": "Intel64 Family 6 Model 154 Stepping 3, GenuineIntel",
     "logical_cpus": 20,
-    "available_gib": 12.61,
-    "total_gib": 31.69,
-    "free_disk_gib": 104.61,
-    "cpu_inference_budget_gib": 8.11,
+    "available_gib": null,
+    "total_gib": null,
+    "free_disk_gib": null,
+    "cpu_inference_budget_gib": null,
     "ai_probe_status": "paused",
     "ai_probe_detail": "No free local inference at http://127.0.0.1:11434/api/tags (TCP unreachable for 127.0.0.1:11434). Progress preserved; AI-dependent steps paused.",
-    "host_context": "native_windows"
+    "host_context": "ci_runner",
+    "doctor_suite": "mainframe-doctor-ci-lite"
   },
   "demos": {
     "coding": {
@@ -669,12 +671,12 @@
       "feature_flags_used": "recommended_simplified",
       "model_calls": 0,
       "correct": true,
-      "elapsed_s": 0.0035,
+      "elapsed_s": 0.0044,
       "contract": "deterministic_offline \u2014 no paid/hosted inference",
       "blocker": null,
       "detail": {
         "correct": true,
-        "elapsed_s": 0.0035,
+        "elapsed_s": 0.0044,
         "retries": 0,
         "model_calls": 0,
         "failure_recoveries": 0
@@ -712,9 +714,9 @@
           "artifact_path": "report.json",
           "sha256": "395678eaa52340df1b4e8ea3427eaca3140a3869f4836bbcb23e5fafa71aadfd",
           "bytes": 305,
-          "operation_id": "op_aad11dc0fa26a5c8",
+          "operation_id": "op_cb5c16244170dfb7",
           "effect_receipt": {
-            "operation_id": "op_aad11dc0fa26a5c8",
+            "operation_id": "op_cb5c16244170dfb7",
             "effect_kind": "create_local_artifact",
             "execution_status": "succeeded",
             "delivery_status": "not_requested",
@@ -738,9 +740,9 @@
         "artifact_path": "report.json",
         "sha256": "395678eaa52340df1b4e8ea3427eaca3140a3869f4836bbcb23e5fafa71aadfd",
         "bytes": 305,
-        "operation_id": "op_aad11dc0fa26a5c8",
+        "operation_id": "op_cb5c16244170dfb7",
         "effect_receipt": {
-          "operation_id": "op_aad11dc0fa26a5c8",
+          "operation_id": "op_cb5c16244170dfb7",
           "effect_kind": "create_local_artifact",
           "execution_status": "succeeded",
           "delivery_status": "not_requested",

@@ -16,10 +16,18 @@ concurrency:
   group: surfaces-${{ github.ref }}
   cancel-in-progress: true
 
+env:
+  PYTHONUTF8: "1"
+  PYTHONIOENCODING: utf-8
+  CI: "true"
+
 jobs:
   local-checks:
     name: Local Python surfaces (web + application)
     runs-on: windows-latest
+    defaults:
+      run:
+        shell: bash
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -33,10 +41,14 @@ jobs:
         run: python -m mainframe status
 
       - name: Build dual surfaces + accept
-        run: python -m mainframe surfaces accept
+        run: |
+          python -m mainframe surfaces accept
+          python -c "import json; from pathlib import Path; d=json.loads(Path('docs/SURFACES.json').read_text(encoding='utf-8')); assert d.get('ok') is True, d; print('surfaces_report_ok')"
 
       - name: Recommend accept (evidence config)
-        run: python -m mainframe recommend accept
+        run: |
+          python -m mainframe recommend accept
+          python -c "import json; from pathlib import Path; d=json.loads(Path('docs/FREEFORGE_RECOMMENDED.json').read_text(encoding='utf-8')); assert d.get('ok') is True, d; print('recommend_report_ok', d.get('modes',{}).get('recommended_mode_id'))"
 
       - name: Upload web artifact
         uses: actions/upload-artifact@v4

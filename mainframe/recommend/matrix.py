@@ -250,7 +250,7 @@ def summarize_workloads(evidence: dict[str, Any]) -> dict[str, Any]:
 
     where = {
         "outperforms_measured_baselines": [
-            "FreeForge correct rate ≫ minimal free agent on held-out repair / site / docreport (n=5)",
+            "FreeForge correct rate >> minimal free agent on held-out repair / site / docreport (n=5)",
             "FreeForge matches manual correctness with less active human time on those workloads",
             "Retrieval improves site + docreport; review improves docreport (ablations)",
         ],

@@ -1,6 +1,6 @@
 {
   "ok": true,
-  "generated_at": "2026-10-06T19:12:40.459260+00:00",
+  "generated_at": "2026-10-06T19:30:49.803628+00:00",
   "catalog": {
     "objective": "correct_completed_work_per_available_resource",
     "surfaces": {
@@ -86,8 +86,8 @@
     "index": "C:\\Users\\levyz\\OneDrive\\Microsoft Copilot Chat Files\\Documents\\MAINFRAME\\dist\\web\\index.html",
     "manifest": {
       "surface": "web",
-      "version": "0.1.50",
-      "generated_at": "2026-10-06T19:12:39.771848+00:00",
+      "version": "0.1.51",
+      "generated_at": "2026-10-06T19:30:48.815513+00:00",
       "focus": {
         "id": "web",
         "title": "Web surface",
@@ -133,7 +133,7 @@
     "dest": "C:\\Users\\levyz\\OneDrive\\Microsoft Copilot Chat Files\\Documents\\MAINFRAME\\dist\\application",
     "desktop_package": {
       "ok": true,
-      "dest": "C:\\Users\\levyz\\OneDrive\\Microsoft Copilot Chat Files\\Documents\\MAINFRAME\\dist\\application\\mainframe-desktop-0.1.50",
+      "dest": "C:\\Users\\levyz\\OneDrive\\Microsoft Copilot Chat Files\\Documents\\MAINFRAME\\dist\\application\\mainframe-desktop-0.1.51",
       "file_count": 421,
       "missing": [],
       "target": {

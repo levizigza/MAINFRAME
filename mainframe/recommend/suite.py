@@ -154,12 +154,46 @@ def _write_md(payload: dict[str, Any]) -> None:
 
 
 def run_recommend() -> dict[str, Any]:
+    import os
+    import platform
+
     ensure_state()
     generated_at = _utc()
-    doctor = run_doctor()
     probe = probe_free_inference()
     probe_d = probe.to_dict() if hasattr(probe, "to_dict") else dict(probe or {})
     ollama_ok = probe_d.get("status") in ("ok", "available")
+
+    # CI runners: skip full doctor (PowerShell CIM + Playwright probe). Local runs keep doctor.
+    doctor: dict[str, Any]
+    if os.environ.get("CI", "").lower() in {"1", "true", "yes"}:
+        doctor = {
+            "ok": True,
+            "suite": "mainframe-doctor-ci-lite",
+            "host_context": {"kind": "ci_runner"},
+            "memory": {"measured": False},
+            "cpu": {
+                "name": platform.processor() or platform.machine(),
+                "logical_cpus": os.cpu_count(),
+            },
+            "disk": {"measured": False},
+            "resource_limits": {"optional_cpu_inference": {"ram_budget_gib": None}},
+            "startup_tasks_enabled": False,
+        }
+    else:
+        try:
+            doctor = run_doctor()
+        except Exception as exc:  # noqa: BLE001
+            doctor = {
+                "ok": False,
+                "suite": "mainframe-doctor",
+                "error": str(exc),
+                "host_context": {"kind": "doctor_failed"},
+                "memory": {},
+                "cpu": {},
+                "disk": {},
+                "resource_limits": {},
+                "startup_tasks_enabled": False,
+            }
 
     modes = build_modes(ollama_reachable=ollama_ok, llamacpp_reachable=False)
     evidence = load_evidence()
@@ -179,6 +213,7 @@ def run_recommend() -> dict[str, Any]:
         "ai_probe_status": probe_d.get("status"),
         "ai_probe_detail": probe_d.get("detail"),
         "host_context": (doctor.get("host_context") or {}).get("kind"),
+        "doctor_suite": doctor.get("suite"),
     }
 
     matrix = build_capability_matrix(
@@ -207,9 +242,18 @@ def run_recommend() -> dict[str, Any]:
     except Exception as exc:  # noqa: BLE001
         workloads["sustainable_quotas"]["live_bucket_snapshot_error"] = str(exc)
 
-    coding = demo_coding_task()
-    codingbench = demo_codingbench_logic()
-    automation = demo_reusable_automation()
+    try:
+        coding = demo_coding_task()
+    except Exception as exc:  # noqa: BLE001
+        coding = {"ok": False, "blocker": f"coding_exception:{exc}"}
+    try:
+        codingbench = demo_codingbench_logic()
+    except Exception as exc:  # noqa: BLE001
+        codingbench = {"ok": False, "blocker": f"codingbench_exception:{exc}"}
+    try:
+        automation = demo_reusable_automation()
+    except Exception as exc:  # noqa: BLE001
+        automation = {"ok": False, "blocker": f"automation_exception:{exc}"}
 
     acceptance = {
         "recommended_mode_published": True,

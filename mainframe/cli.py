@@ -152,7 +152,14 @@ from mainframe.workspace import inspect_workspace
 
 
 def _print_json(data: Any) -> None:
-    print(json.dumps(data, indent=2))
+    """Print JSON using ASCII escapes so Windows cp1252 consoles cannot crash the process."""
+    text = json.dumps(data, indent=2, ensure_ascii=True)
+    try:
+        print(text)
+    except UnicodeEncodeError:
+        sys.stdout.buffer.write((text + "\n").encode("utf-8", errors="replace"))
+        sys.stdout.buffer.flush()
+
 
 
 def cmd_status(_: argparse.Namespace) -> int:
