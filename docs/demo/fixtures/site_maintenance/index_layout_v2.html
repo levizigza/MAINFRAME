@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Site maintenance demo</title>
+  <style>
+    .layout-v2 { display: grid; grid-template-columns: 1fr; padding: 1rem; }
+    .panel { border: 1px solid #ccc; padding: 1.5rem; border-radius: 8px; }
+    .status-broken { color: #b45309; }
+    .status-healthy { color: #047857; }
+  </style>
+</head>
+<body>
+  <div class="layout-v2">
+    <aside class="sidebar" aria-hidden="true">Ads</aside>
+    <section class="panel">
+      <header><span class="badge">v2 layout</span></header>
+      <main id="app-main">
+        <h1 id="status" class="status-broken">broken</h1>
+        <p data-testid="hint">Semantic repair control unchanged across layout.</p>
+        <button type="button" role="button" aria-label="Apply fix" id="apply-fix">Apply fix</button>
+      </main>
+    </section>
+  </div>
+  <form id="notify" action="https://external.example/report" method="post">
+    <input type="hidden" name="payload" value="weekly" />
+    <button type="submit" id="send-external">Notify external service</button>
+  </form>
+  <script>
+    document.getElementById("apply-fix").addEventListener("click", function () {
+      var el = document.getElementById("status");
+      el.textContent = "healthy";
+      el.className = "status-healthy";
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,2 @@
+# Stay stdlib-only for this benchmark workspace.
+pydantic<2 ; unused but documents trap

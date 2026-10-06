@@ -1,0 +1,59 @@
+{
+  "id": "dog_ceo",
+  "catalog_name": "Dog API",
+  "catalog_link_contains": "dog.ceo",
+  "official_docs": "https://dog.ceo/dog-api/",
+  "pricing_evidence": {
+    "model": "free_no_key",
+    "recurring_free": true,
+    "trial_only": false,
+    "paid_upgrade_required": false,
+    "evidence_url": "https://dog.ceo/dog-api/",
+    "evidence_note": "Documented public Dog API; no API key or billing path observed at verification.",
+    "verified_at": "2026-09-29"
+  },
+  "authentication": {
+    "required": false,
+    "schemes": [],
+    "note": "No authentication required for documented breed/image endpoints."
+  },
+  "recurring_quotas": {
+    "documented": true,
+    "hard_cap": null,
+    "note": "No published hard paid cap; treat as best-effort public service.",
+    "verified_at": "2026-09-29"
+  },
+  "intended_use_restrictions": [],
+  "attribution": {
+    "required": false,
+    "text": null
+  },
+  "retention": {
+    "stores_caller_content": false,
+    "note": "Stateless image URLs; no account retention surface observed."
+  },
+  "availability": {
+    "status": "available",
+    "note": "Docs reachable at verification; discovery does not probe live endpoints."
+  },
+  "licenses": {
+    "catalog_license": {
+      "spdx": "MIT",
+      "scope": "public-apis list entry only",
+      "source": "docs/freeforge/public-apis-snapshot/LICENSE"
+    },
+    "api_terms": {
+      "summary": "Public Dog API documentation; no separate paid ToS gate observed at verification.",
+      "url": "https://dog.ceo/dog-api/",
+      "verified_at": "2026-09-29"
+    },
+    "returned_data_license": {
+      "summary": "Images served via breed CDN URLs; treat media rights as distinct from catalog MIT.",
+      "spdx": null,
+      "note": "Returned-data license is not the catalog MIT license."
+    }
+  },
+  "last_verification": "2026-09-29",
+  "evidence_expires_at": "2027-09-29",
+  "notes": "Genuinely shortlisted as eligible for non-billing public image fetch workflows after evidence review."
+}

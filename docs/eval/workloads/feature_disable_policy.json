@@ -1,0 +1,87 @@
+{
+  "generated_at": "2026-10-06T18:53:34.663942+00:00",
+  "rule": "Disable feature for workload when ablation correct rate >= full rate (tied or better without it).",
+  "workloads": {
+    "repository_repair": {
+      "retrieval": {
+        "disabled": true,
+        "reason": "ablation_rate_ge_full",
+        "full_rate": 1.0,
+        "ablation_rate": 1.0
+      },
+      "workflow_reuse": {
+        "disabled": true,
+        "reason": "ablation_rate_ge_full",
+        "full_rate": 1.0,
+        "ablation_rate": 1.0
+      },
+      "review": {
+        "disabled": true,
+        "reason": "ablation_rate_ge_full",
+        "full_rate": 1.0,
+        "ablation_rate": 1.0
+      },
+      "caching": {
+        "disabled": true,
+        "reason": "ablation_rate_ge_full",
+        "full_rate": 1.0,
+        "ablation_rate": 1.0
+      }
+    },
+    "website_maintenance": {
+      "retrieval": {
+        "disabled": false,
+        "reason": "ablation_worsened_outcomes",
+        "full_rate": 1.0,
+        "ablation_rate": 0.0,
+        "contribution": 1.0
+      },
+      "workflow_reuse": {
+        "disabled": true,
+        "reason": "ablation_rate_ge_full",
+        "full_rate": 1.0,
+        "ablation_rate": 1.0
+      },
+      "review": {
+        "disabled": true,
+        "reason": "ablation_rate_ge_full",
+        "full_rate": 1.0,
+        "ablation_rate": 1.0
+      },
+      "caching": {
+        "disabled": true,
+        "reason": "ablation_rate_ge_full",
+        "full_rate": 1.0,
+        "ablation_rate": 1.0
+      }
+    },
+    "document_reporting": {
+      "retrieval": {
+        "disabled": false,
+        "reason": "ablation_worsened_outcomes",
+        "full_rate": 1.0,
+        "ablation_rate": 0.0,
+        "contribution": 1.0
+      },
+      "workflow_reuse": {
+        "disabled": true,
+        "reason": "ablation_rate_ge_full",
+        "full_rate": 1.0,
+        "ablation_rate": 1.0
+      },
+      "review": {
+        "disabled": false,
+        "reason": "ablation_worsened_outcomes",
+        "full_rate": 1.0,
+        "ablation_rate": 0.0,
+        "contribution": 1.0
+      },
+      "caching": {
+        "disabled": true,
+        "reason": "ablation_rate_ge_full",
+        "full_rate": 1.0,
+        "ablation_rate": 1.0
+      }
+    }
+  }
+}

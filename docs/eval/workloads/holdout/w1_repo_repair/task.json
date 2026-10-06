@@ -1,0 +1,17 @@
+{
+  "id": "hold_w1_multiply",
+  "workload": "repository_repair",
+  "split": "holdout",
+  "acceptance": {
+    "self_check_true": true,
+    "forbidden_substring": "return a + b"
+  },
+  "human_manual_steps": [
+    {"action": "open_file", "active_human_s": 20},
+    {"action": "locate_bug", "active_human_s": 45},
+    {"action": "edit", "active_human_s": 30},
+    {"action": "run_self_check", "active_human_s": 25},
+    {"action": "confirm", "active_human_s": 15}
+  ],
+  "note": "Held out from scorecard W1 and demo issue_patch fixtures."
+}

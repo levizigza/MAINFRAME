@@ -1,0 +1,19 @@
+{
+  "id": "hold_w2_shop",
+  "workload": "website_maintenance",
+  "split": "holdout",
+  "acceptance": {
+    "copyright_year_current": true,
+    "dead_link_removed": true,
+    "update_control_present": true,
+    "status_ready": true
+  },
+  "human_manual_steps": [
+    {"action": "open_page_source", "active_human_s": 25},
+    {"action": "fix_year", "active_human_s": 40},
+    {"action": "remove_dead_link", "active_human_s": 35},
+    {"action": "add_update_button", "active_human_s": 60},
+    {"action": "reload_verify", "active_human_s": 40}
+  ],
+  "note": "Held out from scorecard W2 and browser site_maintenance demo fixtures."
+}

@@ -1,0 +1,10 @@
+{
+  "status": 200,
+  "headers": {"content-type": "application/json"},
+  "body": {
+    "amount": 1.0,
+    "base": "USD",
+    "date": "2026-09-29",
+    "rates": {"EUR": 0.92}
+  }
+}

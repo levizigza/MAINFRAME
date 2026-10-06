@@ -1,0 +1,52 @@
+{
+  "id": "apilayer_marketplace_ad",
+  "catalog_name": "APILayer",
+  "catalog_link_contains": "apilayer",
+  "official_docs": null,
+  "pricing_evidence": {
+    "model": "commercial_listing",
+    "recurring_free": false,
+    "trial_only": false,
+    "paid_upgrade_required": true,
+    "evidence_url": null,
+    "evidence_note": "Upstream README marketing / commercial suite listing — not an entitlement.",
+    "verified_at": "2026-09-29"
+  },
+  "authentication": {
+    "required": true,
+    "schemes": ["api_key"],
+    "note": "Commercial marketplace."
+  },
+  "recurring_quotas": {
+    "documented": false,
+    "hard_cap": null,
+    "note": "Ads confer no quota entitlement.",
+    "verified_at": "2026-09-29"
+  },
+  "intended_use_restrictions": [],
+  "attribution": {"required": false, "text": null},
+  "retention": {"stores_caller_content": true, "note": "Commercial SaaS."},
+  "availability": {"status": "available", "note": "Listing exists; rejected as advertisement."},
+  "licenses": {
+    "catalog_license": {
+      "spdx": "MIT",
+      "scope": "public-apis README marketing text is still under catalog MIT; does not license the commercial API.",
+      "source": "docs/freeforge/public-apis-snapshot/LICENSE"
+    },
+    "api_terms": {
+      "summary": "Commercial APILayer terms — not inherited from catalog MIT.",
+      "url": null,
+      "verified_at": "2026-09-29"
+    },
+    "returned_data_license": {
+      "summary": "Unknown / vendor-specific — advertisements confer no data license entitlement.",
+      "spdx": null,
+      "note": "Catalog license ≠ API terms ≠ returned-data license."
+    }
+  },
+  "last_verification": "2026-09-29",
+  "evidence_expires_at": "2027-09-29",
+  "is_advertisement": true,
+  "is_commercial_listing": true,
+  "notes": "Advertisements and commercial listings confer no entitlement."
+}

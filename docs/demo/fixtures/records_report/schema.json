@@ -1,0 +1,12 @@
+{
+  "type": "object",
+  "required": ["title", "source_sha256", "rows", "row_count", "generated_by", "automation_kind"],
+  "properties": {
+    "title": {"type": "string"},
+    "source_sha256": {"type": "string"},
+    "rows": {"type": "array", "minItems": 1},
+    "row_count": {"type": "integer", "minimum": 1},
+    "generated_by": {"type": "string"},
+    "automation_kind": {"const": "non_ai_deterministic"}
+  }
+}

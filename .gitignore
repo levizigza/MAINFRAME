@@ -1,0 +1,34 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.eggs/
+dist/
+build/
+.venv/
+venv/
+.env
+.env.*
+
+# MAINFRAME local state (never commit — recreated on first run)
+.mainframe/
+.pytest_cache/
+freeforge-cli/node_modules/
+freeforge-cli/dist/
+
+# OS / editor
+Thumbs.db
+Desktop.ini
+.DS_Store
+.idea/
+.vscode/
+*.swp
+
+# Secrets — never commit
+*.pem
+credentials.json
+secrets.json
+.mainframe/credentials/
+.mainframe/quota_ledger.sqlite
+.mainframe/quota_ledger.sqlite-*

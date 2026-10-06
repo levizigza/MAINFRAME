@@ -1,0 +1,113 @@
+{
+  "format_version": "1.0",
+  "id": "mixed_ai_extract",
+  "description": "Mixed: deterministic digest + typed AI extract/summarize; independent work continues offline",
+  "permissions": ["local.read", "local.write", "local.artifact", "ai.infer"],
+  "artifacts": [
+    {"id": "digest_json", "path": "digest.json", "content_type": "application/json"}
+  ],
+  "inputs": {
+    "type": "object",
+    "properties": {},
+    "additionalProperties": false
+  },
+  "outputs": {
+    "type": "object",
+    "properties": {
+      "digest_sha256": {"type": "string"},
+      "fields": {"type": "object"}
+    }
+  },
+  "output_steps": ["write_digest", "extract"],
+  "steps": [
+    {
+      "id": "load",
+      "kind": "deterministic",
+      "handler": "load_source",
+      "depends_on": [],
+      "permissions": ["local.read"],
+      "effects": [],
+      "timeout_ms": 5000,
+      "retries": {"max": 1, "backoff_ms": 10},
+      "args": {"path": "source.txt"},
+      "inputs": {"type": "object", "properties": {}},
+      "outputs": {
+        "type": "object",
+        "required": ["source"],
+        "properties": {"source": {"type": "string"}, "source_bytes": {"type": "integer"}}
+      }
+    },
+    {
+      "id": "write_digest",
+      "kind": "deterministic",
+      "handler": "write_digest",
+      "depends_on": ["load"],
+      "permissions": ["local.write", "local.artifact"],
+      "effects": ["write_digest_json"],
+      "mutates": true,
+      "artifact_refs": ["digest_json"],
+      "timeout_ms": 5000,
+      "retries": {"max": 0, "backoff_ms": 0},
+      "args": {"path": "digest.json"},
+      "inputs": {
+        "type": "object",
+        "required": ["source"],
+        "properties": {"source": {"type": "string"}}
+      },
+      "outputs": {
+        "type": "object",
+        "required": ["digest_path", "digest_sha256"],
+        "properties": {
+          "digest_path": {"type": "string"},
+          "digest_sha256": {"type": "string"}
+        }
+      }
+    },
+    {
+      "id": "extract",
+      "kind": "ai",
+      "ai_type": "extract",
+      "handler": "ai_extract",
+      "depends_on": ["load"],
+      "permissions": ["ai.infer"],
+      "effects": [],
+      "timeout_ms": 60000,
+      "retries": {"max": 0, "backoff_ms": 0},
+      "args": {
+        "required_fields": ["name", "version"]
+      },
+      "inputs": {
+        "type": "object",
+        "required": ["source"],
+        "properties": {"source": {"type": "string"}}
+      },
+      "outputs": {
+        "type": "object",
+        "properties": {
+          "fields": {"type": "object"},
+          "uncertain": {"type": "boolean"},
+          "ok": {"type": "boolean"}
+        }
+      }
+    },
+    {
+      "id": "summarize",
+      "kind": "ai",
+      "ai_type": "summarize",
+      "handler": "ai_summarize",
+      "depends_on": ["extract"],
+      "permissions": ["ai.infer"],
+      "effects": [],
+      "timeout_ms": 60000,
+      "retries": {"max": 0, "backoff_ms": 0},
+      "inputs": {
+        "type": "object",
+        "properties": {"fields": {"type": "object"}, "source": {"type": "string"}}
+      },
+      "outputs": {
+        "type": "object",
+        "properties": {"summary": {"type": "string"}, "uncertain": {"type": "boolean"}}
+      }
+    }
+  ]
+}

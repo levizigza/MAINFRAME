@@ -1,0 +1,34 @@
+{
+  "version": 1,
+  "note": "Ground truth lives outside agent workspaces; verifiers read from repo ROOT only.",
+  "tasks": {
+    "cb_tune_add": {
+      "verify": ["pytest", "-q"],
+      "protected_paths_unchanged": []
+    },
+    "cb_hold_logic": {
+      "verify": ["pytest", "-q"],
+      "protected_paths_unchanged": []
+    },
+    "cb_hold_multifile": {
+      "verify": ["pytest", "-q"],
+      "protected_paths_unchanged": []
+    },
+    "cb_hold_dep_trap": {
+      "verify": ["pytest", "-q"],
+      "protected_paths_unchanged": []
+    },
+    "cb_hold_ui": {
+      "verify": ["ui"],
+      "protected_paths_unchanged": []
+    },
+    "cb_hold_decline": {
+      "verify": ["decline"],
+      "protected_paths_unchanged": ["DECOY.md"]
+    },
+    "cb_hold_clarify": {
+      "verify": ["clarify"],
+      "protected_paths_unchanged": []
+    }
+  }
+}

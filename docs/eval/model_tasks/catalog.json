@@ -1,0 +1,88 @@
+{
+  "version": 1,
+  "note": "Small evaluation set. Holdout tasks must not be used for tuning route weights.",
+  "task_classes": [
+    "code_repair",
+    "tool_selection",
+    "structured_extraction",
+    "planning",
+    "vision"
+  ],
+  "tasks": [
+    {
+      "id": "cr_tune_missing_colon",
+      "class": "code_repair",
+      "split": "tune",
+      "prompt": "Fix syntax so add(a,b) returns a+b.",
+      "expect": {"contains": ["def add", "return a + b"], "self_check": true},
+      "vision": false
+    },
+    {
+      "id": "cr_hold_off_by_one",
+      "class": "code_repair",
+      "split": "holdout",
+      "prompt": "Fix range so sum_to(n) sums 1..n inclusive.",
+      "expect": {"sum_to_5": 15},
+      "vision": false
+    },
+    {
+      "id": "ts_tune_lookup",
+      "class": "tool_selection",
+      "split": "tune",
+      "prompt": "Which tool finds a symbol definition?",
+      "tools": ["lookup_symbol", "run_tests", "write_file"],
+      "expect": {"tool": "lookup_symbol"},
+      "vision": false
+    },
+    {
+      "id": "ts_hold_patch",
+      "class": "tool_selection",
+      "split": "holdout",
+      "prompt": "Which tool applies a search-replace patch?",
+      "tools": ["lookup_symbol", "apply_patch", "list_tree"],
+      "expect": {"tool": "apply_patch"},
+      "vision": false
+    },
+    {
+      "id": "se_tune_pkg",
+      "class": "structured_extraction",
+      "split": "tune",
+      "prompt": "Extract JSON {name, version} from: Package MAINFRAME version 0.1.20.",
+      "expect": {"name": "MAINFRAME", "version": "0.1.20"},
+      "vision": false
+    },
+    {
+      "id": "se_hold_error",
+      "class": "structured_extraction",
+      "split": "holdout",
+      "prompt": "Extract JSON {code, file} from: Error E42 in path/mod.py",
+      "expect": {"code": "E42", "file": "path/mod.py"},
+      "vision": false
+    },
+    {
+      "id": "pl_tune_steps",
+      "class": "planning",
+      "split": "tune",
+      "prompt": "Plan repair: reproduce, patch, test. Reply JSON {steps: string[]}.",
+      "expect": {"steps_include": ["reproduce", "patch", "test"]},
+      "vision": false
+    },
+    {
+      "id": "pl_hold_order",
+      "class": "planning",
+      "split": "holdout",
+      "prompt": "Order JSON steps for: inventory then retrieve then patch.",
+      "expect": {"order": ["inventory", "retrieve", "patch"]},
+      "vision": false
+    },
+    {
+      "id": "vi_hold_optional",
+      "class": "vision",
+      "split": "holdout",
+      "prompt": "Describe UI screenshot (optional vision).",
+      "expect": {"requires_vision": true},
+      "vision": true,
+      "optional": true
+    }
+  ]
+}

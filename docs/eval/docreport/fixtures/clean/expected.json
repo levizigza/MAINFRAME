@@ -1,0 +1,5 @@
+[
+  {"record_id": "INV-1001", "date": "2024-01-15", "amount": "100.50", "unit": "USD", "party": "Acme Corp"},
+  {"record_id": "INV-1002", "date": "2024-02-01", "amount": "250.00", "unit": "USD", "party": "Beta LLC"},
+  {"record_id": "INV-1003", "date": "2024-03-10", "amount": "75.25", "unit": "EUR", "party": "Gamma GmbH"}
+]

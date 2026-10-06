@@ -1,0 +1,4752 @@
+{
+  "suite": "heldout_workload_eval",
+  "generated_at": "2026-10-06T18:53:34.909795+00:00",
+  "trials_per_cell": 5,
+  "holdout_root": "docs/eval/workloads/holdout",
+  "competitors": {
+    "claude_code_e2e": "unmeasured",
+    "cursor_e2e": "unmeasured",
+    "note": "Legitimately unavailable without purchasing access for this run."
+  },
+  "comparison": {
+    "repository_repair": {
+      "freeforge": {
+        "aggregate": {
+          "trials": 5,
+          "correct_count": 5,
+          "correct_completion_rate": {
+            "n": 5,
+            "successes": 5,
+            "rate": 1.0,
+            "ci95_low": 0.5655,
+            "ci95_high": 1.0,
+            "small_sample": true,
+            "note": "Small-n Wilson interval; not a substitute for a large held-out study."
+          },
+          "total_elapsed_s_mean": 0.0082,
+          "total_elapsed_s_sum": 0.0408,
+          "active_human_s_mean": 0.0,
+          "active_human_s_sum": 0.0,
+          "retries_total": 1,
+          "model_calls_total": 0,
+          "failure_recoveries_total": 1,
+          "setup_s_sum": 0.0334,
+          "maintenance_s_sum": 0.0,
+          "sustainable_daily_volume_est": 3529411.76,
+          "daily_volume_basis": "wall_clock_8h_theoretical",
+          "daily_volume_note": "Theoretical from sub-second deterministic runs; not a claim of interactive daily capacity.",
+          "small_sample": true
+        },
+        "trials": [
+          {
+            "workload": "repository_repair",
+            "trial": 1,
+            "correct": true,
+            "elapsed_s": 0.0158,
+            "active_human_s": 0.0,
+            "retries": 1,
+            "model_calls": 0,
+            "failure_recoveries": 1,
+            "setup_s": 0.0084,
+            "maintenance_s": 0.0,
+            "detail": {
+              "flags": {
+                "retrieval": true,
+                "workflow_reuse": true,
+                "review": true,
+                "caching": true
+              },
+              "system": "freeforge",
+              "retrieved": "broken_math.py",
+              "patched": "broken_math.py"
+            }
+          },
+          {
+            "workload": "repository_repair",
+            "trial": 2,
+            "correct": true,
+            "elapsed_s": 0.0075,
+            "active_human_s": 0.0,
+            "retries": 0,
+            "model_calls": 0,
+            "failure_recoveries": 0,
+            "setup_s": 0.0064,
+            "maintenance_s": 0.0,
+            "detail": {
+              "flags": {
+                "retrieval": true,
+                "workflow_reuse": true,
+                "review": true,
+                "caching": true
+              },
+              "system": "freeforge",
+              "cache_hit": true
+            }
+          },
+          {
+            "workload": "repository_repair",
+            "trial": 3,
+            "correct": true,
+            "elapsed_s": 0.0065,
+            "active_human_s": 0.0,
+            "retries": 0,
+            "model_calls": 0,
+            "failure_recoveries": 0,
+            "setup_s": 0.0061,
+            "maintenance_s": 0.0,
+            "detail": {
+              "flags": {
+                "retrieval": true,
+                "workflow_reuse": true,
+                "review": true,
+                "caching": true
+              },
+              "system": "freeforge",
+              "cache_hit": true
+            }
+          },
+          {
+            "workload": "repository_repair",
+            "trial": 4,
+            "correct": true,
+            "elapsed_s": 0.0066,
+            "active_human_s": 0.0,
+            "retries": 0,
+            "model_calls": 0,
+            "failure_recoveries": 0,
+            "setup_s": 0.0065,
+            "maintenance_s": 0.0,
+            "detail": {
+              "flags": {
+                "retrieval": true,
+                "workflow_reuse": true,
+                "review": true,
+                "caching": true
+              },
+              "system": "freeforge",
+              "cache_hit": true
+            }
+          },
+          {
+            "workload": "repository_repair",
+            "trial": 5,
+            "correct": true,
+            "elapsed_s": 0.0044,
+            "active_human_s": 0.0,
+            "retries": 0,
+            "model_calls": 0,
+            "failure_recoveries": 0,
+            "setup_s": 0.006,
+            "maintenance_s": 0.0,
+            "detail": {
+              "flags": {
+                "retrieval": true,
+                "workflow_reuse": true,
+                "review": true,
+                "caching": true
+              },
+              "system": "freeforge",
+              "cache_hit": true
+            }
+          }
+        ]
+      },
+      "minimal": {
+        "aggregate": {
+          "trials": 5,
+          "correct_count": 0,
+          "correct_completion_rate": {
+            "n": 5,
+            "successes": 0,
+            "rate": 0.0,
+            "ci95_low": 0.0,
+            "ci95_high": 0.4345,
+            "small_sample": true,
+            "note": "Small-n Wilson interval; not a substitute for a large held-out study."
+          },
+          "total_elapsed_s_mean": 0.0038,
+          "total_elapsed_s_sum": 0.0192,
+          "active_human_s_mean": 0.0,
+          "active_human_s_sum": 0.0,
+          "retries_total": 5,
+          "model_calls_total": 5,
+          "failure_recoveries_total": 0,
+          "setup_s_sum": 0.0327,
+          "maintenance_s_sum": 0.0,
+          "sustainable_daily_volume_est": 7500000.0,
+          "daily_volume_basis": "wall_clock_8h_theoretical",
+          "daily_volume_note": "Theoretical from sub-second deterministic runs; not a claim of interactive daily capacity.",
+          "small_sample": true
+        },
+        "trials": [
+          {
+            "workload": "repository_repair",
+            "trial": 1,
+            "correct": false,
+            "elapsed_s": 0.0046,
+            "active_human_s": 0.0,
+            "retries": 1,
+            "model_calls": 1,
+            "failure_recoveries": 0,
+            "setup_s": 0.0063,
+            "maintenance_s": 0.0,
+            "detail": {
+              "flags": {
+                "retrieval": true,
+                "workflow_reuse": true,
+                "review": true,
+                "caching": true
+              },
+              "system": "minimal",
+              "patched": "decoy_ops.py"
+            }
+          },
+          {
+            "workload": "repository_repair",
+            "trial": 2,
+            "correct": false,
+            "elapsed_s": 0.0027,
+            "active_human_s": 0.0,
+            "retries": 1,
+            "model_calls": 1,
+            "failure_recoveries": 0,
+            "setup_s": 0.0075,
+            "maintenance_s": 0.0,
+            "detail": {
+              "flags": {
+                "retrieval": true,
+                "workflow_reuse": true,
+                "review": true,
+                "caching": true
+              },
+              "system": "minimal",
+              "patched": "decoy_ops.py"
+            }
+          },
+          {
+            "workload": "repository_repair",
+            "trial": 3,
+            "correct": false,
+            "elapsed_s": 0.0033,
+            "active_human_s": 0.0,
+            "retries": 1,
+            "model_calls": 1,
+            "failure_recoveries": 0,
+            "setup_s": 0.0054,
+            "maintenance_s": 0.0,
+            "detail": {
+              "flags": {
+                "retrieval": true,
+                "workflow_reuse": true,
+                "review": true,
+                "caching": true
+              },
+              "system": "minimal",
+              "patched": "decoy_ops.py"
+            }
+          },
+          {
+            "workload": "repository_repair",
+            "trial": 4,
+            "correct": false,
+            "elapsed_s": 0.0042,
+            "active_human_s": 0.0,
+            "retries": 1,
+            "model_calls": 1,
+            "failure_recoveries": 0,
+            "setup_s": 0.0061,
+            "maintenance_s": 0.0,
+            "detail": {
+              "flags": {
+                "retrieval": true,
+                "workflow_reuse": true,
+                "review": true,
+                "caching": true
+              },
+              "system": "minimal",
+              "patched": "decoy_ops.py"
+            }
+          },
+          {
+            "workload": "repository_repair",
+            "trial": 5,
+            "correct": false,
+            "elapsed_s": 0.0044,
+            "active_human_s": 0.0,
+            "retries": 1,
+            "model_calls": 1,
+            "failure_recoveries": 0,
+            "setup_s": 0.0074,
+            "maintenance_s": 0.0,
+            "detail": {
+              "flags": {
+                "retrieval": true,
+                "workflow_reuse": true,
+                "review": true,
+                "caching": true
+              },
+              "system": "minimal",
+              "patched": "decoy_ops.py"
+            }
+          }
+        ]
+      },
+      "manual": {
+        "aggregate": {
+          "trials": 5,
+          "correct_count": 5,
+          "correct_completion_rate": {
+            "n": 5,
+            "successes": 5,
+            "rate": 1.0,
+            "ci95_low": 0.5655,
+            "ci95_high": 1.0,
+            "small_sample": true,
+            "note": "Small-n Wilson interval; not a substitute for a large held-out study."
+          },
+          "total_elapsed_s_mean": 0.0087,
+          "total_elapsed_s_sum": 0.0436,
+          "active_human_s_mean": 135.0,
+          "active_human_s_sum": 675.0,
+          "retries_total": 0,
+          "model_calls_total": 0,
+          "failure_recoveries_total": 0,
+          "setup_s_sum": 0.0313,
+          "maintenance_s_sum": 0.0,
+          "sustainable_daily_volume_est": 213.33,
+          "daily_volume_basis": "active_human_8h",
+          "daily_volume_note": null,
+          "small_sample": true
+        },
+        "trials": [
+          {
+            "workload": "repository_repair",
+            "trial": 1,
+            "correct": true,
+            "elapsed_s": 0.0087,
+            "active_human_s": 135.0,
+            "retries": 0,
+            "model_calls": 0,
+            "failure_recoveries": 0,
+            "setup_s": 0.0062,
+            "maintenance_s": 0.0,
+            "detail": {
+              "flags": {
+                "retrieval": true,
+                "workflow_reuse": true,
+                "review": true,
+                "caching": true
+              },
+              "system": "manual",
+              "process": "scripted_manual_steps"
+            }
+          },
+          {
+            "workload": "repository_repair",
+            "trial": 2,
+            "correct": true,
+            "elapsed_s": 0.0091,
+            "active_human_s": 135.0,
+            "retries": 0,
+            "model_calls": 0,
+            "failure_recoveries": 0,
+            "setup_s": 0.0058,
+            "maintenance_s": 0.0,
+            "detail": {
+              "flags": {
+                "retrieval": true,
+                "workflow_reuse": true,
+                "review": true,
+                "caching": true
+              },
+              "system": "manual",
+              "process": "scripted_manual_steps"
+            }
+          },
+          {
+            "workload": "repository_repair",
+            "trial": 3,
+            "correct": true,
+            "elapsed_s": 0.0095,
+            "active_human_s": 135.0,
+            "retries": 0,
+            "model_calls": 0,
+            "failure_recoveries": 0,
+            "setup_s": 0.0062,
+            "maintenance_s": 0.0,
+            "detail": {
+              "flags": {
+                "retrieval": true,
+                "workflow_reuse": true,
+                "review": true,
+                "caching": true
+              },
+              "system": "manual",
+              "process": "scripted_manual_steps"
+            }
+          },
+          {
+            "workload": "repository_repair",
+            "trial": 4,
+            "correct": true,
+            "elapsed_s": 0.007,
+            "active_human_s": 135.0,
+            "retries": 0,
+            "model_calls": 0,
+            "failure_recoveries": 0,
+            "setup_s": 0.0076,
+            "maintenance_s": 0.0,
+            "detail": {
+              "flags": {
+                "retrieval": true,
+                "workflow_reuse": true,
+                "review": true,
+                "caching": true
+              },
+              "system": "manual",
+              "process": "scripted_manual_steps"
+            }
+          },
+          {
+            "workload": "repository_repair",
+            "trial": 5,
+            "correct": true,
+            "elapsed_s": 0.0093,
+            "active_human_s": 135.0,
+            "retries": 0,
+            "model_calls": 0,
+            "failure_recoveries": 0,
+            "setup_s": 0.0055,
+            "maintenance_s": 0.0,
+            "detail": {
+              "flags": {
+                "retrieval": true,
+                "workflow_reuse": true,
+                "review": true,
+                "caching": true
+              },
+              "system": "manual",
+              "process": "scripted_manual_steps"
+            }
+          }
+        ]
+      }
+    },
+    "website_maintenance": {
+      "freeforge": {
+        "aggregate": {
+          "trials": 5,
+          "correct_count": 5,
+          "correct_completion_rate": {
+            "n": 5,
+            "successes": 5,
+            "rate": 1.0,
+            "ci95_low": 0.5655,
+            "ci95_high": 1.0,
+            "small_sample": true,
+            "note": "Small-n Wilson interval; not a substitute for a large held-out study."
+          },
+          "total_elapsed_s_mean": 0.0058,
+          "total_elapsed_s_sum": 0.029,
+          "active_human_s_mean": 0.0,
+          "active_human_s_sum": 0.0,
+          "retries_total": 0,
+          "model_calls_total": 0,
+          "failure_recoveries_total": 0,
+          "setup_s_sum": 0.0197,
+          "maintenance_s_sum": 0.0,
+          "sustainable_daily_volume_est": 4965517.24,
+          "daily_volume_basis": "wall_clock_8h_theoretical",
+          "daily_volume_note": "Theoretical from sub-second deterministic runs; not a claim of interactive daily capacity.",
+          "small_sample": true
+        },
+        "trials": [
+          {
+            "workload": "website_maintenance",
+            "trial": 1,
+            "correct": true,
+            "elapsed_s": 0.0051,
+            "active_human_s": 0.0,
+            "retries": 0,
+            "model_calls": 0,
+            "failure_recoveries": 0,
+            "setup_s": 0.0027,
+            "maintenance_s": 0.0,
+            "detail": {
+              "flags": {
+                "retrieval": true,
+                "workflow_reuse": true,
+                "review": true,
+                "caching": true
+              },
+              "system": "freeforge",
+              "review_set_ready": true,
+              "checks": {
+                "copyright_year_current": true,
+                "dead_link_removed": true,
+                "update_control_present": true,
+                "status_ready": true
+              }
+            }
+          },
+          {
+            "workload": "website_maintenance",
+            "trial": 2,
+            "correct": true,
+            "elapsed_s": 0.0069,
+            "active_human_s": 0.0,
+            "retries": 0,
+            "model_calls": 0,
+            "failure_recoveries": 0,
+            "setup_s": 0.0047,
+            "maintenance_s": 0.0,
+            "detail": {
+              "flags": {
+                "retrieval": true,
+                "workflow_reuse": true,
+                "review": true,
+                "caching": true
+              },
+              "system": "freeforge",
+              "cache_hit": true,
+              "checks": {
+                "copyright_year_current": true,
+                "dead_link_removed": true,
+                "update_control_present": true,
+                "status_ready": true
+              }
+            }
+          },
+          {
+            "workload": "website_maintenance",
+            "trial": 3,
+            "correct": true,
+            "elapsed_s": 0.0057,
+            "active_human_s": 0.0,
+            "retries": 0,
+            "model_calls": 0,
+            "failure_recoveries": 0,
+            "setup_s": 0.0045,
+            "maintenance_s": 0.0,
+            "detail": {
+              "flags": {
+                "retrieval": true,
+                "workflow_reuse": true,
+                "review": true,
+                "caching": true
+              },
+              "system": "freeforge",
+              "cache_hit": true,
+              "checks": {
+                "copyright_year_current": true,
+                "dead_link_removed": true,
+                "update_control_present": true,
+                "status_ready": true
+              }
+            }
+          },
+          {
+            "workload": "website_maintenance",
+            "trial": 4,
+            "correct": true,
+            "elapsed_s": 0.0049,
+            "active_human_s": 0.0,
+            "retries": 0,
+            "model_calls": 0,
+            "failure_recoveries": 0,
+            "setup_s": 0.0038,
+            "maintenance_s": 0.0,
+            "detail": {
+              "flags": {
+                "retrieval": true,
+                "workflow_reuse": true,
+                "review": true,
+                "caching": true
+              },
+              "system": "freeforge",
+              "cache_hit": true,
+              "checks": {
+                "copyright_year_current": true,
+                "dead_link_removed": true,
+                "update_control_present": true,
+                "status_ready": true
+              }
+            }
+          },
+          {
+            "workload": "website_maintenance",
+            "trial": 5,
+            "correct": true,
+            "elapsed_s": 0.0064,
+            "active_human_s": 0.0,
+            "retries": 0,
+            "model_calls": 0,
+            "failure_recoveries": 0,
+            "setup_s": 0.004,
+            "maintenance_s": 0.0,
+            "detail": {
+              "flags": {
+                "retrieval": true,
+                "workflow_reuse": true,
+                "review": true,
+                "caching": true
+              },
+              "system": "freeforge",
+              "cache_hit": true,
+              "checks": {
+                "copyright_year_current": true,
+                "dead_link_removed": true,
+                "update_control_present": true,
+                "status_ready": true
+              }
+            }
+          }
+        ]
+      },
+      "minimal": {
+        "aggregate": {
+          "trials": 5,
+          "correct_count": 0,
+          "correct_completion_rate": {
+            "n": 5,
+            "successes": 0,
+            "rate": 0.0,
+            "ci95_low": 0.0,
+            "ci95_high": 0.4345,
+            "small_sample": true,
+            "note": "Small-n Wilson interval; not a substitute for a large held-out study."
+          },
+          "total_elapsed_s_mean": 0.0043,
+          "total_elapsed_s_sum": 0.0215,
+          "active_human_s_mean": 0.0,
+          "active_human_s_sum": 0.0,
+          "retries_total": 5,
+          "model_calls_total": 5,
+          "failure_recoveries_total": 0,
+          "setup_s_sum": 0.0202,
+          "maintenance_s_sum": 0.0,
+          "sustainable_daily_volume_est": 6697674.42,
+          "daily_volume_basis": "wall_clock_8h_theoretical",
+          "daily_volume_note": "Theoretical from sub-second deterministic runs; not a claim of interactive daily capacity.",
+          "small_sample": true
+        },
+        "trials": [
+          {
+            "workload": "website_maintenance",
+            "trial": 1,
+            "correct": false,
+            "elapsed_s": 0.0039,
+            "active_human_s": 0.0,
+            "retries": 1,
+            "model_calls": 1,
+            "failure_recoveries": 0,
+            "setup_s": 0.003,
+            "maintenance_s": 0.0,
+            "detail": {
+              "flags": {
+                "retrieval": true,
+                "workflow_reuse": true,
+                "review": true,
+                "caching": true
+              },
+              "system": "minimal",
+              "checks": {
+                "copyright_year_current": true,
+                "dead_link_removed": false,
+                "update_control_present": false,
+                "status_ready": false
+              }
+            }
+          },
+          {
+            "workload": "website_maintenance",
+            "trial": 2,
+            "correct": false,
+            "elapsed_s": 0.0041,
+            "active_human_s": 0.0,
+            "retries": 1,
+            "model_calls": 1,
+            "failure_recoveries": 0,
+            "setup_s": 0.0039,
+            "maintenance_s": 0.0,
+            "detail": {
+              "flags": {
+                "retrieval": true,
+                "workflow_reuse": true,
+                "review": true,
+                "caching": true
+              },
+              "system": "minimal",
+              "checks": {
+                "copyright_year_current": true,
+                "dead_link_removed": false,
+                "update_control_present": false,
+                "status_ready": false
+              }
+            }
+          },
+          {
+            "workload": "website_maintenance",
+            "trial": 3,
+            "correct": false,
+            "elapsed_s": 0.005,
+            "active_human_s": 0.0,
+            "retries": 1,
+            "model_calls": 1,
+            "failure_recoveries": 0,
+            "setup_s": 0.0044,
+            "maintenance_s": 0.0,
+            "detail": {
+              "flags": {
+                "retrieval": true,
+                "workflow_reuse": true,
+                "review": true,
+                "caching": true
+              },
+              "system": "minimal",
+              "checks": {
+                "copyright_year_current": true,
+                "dead_link_removed": false,
+                "update_control_present": false,
+                "status_ready": false
+              }
+            }
+          },
+          {
+            "workload": "website_maintenance",
+            "trial": 4,
+            "correct": false,
+            "elapsed_s": 0.0046,
+            "active_human_s": 0.0,
+            "retries": 1,
+            "model_calls": 1,
+            "failure_recoveries": 0,
+            "setup_s": 0.0045,
+            "maintenance_s": 0.0,
+            "detail": {
+              "flags": {
+                "retrieval": true,
+                "workflow_reuse": true,
+                "review": true,
+                "caching": true
+              },
+              "system": "minimal",
+              "checks": {
+                "copyright_year_current": true,
+                "dead_link_removed": false,
+                "update_control_present": false,
+                "status_ready": false
+              }
+            }
+          },
+          {
+            "workload": "website_maintenance",
+            "trial": 5,
+            "correct": false,
+            "elapsed_s": 0.0039,
+            "active_human_s": 0.0,
+            "retries": 1,
+            "model_calls": 1,
+            "failure_recoveries": 0,
+            "setup_s": 0.0044,
+            "maintenance_s": 0.0,
+            "detail": {
+              "flags": {
+                "retrieval": true,
+                "workflow_reuse": true,
+                "review": true,
+                "caching": true
+              },
+              "system": "minimal",
+              "checks": {
+                "copyright_year_current": true,
+                "dead_link_removed": false,
+                "update_control_present": false,
+                "status_ready": false
+              }
+            }
+          }
+        ]
+      },
+      "manual": {
+        "aggregate": {
+          "trials": 5,
+          "correct_count": 5,
+          "correct_completion_rate": {
+            "n": 5,
+            "successes": 5,
+            "rate": 1.0,
+            "ci95_low": 0.5655,
+            "ci95_high": 1.0,
+            "small_sample": true,
+            "note": "Small-n Wilson interval; not a substitute for a large held-out study."
+          },
+          "total_elapsed_s_mean": 0.0044,
+          "total_elapsed_s_sum": 0.022,
+          "active_human_s_mean": 200.0,
+          "active_human_s_sum": 1000.0,
+          "retries_total": 0,
+          "model_calls_total": 0,
+          "failure_recoveries_total": 0,
+          "setup_s_sum": 0.0192,
+          "maintenance_s_sum": 0.0,
+          "sustainable_daily_volume_est": 144.0,
+          "daily_volume_basis": "active_human_8h",
+          "daily_volume_note": null,
+          "small_sample": true
+        },
+        "trials": [
+          {
+            "workload": "website_maintenance",
+            "trial": 1,
+            "correct": true,
+            "elapsed_s": 0.0043,
+            "active_human_s": 200.0,
+            "retries": 0,
+            "model_calls": 0,
+            "failure_recoveries": 0,
+            "setup_s": 0.004,
+            "maintenance_s": 0.0,
+            "detail": {
+              "flags": {
+                "retrieval": true,
+                "workflow_reuse": true,
+                "review": true,
+                "caching": true
+              },
+              "system": "manual",
+              "checks": {
+                "copyright_year_current": true,
+                "dead_link_removed": true,
+                "update_control_present": true,
+                "status_ready": true
+              }
+            }
+          },
+          {
+            "workload": "website_maintenance",
+            "trial": 2,
+            "correct": true,
+            "elapsed_s": 0.004,
+            "active_human_s": 200.0,
+            "retries": 0,
+            "model_calls": 0,
+            "failure_recoveries": 0,
+            "setup_s": 0.0042,
+            "maintenance_s": 0.0,
+            "detail": {
+              "flags": {
+                "retrieval": true,
+                "workflow_reuse": true,
+                "review": true,
+                "caching": true
+              },
+              "system": "manual",
+              "checks": {
+                "copyright_year_current": true,
+                "dead_link_removed": true,
+                "update_control_present": true,
+                "status_ready": true
+              }
+            }
+          },
+          {
+            "workload": "website_maintenance",
+            "trial": 3,
+            "correct": true,
+            "elapsed_s": 0.0044,
+            "active_human_s": 200.0,
+            "retries": 0,
+            "model_calls": 0,
+            "failure_recoveries": 0,
+            "setup_s": 0.0031,
+            "maintenance_s": 0.0,
+            "detail": {
+              "flags": {
+                "retrieval": true,
+                "workflow_reuse": true,
+                "review": true,
+                "caching": true
+              },
+              "system": "manual",
+              "checks": {
+                "copyright_year_current": true,
+                "dead_link_removed": true,
+                "update_control_present": true,
+                "status_ready": true
+              }
+            }
+          },
+          {
+            "workload": "website_maintenance",
+            "trial": 4,
+            "correct": true,
+            "elapsed_s": 0.0048,
+            "active_human_s": 200.0,
+            "retries": 0,
+            "model_calls": 0,
+            "failure_recoveries": 0,
+            "setup_s": 0.0035,
+            "maintenance_s": 0.0,
+            "detail": {
+              "flags": {
+                "retrieval": true,
+                "workflow_reuse": true,
+                "review": true,
+                "caching": true
+              },
+              "system": "manual",
+              "checks": {
+                "copyright_year_current": true,
+                "dead_link_removed": true,
+                "update_control_present": true,
+                "status_ready": true
+              }
+            }
+          },
+          {
+            "workload": "website_maintenance",
+            "trial": 5,
+            "correct": true,
+            "elapsed_s": 0.0045,
+            "active_human_s": 200.0,
+            "retries": 0,
+            "model_calls": 0,
+            "failure_recoveries": 0,
+            "setup_s": 0.0044,
+            "maintenance_s": 0.0,
+            "detail": {
+              "flags": {
+                "retrieval": true,
+                "workflow_reuse": true,
+                "review": true,
+                "caching": true
+              },
+              "system": "manual",
+              "checks": {
+                "copyright_year_current": true,
+                "dead_link_removed": true,
+                "update_control_present": true,
+                "status_ready": true
+              }
+            }
+          }
+        ]
+      }
+    },
+    "document_reporting": {
+      "freeforge": {
+        "aggregate": {
+          "trials": 5,
+          "correct_count": 5,
+          "correct_completion_rate": {
+            "n": 5,
+            "successes": 5,
+            "rate": 1.0,
+            "ci95_low": 0.5655,
+            "ci95_high": 1.0,
+            "small_sample": true,
+            "note": "Small-n Wilson interval; not a substitute for a large held-out study."
+          },
+          "total_elapsed_s_mean": 0.0059,
+          "total_elapsed_s_sum": 0.0297,
+          "active_human_s_mean": 0.0,
+          "active_human_s_sum": 0.0,
+          "retries_total": 0,
+          "model_calls_total": 0,
+          "failure_recoveries_total": 0,
+          "setup_s_sum": 0.0178,
+          "maintenance_s_sum": 0.0,
+          "sustainable_daily_volume_est": 4848484.85,
+          "daily_volume_basis": "wall_clock_8h_theoretical",
+          "daily_volume_note": "Theoretical from sub-second deterministic runs; not a claim of interactive daily capacity.",
+          "small_sample": true
+        },
+        "trials": [
+          {
+            "workload": "document_reporting",
+            "trial": 1,
+            "correct": true,
+            "elapsed_s": 0.0248,
+            "active_human_s": 0.0,
+            "retries": 0,
+            "model_calls": 0,
+            "failure_recoveries": 0,
+            "setup_s": 0.0041,
+            "maintenance_s": 0.0,
+            "detail": {
+              "flags": {
+                "retrieval": true,
+                "workflow_reuse": true,
+                "review": true,
+                "caching": true
+              },
+              "system": "freeforge",
+              "metrics": {
+                "kept": 4,
+                "duplicates_removed": 1,
+                "invalid": 1,
+                "correct": true,
+                "auto_posted_external": false
+              }
+            }
+          },
+          {
+            "workload": "document_reporting",
+            "trial": 2,
+            "correct": true,
+            "elapsed_s": 0.0032,
+            "active_human_s": 0.0,
+            "retries": 0,
+            "model_calls": 0,
+            "failure_recoveries": 0,
+            "setup_s": 0.0032,
+            "maintenance_s": 0.0,
+            "detail": {
+              "flags": {
+                "retrieval": true,
+                "workflow_reuse": true,
+                "review": true,
+                "caching": true
+              },
+              "system": "freeforge",
+              "cache_hit": true,
+              "metrics": {
+                "kept": 4,
+                "duplicates_removed": 1,
+                "invalid": 1,
+                "correct": true,
+                "auto_posted_external": false
+              }
+            }
+          },
+          {
+            "workload": "document_reporting",
+            "trial": 3,
+            "correct": true,
+            "elapsed_s": 0.0005,
+            "active_human_s": 0.0,
+            "retries": 0,
+            "model_calls": 0,
+            "failure_recoveries": 0,
+            "setup_s": 0.0031,
+            "maintenance_s": 0.0,
+            "detail": {
+              "flags": {
+                "retrieval": true,
+                "workflow_reuse": true,
+                "review": true,
+                "caching": true
+              },
+              "system": "freeforge",
+              "cache_hit": true,
+              "metrics": {
+                "kept": 4,
+                "duplicates_removed": 1,
+                "invalid": 1,
+                "correct": true,
+                "auto_posted_external": false
+              }
+            }
+          },
+          {
+            "workload": "document_reporting",
+            "trial": 4,
+            "correct": true,
+            "elapsed_s": 0.0008,
+            "active_human_s": 0.0,
+            "retries": 0,
+            "model_calls": 0,
+            "failure_recoveries": 0,
+            "setup_s": 0.0035,
+            "maintenance_s": 0.0,
+            "detail": {
+              "flags": {
+                "retrieval": true,
+                "workflow_reuse": true,
+                "review": true,
+                "caching": true
+              },
+              "system": "freeforge",
+              "cache_hit": true,
+              "metrics": {
+                "kept": 4,
+                "duplicates_removed": 1,
+                "invalid": 1,
+                "correct": true,
+                "auto_posted_external": false
+              }
+            }
+          },
+          {
+            "workload": "document_reporting",
+            "trial": 5,
+            "correct": true,
+            "elapsed_s": 0.0004,
+            "active_human_s": 0.0,
+            "retries": 0,
+            "model_calls": 0,
+            "failure_recoveries": 0,
+            "setup_s": 0.0039,
+            "maintenance_s": 0.0,
+            "detail": {
+              "flags": {
+                "retrieval": true,
+                "workflow_reuse": true,
+                "review": true,
+                "caching": true
+              },
+              "system": "freeforge",
+              "cache_hit": true,
+              "metrics": {
+                "kept": 4,
+                "duplicates_removed": 1,
+                "invalid": 1,
+                "correct": true,
+                "auto_posted_external": false
+              }
+            }
+          }
+        ]
+      },
+      "minimal": {
+        "aggregate": {
+          "trials": 5,
+          "correct_count": 0,
+          "correct_completion_rate": {
+            "n": 5,
+            "successes": 0,
+            "rate": 0.0,
+            "ci95_low": 0.0,
+            "ci95_high": 0.4345,
+            "small_sample": true,
+            "note": "Small-n Wilson interval; not a substitute for a large held-out study."
+          },
+          "total_elapsed_s_mean": 0.0035,
+          "total_elapsed_s_sum": 0.0176,
+          "active_human_s_mean": 0.0,
+          "active_human_s_sum": 0.0,
+          "retries_total": 5,
+          "model_calls_total": 5,
+          "failure_recoveries_total": 0,
+          "setup_s_sum": 0.0251,
+          "maintenance_s_sum": 0.0,
+          "sustainable_daily_volume_est": 8181818.18,
+          "daily_volume_basis": "wall_clock_8h_theoretical",
+          "daily_volume_note": "Theoretical from sub-second deterministic runs; not a claim of interactive daily capacity.",
+          "small_sample": true
+        },
+        "trials": [
+          {
+            "workload": "document_reporting",
+            "trial": 1,
+            "correct": false,
+            "elapsed_s": 0.0033,
+            "active_human_s": 0.0,
+            "retries": 1,
+            "model_calls": 1,
+            "failure_recoveries": 0,
+            "setup_s": 0.0053,
+            "maintenance_s": 0.0,
+            "detail": {
+              "flags": {
+                "retrieval": true,
+                "workflow_reuse": true,
+                "review": true,
+                "caching": true
+              },
+              "system": "minimal"
+            }
+          },
+          {
+            "workload": "document_reporting",
+            "trial": 2,
+            "correct": false,
+            "elapsed_s": 0.0029,
+            "active_human_s": 0.0,
+            "retries": 1,
+            "model_calls": 1,
+            "failure_recoveries": 0,
+            "setup_s": 0.0043,
+            "maintenance_s": 0.0,
+            "detail": {
+              "flags": {
+                "retrieval": true,
+                "workflow_reuse": true,
+                "review": true,
+                "caching": true
+              },
+              "system": "minimal"
+            }
+          },
+          {
+            "workload": "document_reporting",
+            "trial": 3,
+            "correct": false,
+            "elapsed_s": 0.0037,
+            "active_human_s": 0.0,
+            "retries": 1,
+            "model_calls": 1,
+            "failure_recoveries": 0,
+            "setup_s": 0.0042,
+            "maintenance_s": 0.0,
+            "detail": {
+              "flags": {
+                "retrieval": true,
+                "workflow_reuse": true,
+                "review": true,
+                "caching": true
+              },
+              "system": "minimal"
+            }
+          },
+          {
+            "workload": "document_reporting",
+            "trial": 4,
+            "correct": false,
+            "elapsed_s": 0.0039,
+            "active_human_s": 0.0,
+            "retries": 1,
+            "model_calls": 1,
+            "failure_recoveries": 0,
+            "setup_s": 0.006,
+            "maintenance_s": 0.0,
+            "detail": {
+              "flags": {
+                "retrieval": true,
+                "workflow_reuse": true,
+                "review": true,
+                "caching": true
+              },
+              "system": "minimal"
+            }
+          },
+          {
+            "workload": "document_reporting",
+            "trial": 5,
+            "correct": false,
+            "elapsed_s": 0.0038,
+            "active_human_s": 0.0,
+            "retries": 1,
+            "model_calls": 1,
+            "failure_recoveries": 0,
+            "setup_s": 0.0053,
+            "maintenance_s": 0.0,
+            "detail": {
+              "flags": {
+                "retrieval": true,
+                "workflow_reuse": true,
+                "review": true,
+                "caching": true
+              },
+              "system": "minimal"
+            }
+          }
+        ]
+      },
+      "manual": {
+        "aggregate": {
+          "trials": 5,
+          "correct_count": 5,
+          "correct_completion_rate": {
+            "n": 5,
+            "successes": 5,
+            "rate": 1.0,
+            "ci95_low": 0.5655,
+            "ci95_high": 1.0,
+            "small_sample": true,
+            "note": "Small-n Wilson interval; not a substitute for a large held-out study."
+          },
+          "total_elapsed_s_mean": 0.0067,
+          "total_elapsed_s_sum": 0.0337,
+          "active_human_s_mean": 245.0,
+          "active_human_s_sum": 1225.0,
+          "retries_total": 0,
+          "model_calls_total": 0,
+          "failure_recoveries_total": 0,
+          "setup_s_sum": 0.0255,
+          "maintenance_s_sum": 0.0,
+          "sustainable_daily_volume_est": 117.55,
+          "daily_volume_basis": "active_human_8h",
+          "daily_volume_note": null,
+          "small_sample": true
+        },
+        "trials": [
+          {
+            "workload": "document_reporting",
+            "trial": 1,
+            "correct": true,
+            "elapsed_s": 0.0064,
+            "active_human_s": 245.0,
+            "retries": 0,
+            "model_calls": 0,
+            "failure_recoveries": 0,
+            "setup_s": 0.0055,
+            "maintenance_s": 0.0,
+            "detail": {
+              "flags": {
+                "retrieval": true,
+                "workflow_reuse": true,
+                "review": true,
+                "caching": true
+              },
+              "system": "manual"
+            }
+          },
+          {
+            "workload": "document_reporting",
+            "trial": 2,
+            "correct": true,
+            "elapsed_s": 0.0061,
+            "active_human_s": 245.0,
+            "retries": 0,
+            "model_calls": 0,
+            "failure_recoveries": 0,
+            "setup_s": 0.0071,
+            "maintenance_s": 0.0,
+            "detail": {
+              "flags": {
+                "retrieval": true,
+                "workflow_reuse": true,
+                "review": true,
+                "caching": true
+              },
+              "system": "manual"
+            }
+          },
+          {
+            "workload": "document_reporting",
+            "trial": 3,
+            "correct": true,
+            "elapsed_s": 0.0067,
+            "active_human_s": 245.0,
+            "retries": 0,
+            "model_calls": 0,
+            "failure_recoveries": 0,
+            "setup_s": 0.004,
+            "maintenance_s": 0.0,
+            "detail": {
+              "flags": {
+                "retrieval": true,
+                "workflow_reuse": true,
+                "review": true,
+                "caching": true
+              },
+              "system": "manual"
+            }
+          },
+          {
+            "workload": "document_reporting",
+            "trial": 4,
+            "correct": true,
+            "elapsed_s": 0.0074,
+            "active_human_s": 245.0,
+            "retries": 0,
+            "model_calls": 0,
+            "failure_recoveries": 0,
+            "setup_s": 0.0044,
+            "maintenance_s": 0.0,
+            "detail": {
+              "flags": {
+                "retrieval": true,
+                "workflow_reuse": true,
+                "review": true,
+                "caching": true
+              },
+              "system": "manual"
+            }
+          },
+          {
+            "workload": "document_reporting",
+            "trial": 5,
+            "correct": true,
+            "elapsed_s": 0.0071,
+            "active_human_s": 245.0,
+            "retries": 0,
+            "model_calls": 0,
+            "failure_recoveries": 0,
+            "setup_s": 0.0045,
+            "maintenance_s": 0.0,
+            "detail": {
+              "flags": {
+                "retrieval": true,
+                "workflow_reuse": true,
+                "review": true,
+                "caching": true
+              },
+              "system": "manual"
+            }
+          }
+        ]
+      }
+    }
+  },
+  "ablations": {
+    "repository_repair": {
+      "full": {
+        "aggregate": {
+          "trials": 5,
+          "correct_count": 5,
+          "correct_completion_rate": {
+            "n": 5,
+            "successes": 5,
+            "rate": 1.0,
+            "ci95_low": 0.5655,
+            "ci95_high": 1.0,
+            "small_sample": true,
+            "note": "Small-n Wilson interval; not a substitute for a large held-out study."
+          },
+          "total_elapsed_s_mean": 0.0081,
+          "total_elapsed_s_sum": 0.0404,
+          "active_human_s_mean": 0.0,
+          "active_human_s_sum": 0.0,
+          "retries_total": 1,
+          "model_calls_total": 0,
+          "failure_recoveries_total": 1,
+          "setup_s_sum": 0.0341,
+          "maintenance_s_sum": 0.0,
+          "sustainable_daily_volume_est": 3564356.44,
+          "daily_volume_basis": "wall_clock_8h_theoretical",
+          "daily_volume_note": "Theoretical from sub-second deterministic runs; not a claim of interactive daily capacity.",
+          "small_sample": true
+        },
+        "flags": {
+          "retrieval": true,
+          "workflow_reuse": true,
+          "review": true,
+          "caching": true
+        },
+        "trials": [
+          {
+            "workload": "repository_repair",
+            "trial": 1,
+            "correct": true,
+            "elapsed_s": 0.0143,
+            "active_human_s": 0.0,
+            "retries": 1,
+            "model_calls": 0,
+            "failure_recoveries": 1,
+            "setup_s": 0.0066,
+            "maintenance_s": 0.0,
+            "detail": {
+              "flags": {
+                "retrieval": true,
+                "workflow_reuse": true,
+                "review": true,
+                "caching": true
+              },
+              "system": "freeforge",
+              "retrieved": "broken_math.py",
+              "patched": "broken_math.py"
+            }
+          },
+          {
+            "workload": "repository_repair",
+            "trial": 2,
+            "correct": true,
+            "elapsed_s": 0.0062,
+            "active_human_s": 0.0,
+            "retries": 0,
+            "model_calls": 0,
+            "failure_recoveries": 0,
+            "setup_s": 0.0074,
+            "maintenance_s": 0.0,
+            "detail": {
+              "flags": {
+                "retrieval": true,
+                "workflow_reuse": true,
+                "review": true,
+                "caching": true
+              },
+              "system": "freeforge",
+              "cache_hit": true
+            }
+          },
+          {
+            "workload": "repository_repair",
+            "trial": 3,
+            "correct": true,
+            "elapsed_s": 0.0079,
+            "active_human_s": 0.0,
+            "retries": 0,
+            "model_calls": 0,
+            "failure_recoveries": 0,
+            "setup_s": 0.006,
+            "maintenance_s": 0.0,
+            "detail": {
+              "flags": {
+                "retrieval": true,
+                "workflow_reuse": true,
+                "review": true,
+                "caching": true
+              },
+              "system": "freeforge",
+              "cache_hit": true
+            }
+          },
+          {
+            "workload": "repository_repair",
+            "trial": 4,
+            "correct": true,
+            "elapsed_s": 0.0055,
+            "active_human_s": 0.0,
+            "retries": 0,
+            "model_calls": 0,
+            "failure_recoveries": 0,
+            "setup_s": 0.0075,
+            "maintenance_s": 0.0,
+            "detail": {
+              "flags": {
+                "retrieval": true,
+                "workflow_reuse": true,
+                "review": true,
+                "caching": true
+              },
+              "system": "freeforge",
+              "cache_hit": true
+            }
+          },
+          {
+            "workload": "repository_repair",
+            "trial": 5,
+            "correct": true,
+            "elapsed_s": 0.0065,
+            "active_human_s": 0.0,
+            "retries": 0,
+            "model_calls": 0,
+            "failure_recoveries": 0,
+            "setup_s": 0.0066,
+            "maintenance_s": 0.0,
+            "detail": {
+              "flags": {
+                "retrieval": true,
+                "workflow_reuse": true,
+                "review": true,
+                "caching": true
+              },
+              "system": "freeforge",
+              "cache_hit": true
+            }
+          }
+        ]
+      },
+      "no_retrieval": {
+        "aggregate": {
+          "trials": 5,
+          "correct_count": 5,
+          "correct_completion_rate": {
+            "n": 5,
+            "successes": 5,
+            "rate": 1.0,
+            "ci95_low": 0.5655,
+            "ci95_high": 1.0,
+            "small_sample": true,
+            "note": "Small-n Wilson interval; not a substitute for a large held-out study."
+          },
+          "total_elapsed_s_mean": 0.0068,
+          "total_elapsed_s_sum": 0.0338,
+          "active_human_s_mean": 0.0,
+          "active_human_s_sum": 0.0,
+          "retries_total": 1,
+          "model_calls_total": 0,
+          "failure_recoveries_total": 1,
+          "setup_s_sum": 0.0288,
+          "maintenance_s_sum": 0.0,
+          "sustainable_daily_volume_est": 4260355.03,
+          "daily_volume_basis": "wall_clock_8h_theoretical",
+          "daily_volume_note": "Theoretical from sub-second deterministic runs; not a claim of interactive daily capacity.",
+          "small_sample": true
+        },
+        "flags": {
+          "retrieval": false,
+          "workflow_reuse": true,
+          "review": true,
+          "caching": true
+        },
+        "trials": [
+          {
+            "workload": "repository_repair",
+            "trial": 1,
+            "correct": true,
+            "elapsed_s": 0.0118,
+            "active_human_s": 0.0,
+            "retries": 1,
+            "model_calls": 0,
+            "failure_recoveries": 1,
+            "setup_s": 0.004,
+            "maintenance_s": 0.0,
+            "detail": {
+              "flags": {
+                "retrieval": false,
+                "workflow_reuse": true,
+                "review": true,
+                "caching": true
+              },
+              "system": "freeforge",
+              "retrieved": null,
+              "guess": "decoy_ops.py",
+              "retargeted": "broken_math.py",
+              "patched": "decoy_ops.py"
+            }
+          },
+          {
+            "workload": "repository_repair",
+            "trial": 2,
+            "correct": true,
+            "elapsed_s": 0.0073,
+            "active_human_s": 0.0,
+            "retries": 0,
+            "model_calls": 0,
+            "failure_recoveries": 0,
+            "setup_s": 0.0051,
+            "maintenance_s": 0.0,
+            "detail": {
+              "flags": {
+                "retrieval": false,
+                "workflow_reuse": true,
+                "review": true,
+                "caching": true
+              },
+              "system": "freeforge",
+              "cache_hit": true
+            }
+          },
+          {
+            "workload": "repository_repair",
+            "trial": 3,
+            "correct": true,
+            "elapsed_s": 0.0056,
+            "active_human_s": 0.0,
+            "retries": 0,
+            "model_calls": 0,
+            "failure_recoveries": 0,
+            "setup_s": 0.0058,
+            "maintenance_s": 0.0,
+            "detail": {
+              "flags": {
+                "retrieval": false,
+                "workflow_reuse": true,
+                "review": true,
+                "caching": true
+              },
+              "system": "freeforge",
+              "cache_hit": true
+            }
+          },
+          {
+            "workload": "repository_repair",
+            "trial": 4,
+            "correct": true,
+            "elapsed_s": 0.0042,
+            "active_human_s": 0.0,
+            "retries": 0,
+            "model_calls": 0,
+            "failure_recoveries": 0,
+            "setup_s": 0.0075,
+            "maintenance_s": 0.0,
+            "detail": {
+              "flags": {
+                "retrieval": false,
+                "workflow_reuse": true,
+                "review": true,
+                "caching": true
+              },
+              "system": "freeforge",
+              "cache_hit": true
+            }
+          },
+          {
+            "workload": "repository_repair",
+            "trial": 5,
+            "correct": true,
+            "elapsed_s": 0.0049,
+            "active_human_s": 0.0,
+            "retries": 0,
+            "model_calls": 0,
+            "failure_recoveries": 0,
+            "setup_s": 0.0064,
+            "maintenance_s": 0.0,
+            "detail": {
+              "flags": {
+                "retrieval": false,
+                "workflow_reuse": true,
+                "review": true,
+                "caching": true
+              },
+              "system": "freeforge",
+              "cache_hit": true
+            }
+          }
+        ]
+      },
+      "no_workflow_reuse": {
+        "aggregate": {
+          "trials": 5,
+          "correct_count": 5,
+          "correct_completion_rate": {
+            "n": 5,
+            "successes": 5,
+            "rate": 1.0,
+            "ci95_low": 0.5655,
+            "ci95_high": 1.0,
+            "small_sample": true,
+            "note": "Small-n Wilson interval; not a substitute for a large held-out study."
+          },
+          "total_elapsed_s_mean": 0.0149,
+          "total_elapsed_s_sum": 0.0747,
+          "active_human_s_mean": 0.0,
+          "active_human_s_sum": 0.0,
+          "retries_total": 5,
+          "model_calls_total": 0,
+          "failure_recoveries_total": 5,
+          "setup_s_sum": 0.0338,
+          "maintenance_s_sum": 0.0,
+          "sustainable_daily_volume_est": 1927710.84,
+          "daily_volume_basis": "wall_clock_8h_theoretical",
+          "daily_volume_note": "Theoretical from sub-second deterministic runs; not a claim of interactive daily capacity.",
+          "small_sample": true
+        },
+        "flags": {
+          "retrieval": true,
+          "workflow_reuse": false,
+          "review": true,
+          "caching": true
+        },
+        "trials": [
+          {
+            "workload": "repository_repair",
+            "trial": 1,
+            "correct": true,
+            "elapsed_s": 0.0144,
+            "active_human_s": 0.0,
+            "retries": 1,
+            "model_calls": 0,
+            "failure_recoveries": 1,
+            "setup_s": 0.0056,
+            "maintenance_s": 0.0,
+            "detail": {
+              "flags": {
+                "retrieval": true,
+                "workflow_reuse": false,
+                "review": true,
+                "caching": true
+              },
+              "system": "freeforge",
+              "retrieved": "broken_math.py",
+              "patched": "broken_math.py"
+            }
+          },
+          {
+            "workload": "repository_repair",
+            "trial": 2,
+            "correct": true,
+            "elapsed_s": 0.0133,
+            "active_human_s": 0.0,
+            "retries": 1,
+            "model_calls": 0,
+            "failure_recoveries": 1,
+            "setup_s": 0.0065,
+            "maintenance_s": 0.0,
+            "detail": {
+              "flags": {
+                "retrieval": true,
+                "workflow_reuse": false,
+                "review": true,
+                "caching": true
+              },
+              "system": "freeforge",
+              "retrieved": "broken_math.py",
+              "patched": "broken_math.py"
+            }
+          },
+          {
+            "workload": "repository_repair",
+            "trial": 3,
+            "correct": true,
+            "elapsed_s": 0.0147,
+            "active_human_s": 0.0,
+            "retries": 1,
+            "model_calls": 0,
+            "failure_recoveries": 1,
+            "setup_s": 0.0069,
+            "maintenance_s": 0.0,
+            "detail": {
+              "flags": {
+                "retrieval": true,
+                "workflow_reuse": false,
+                "review": true,
+                "caching": true
+              },
+              "system": "freeforge",
+              "retrieved": "broken_math.py",
+              "patched": "broken_math.py"
+            }
+          },
+          {
+            "workload": "repository_repair",
+            "trial": 4,
+            "correct": true,
+            "elapsed_s": 0.0165,
+            "active_human_s": 0.0,
+            "retries": 1,
+            "model_calls": 0,
+            "failure_recoveries": 1,
+            "setup_s": 0.0069,
+            "maintenance_s": 0.0,
+            "detail": {
+              "flags": {
+                "retrieval": true,
+                "workflow_reuse": false,
+                "review": true,
+                "caching": true
+              },
+              "system": "freeforge",
+              "retrieved": "broken_math.py",
+              "patched": "broken_math.py"
+            }
+          },
+          {
+            "workload": "repository_repair",
+            "trial": 5,
+            "correct": true,
+            "elapsed_s": 0.0158,
+            "active_human_s": 0.0,
+            "retries": 1,
+            "model_calls": 0,
+            "failure_recoveries": 1,
+            "setup_s": 0.0079,
+            "maintenance_s": 0.0,
+            "detail": {
+              "flags": {
+                "retrieval": true,
+                "workflow_reuse": false,
+                "review": true,
+                "caching": true
+              },
+              "system": "freeforge",
+              "retrieved": "broken_math.py",
+              "patched": "broken_math.py"
+            }
+          }
+        ]
+      },
+      "no_review": {
+        "aggregate": {
+          "trials": 5,
+          "correct_count": 5,
+          "correct_completion_rate": {
+            "n": 5,
+            "successes": 5,
+            "rate": 1.0,
+            "ci95_low": 0.5655,
+            "ci95_high": 1.0,
+            "small_sample": true,
+            "note": "Small-n Wilson interval; not a substitute for a large held-out study."
+          },
+          "total_elapsed_s_mean": 0.0075,
+          "total_elapsed_s_sum": 0.0376,
+          "active_human_s_mean": 0.0,
+          "active_human_s_sum": 0.0,
+          "retries_total": 0,
+          "model_calls_total": 0,
+          "failure_recoveries_total": 0,
+          "setup_s_sum": 0.0345,
+          "maintenance_s_sum": 0.0,
+          "sustainable_daily_volume_est": 3829787.23,
+          "daily_volume_basis": "wall_clock_8h_theoretical",
+          "daily_volume_note": "Theoretical from sub-second deterministic runs; not a claim of interactive daily capacity.",
+          "small_sample": true
+        },
+        "flags": {
+          "retrieval": true,
+          "workflow_reuse": true,
+          "review": false,
+          "caching": true
+        },
+        "trials": [
+          {
+            "workload": "repository_repair",
+            "trial": 1,
+            "correct": true,
+            "elapsed_s": 0.0121,
+            "active_human_s": 0.0,
+            "retries": 0,
+            "model_calls": 0,
+            "failure_recoveries": 0,
+            "setup_s": 0.0059,
+            "maintenance_s": 0.0,
+            "detail": {
+              "flags": {
+                "retrieval": true,
+                "workflow_reuse": true,
+                "review": false,
+                "caching": true
+              },
+              "system": "freeforge",
+              "retrieved": "broken_math.py",
+              "patched": "broken_math.py"
+            }
+          },
+          {
+            "workload": "repository_repair",
+            "trial": 2,
+            "correct": true,
+            "elapsed_s": 0.0071,
+            "active_human_s": 0.0,
+            "retries": 0,
+            "model_calls": 0,
+            "failure_recoveries": 0,
+            "setup_s": 0.0074,
+            "maintenance_s": 0.0,
+            "detail": {
+              "flags": {
+                "retrieval": true,
+                "workflow_reuse": true,
+                "review": false,
+                "caching": true
+              },
+              "system": "freeforge",
+              "cache_hit": true
+            }
+          },
+          {
+            "workload": "repository_repair",
+            "trial": 3,
+            "correct": true,
+            "elapsed_s": 0.005,
+            "active_human_s": 0.0,
+            "retries": 0,
+            "model_calls": 0,
+            "failure_recoveries": 0,
+            "setup_s": 0.0064,
+            "maintenance_s": 0.0,
+            "detail": {
+              "flags": {
+                "retrieval": true,
+                "workflow_reuse": true,
+                "review": false,
+                "caching": true
+              },
+              "system": "freeforge",
+              "cache_hit": true
+            }
+          },
+          {
+            "workload": "repository_repair",
+            "trial": 4,
+            "correct": true,
+            "elapsed_s": 0.0077,
+            "active_human_s": 0.0,
+            "retries": 0,
+            "model_calls": 0,
+            "failure_recoveries": 0,
+            "setup_s": 0.0076,
+            "maintenance_s": 0.0,
+            "detail": {
+              "flags": {
+                "retrieval": true,
+                "workflow_reuse": true,
+                "review": false,
+                "caching": true
+              },
+              "system": "freeforge",
+              "cache_hit": true
+            }
+          },
+          {
+            "workload": "repository_repair",
+            "trial": 5,
+            "correct": true,
+            "elapsed_s": 0.0057,
+            "active_human_s": 0.0,
+            "retries": 0,
+            "model_calls": 0,
+            "failure_recoveries": 0,
+            "setup_s": 0.0072,
+            "maintenance_s": 0.0,
+            "detail": {
+              "flags": {
+                "retrieval": true,
+                "workflow_reuse": true,
+                "review": false,
+                "caching": true
+              },
+              "system": "freeforge",
+              "cache_hit": true
+            }
+          }
+        ]
+      },
+      "no_caching": {
+        "aggregate": {
+          "trials": 5,
+          "correct_count": 5,
+          "correct_completion_rate": {
+            "n": 5,
+            "successes": 5,
+            "rate": 1.0,
+            "ci95_low": 0.5655,
+            "ci95_high": 1.0,
+            "small_sample": true,
+            "note": "Small-n Wilson interval; not a substitute for a large held-out study."
+          },
+          "total_elapsed_s_mean": 0.0136,
+          "total_elapsed_s_sum": 0.0678,
+          "active_human_s_mean": 0.0,
+          "active_human_s_sum": 0.0,
+          "retries_total": 5,
+          "model_calls_total": 0,
+          "failure_recoveries_total": 5,
+          "setup_s_sum": 0.0351,
+          "maintenance_s_sum": 0.0,
+          "sustainable_daily_volume_est": 2123893.81,
+          "daily_volume_basis": "wall_clock_8h_theoretical",
+          "daily_volume_note": "Theoretical from sub-second deterministic runs; not a claim of interactive daily capacity.",
+          "small_sample": true
+        },
+        "flags": {
+          "retrieval": true,
+          "workflow_reuse": true,
+          "review": true,
+          "caching": false
+        },
+        "trials": [
+          {
+            "workload": "repository_repair",
+            "trial": 1,
+            "correct": true,
+            "elapsed_s": 0.013,
+            "active_human_s": 0.0,
+            "retries": 1,
+            "model_calls": 0,
+            "failure_recoveries": 1,
+            "setup_s": 0.0071,
+            "maintenance_s": 0.0,
+            "detail": {
+              "flags": {
+                "retrieval": true,
+                "workflow_reuse": true,
+                "review": true,
+                "caching": false
+              },
+              "system": "freeforge",
+              "retrieved": "broken_math.py",
+              "patched": "broken_math.py"
+            }
+          },
+          {
+            "workload": "repository_repair",
+            "trial": 2,
+            "correct": true,
+            "elapsed_s": 0.0135,
+            "active_human_s": 0.0,
+            "retries": 1,
+            "model_calls": 0,
+            "failure_recoveries": 1,
+            "setup_s": 0.0055,
+            "maintenance_s": 0.0,
+            "detail": {
+              "flags": {
+                "retrieval": true,
+                "workflow_reuse": true,
+                "review": true,
+                "caching": false
+              },
+              "system": "freeforge",
+              "retrieved": "broken_math.py",
+              "patched": "broken_math.py"
+            }
+          },
+          {
+            "workload": "repository_repair",
+            "trial": 3,
+            "correct": true,
+            "elapsed_s": 0.0131,
+            "active_human_s": 0.0,
+            "retries": 1,
+            "model_calls": 0,
+            "failure_recoveries": 1,
+            "setup_s": 0.0087,
+            "maintenance_s": 0.0,
+            "detail": {
+              "flags": {
+                "retrieval": true,
+                "workflow_reuse": true,
+                "review": true,
+                "caching": false
+              },
+              "system": "freeforge",
+              "retrieved": "broken_math.py",
+              "patched": "broken_math.py"
+            }
+          },
+          {
+            "workload": "repository_repair",
+            "trial": 4,
+            "correct": true,
+            "elapsed_s": 0.0154,
+            "active_human_s": 0.0,
+            "retries": 1,
+            "model_calls": 0,
+            "failure_recoveries": 1,
+            "setup_s": 0.0069,
+            "maintenance_s": 0.0,
+            "detail": {
+              "flags": {
+                "retrieval": true,
+                "workflow_reuse": true,
+                "review": true,
+                "caching": false
+              },
+              "system": "freeforge",
+              "retrieved": "broken_math.py",
+              "patched": "broken_math.py"
+            }
+          },
+          {
+            "workload": "repository_repair",
+            "trial": 5,
+            "correct": true,
+            "elapsed_s": 0.0128,
+            "active_human_s": 0.0,
+            "retries": 1,
+            "model_calls": 0,
+            "failure_recoveries": 1,
+            "setup_s": 0.0069,
+            "maintenance_s": 0.0,
+            "detail": {
+              "flags": {
+                "retrieval": true,
+                "workflow_reuse": true,
+                "review": true,
+                "caching": false
+              },
+              "system": "freeforge",
+              "retrieved": "broken_math.py",
+              "patched": "broken_math.py"
+            }
+          }
+        ]
+      }
+    },
+    "website_maintenance": {
+      "full": {
+        "aggregate": {
+          "trials": 5,
+          "correct_count": 5,
+          "correct_completion_rate": {
+            "n": 5,
+            "successes": 5,
+            "rate": 1.0,
+            "ci95_low": 0.5655,
+            "ci95_high": 1.0,
+            "small_sample": true,
+            "note": "Small-n Wilson interval; not a substitute for a large held-out study."
+          },
+          "total_elapsed_s_mean": 0.0055,
+          "total_elapsed_s_sum": 0.0273,
+          "active_human_s_mean": 0.0,
+          "active_human_s_sum": 0.0,
+          "retries_total": 0,
+          "model_calls_total": 0,
+          "failure_recoveries_total": 0,
+          "setup_s_sum": 0.0189,
+          "maintenance_s_sum": 0.0,
+          "sustainable_daily_volume_est": 5274725.27,
+          "daily_volume_basis": "wall_clock_8h_theoretical",
+          "daily_volume_note": "Theoretical from sub-second deterministic runs; not a claim of interactive daily capacity.",
+          "small_sample": true
+        },
+        "flags": {
+          "retrieval": true,
+          "workflow_reuse": true,
+          "review": true,
+          "caching": true
+        },
+        "trials": [
+          {
+            "workload": "website_maintenance",
+            "trial": 1,
+            "correct": true,
+            "elapsed_s": 0.0063,
+            "active_human_s": 0.0,
+            "retries": 0,
+            "model_calls": 0,
+            "failure_recoveries": 0,
+            "setup_s": 0.0028,
+            "maintenance_s": 0.0,
+            "detail": {
+              "flags": {
+                "retrieval": true,
+                "workflow_reuse": true,
+                "review": true,
+                "caching": true
+              },
+              "system": "freeforge",
+              "review_set_ready": true,
+              "checks": {
+                "copyright_year_current": true,
+                "dead_link_removed": true,
+                "update_control_present": true,
+                "status_ready": true
+              }
+            }
+          },
+          {
+            "workload": "website_maintenance",
+            "trial": 2,
+            "correct": true,
+            "elapsed_s": 0.006,
+            "active_human_s": 0.0,
+            "retries": 0,
+            "model_calls": 0,
+            "failure_recoveries": 0,
+            "setup_s": 0.0043,
+            "maintenance_s": 0.0,
+            "detail": {
+              "flags": {
+                "retrieval": true,
+                "workflow_reuse": true,
+                "review": true,
+                "caching": true
+              },
+              "system": "freeforge",
+              "cache_hit": true,
+              "checks": {
+                "copyright_year_current": true,
+                "dead_link_removed": true,
+                "update_control_present": true,
+                "status_ready": true
+              }
+            }
+          },
+          {
+            "workload": "website_maintenance",
+            "trial": 3,
+            "correct": true,
+            "elapsed_s": 0.0049,
+            "active_human_s": 0.0,
+            "retries": 0,
+            "model_calls": 0,
+            "failure_recoveries": 0,
+            "setup_s": 0.003,
+            "maintenance_s": 0.0,
+            "detail": {
+              "flags": {
+                "retrieval": true,
+                "workflow_reuse": true,
+                "review": true,
+                "caching": true
+              },
+              "system": "freeforge",
+              "cache_hit": true,
+              "checks": {
+                "copyright_year_current": true,
+                "dead_link_removed": true,
+                "update_control_present": true,
+                "status_ready": true
+              }
+            }
+          },
+          {
+            "workload": "website_maintenance",
+            "trial": 4,
+            "correct": true,
+            "elapsed_s": 0.0049,
+            "active_human_s": 0.0,
+            "retries": 0,
+            "model_calls": 0,
+            "failure_recoveries": 0,
+            "setup_s": 0.0042,
+            "maintenance_s": 0.0,
+            "detail": {
+              "flags": {
+                "retrieval": true,
+                "workflow_reuse": true,
+                "review": true,
+                "caching": true
+              },
+              "system": "freeforge",
+              "cache_hit": true,
+              "checks": {
+                "copyright_year_current": true,
+                "dead_link_removed": true,
+                "update_control_present": true,
+                "status_ready": true
+              }
+            }
+          },
+          {
+            "workload": "website_maintenance",
+            "trial": 5,
+            "correct": true,
+            "elapsed_s": 0.0052,
+            "active_human_s": 0.0,
+            "retries": 0,
+            "model_calls": 0,
+            "failure_recoveries": 0,
+            "setup_s": 0.0046,
+            "maintenance_s": 0.0,
+            "detail": {
+              "flags": {
+                "retrieval": true,
+                "workflow_reuse": true,
+                "review": true,
+                "caching": true
+              },
+              "system": "freeforge",
+              "cache_hit": true,
+              "checks": {
+                "copyright_year_current": true,
+                "dead_link_removed": true,
+                "update_control_present": true,
+                "status_ready": true
+              }
+            }
+          }
+        ]
+      },
+      "no_retrieval": {
+        "aggregate": {
+          "trials": 5,
+          "correct_count": 0,
+          "correct_completion_rate": {
+            "n": 5,
+            "successes": 0,
+            "rate": 0.0,
+            "ci95_low": 0.0,
+            "ci95_high": 0.4345,
+            "small_sample": true,
+            "note": "Small-n Wilson interval; not a substitute for a large held-out study."
+          },
+          "total_elapsed_s_mean": 0.0048,
+          "total_elapsed_s_sum": 0.0241,
+          "active_human_s_mean": 0.0,
+          "active_human_s_sum": 0.0,
+          "retries_total": 5,
+          "model_calls_total": 0,
+          "failure_recoveries_total": 0,
+          "setup_s_sum": 0.0201,
+          "maintenance_s_sum": 0.0,
+          "sustainable_daily_volume_est": 5975103.73,
+          "daily_volume_basis": "wall_clock_8h_theoretical",
+          "daily_volume_note": "Theoretical from sub-second deterministic runs; not a claim of interactive daily capacity.",
+          "small_sample": true
+        },
+        "flags": {
+          "retrieval": false,
+          "workflow_reuse": true,
+          "review": true,
+          "caching": true
+        },
+        "trials": [
+          {
+            "workload": "website_maintenance",
+            "trial": 1,
+            "correct": false,
+            "elapsed_s": 0.0047,
+            "active_human_s": 0.0,
+            "retries": 1,
+            "model_calls": 0,
+            "failure_recoveries": 0,
+            "setup_s": 0.0045,
+            "maintenance_s": 0.0,
+            "detail": {
+              "flags": {
+                "retrieval": false,
+                "workflow_reuse": true,
+                "review": true,
+                "caching": true
+              },
+              "system": "freeforge",
+              "skipped_control_without_retrieval": true,
+              "checks": {
+                "copyright_year_current": true,
+                "dead_link_removed": true,
+                "update_control_present": false,
+                "status_ready": false
+              }
+            }
+          },
+          {
+            "workload": "website_maintenance",
+            "trial": 2,
+            "correct": false,
+            "elapsed_s": 0.0049,
+            "active_human_s": 0.0,
+            "retries": 1,
+            "model_calls": 0,
+            "failure_recoveries": 0,
+            "setup_s": 0.004,
+            "maintenance_s": 0.0,
+            "detail": {
+              "flags": {
+                "retrieval": false,
+                "workflow_reuse": true,
+                "review": true,
+                "caching": true
+              },
+              "system": "freeforge",
+              "skipped_control_without_retrieval": true,
+              "checks": {
+                "copyright_year_current": true,
+                "dead_link_removed": true,
+                "update_control_present": false,
+                "status_ready": false
+              }
+            }
+          },
+          {
+            "workload": "website_maintenance",
+            "trial": 3,
+            "correct": false,
+            "elapsed_s": 0.0051,
+            "active_human_s": 0.0,
+            "retries": 1,
+            "model_calls": 0,
+            "failure_recoveries": 0,
+            "setup_s": 0.0036,
+            "maintenance_s": 0.0,
+            "detail": {
+              "flags": {
+                "retrieval": false,
+                "workflow_reuse": true,
+                "review": true,
+                "caching": true
+              },
+              "system": "freeforge",
+              "skipped_control_without_retrieval": true,
+              "checks": {
+                "copyright_year_current": true,
+                "dead_link_removed": true,
+                "update_control_present": false,
+                "status_ready": false
+              }
+            }
+          },
+          {
+            "workload": "website_maintenance",
+            "trial": 4,
+            "correct": false,
+            "elapsed_s": 0.0048,
+            "active_human_s": 0.0,
+            "retries": 1,
+            "model_calls": 0,
+            "failure_recoveries": 0,
+            "setup_s": 0.0034,
+            "maintenance_s": 0.0,
+            "detail": {
+              "flags": {
+                "retrieval": false,
+                "workflow_reuse": true,
+                "review": true,
+                "caching": true
+              },
+              "system": "freeforge",
+              "skipped_control_without_retrieval": true,
+              "checks": {
+                "copyright_year_current": true,
+                "dead_link_removed": true,
+                "update_control_present": false,
+                "status_ready": false
+              }
+            }
+          },
+          {
+            "workload": "website_maintenance",
+            "trial": 5,
+            "correct": false,
+            "elapsed_s": 0.0046,
+            "active_human_s": 0.0,
+            "retries": 1,
+            "model_calls": 0,
+            "failure_recoveries": 0,
+            "setup_s": 0.0046,
+            "maintenance_s": 0.0,
+            "detail": {
+              "flags": {
+                "retrieval": false,
+                "workflow_reuse": true,
+                "review": true,
+                "caching": true
+              },
+              "system": "freeforge",
+              "skipped_control_without_retrieval": true,
+              "checks": {
+                "copyright_year_current": true,
+                "dead_link_removed": true,
+                "update_control_present": false,
+                "status_ready": false
+              }
+            }
+          }
+        ]
+      },
+      "no_workflow_reuse": {
+        "aggregate": {
+          "trials": 5,
+          "correct_count": 5,
+          "correct_completion_rate": {
+            "n": 5,
+            "successes": 5,
+            "rate": 1.0,
+            "ci95_low": 0.5655,
+            "ci95_high": 1.0,
+            "small_sample": true,
+            "note": "Small-n Wilson interval; not a substitute for a large held-out study."
+          },
+          "total_elapsed_s_mean": 0.0058,
+          "total_elapsed_s_sum": 0.0288,
+          "active_human_s_mean": 0.0,
+          "active_human_s_sum": 0.0,
+          "retries_total": 0,
+          "model_calls_total": 0,
+          "failure_recoveries_total": 0,
+          "setup_s_sum": 0.0217,
+          "maintenance_s_sum": 0.0,
+          "sustainable_daily_volume_est": 5000000.0,
+          "daily_volume_basis": "wall_clock_8h_theoretical",
+          "daily_volume_note": "Theoretical from sub-second deterministic runs; not a claim of interactive daily capacity.",
+          "small_sample": true
+        },
+        "flags": {
+          "retrieval": true,
+          "workflow_reuse": false,
+          "review": true,
+          "caching": true
+        },
+        "trials": [
+          {
+            "workload": "website_maintenance",
+            "trial": 1,
+            "correct": true,
+            "elapsed_s": 0.0055,
+            "active_human_s": 0.0,
+            "retries": 0,
+            "model_calls": 0,
+            "failure_recoveries": 0,
+            "setup_s": 0.0038,
+            "maintenance_s": 0.0,
+            "detail": {
+              "flags": {
+                "retrieval": true,
+                "workflow_reuse": false,
+                "review": true,
+                "caching": true
+              },
+              "system": "freeforge",
+              "skipped_dead_link_without_reuse": true,
+              "review_removed_dead_link": true,
+              "review_set_ready": true,
+              "checks": {
+                "copyright_year_current": true,
+                "dead_link_removed": true,
+                "update_control_present": true,
+                "status_ready": true
+              }
+            }
+          },
+          {
+            "workload": "website_maintenance",
+            "trial": 2,
+            "correct": true,
+            "elapsed_s": 0.006,
+            "active_human_s": 0.0,
+            "retries": 0,
+            "model_calls": 0,
+            "failure_recoveries": 0,
+            "setup_s": 0.0036,
+            "maintenance_s": 0.0,
+            "detail": {
+              "flags": {
+                "retrieval": true,
+                "workflow_reuse": false,
+                "review": true,
+                "caching": true
+              },
+              "system": "freeforge",
+              "skipped_dead_link_without_reuse": true,
+              "review_removed_dead_link": true,
+              "review_set_ready": true,
+              "checks": {
+                "copyright_year_current": true,
+                "dead_link_removed": true,
+                "update_control_present": true,
+                "status_ready": true
+              }
+            }
+          },
+          {
+            "workload": "website_maintenance",
+            "trial": 3,
+            "correct": true,
+            "elapsed_s": 0.006,
+            "active_human_s": 0.0,
+            "retries": 0,
+            "model_calls": 0,
+            "failure_recoveries": 0,
+            "setup_s": 0.0041,
+            "maintenance_s": 0.0,
+            "detail": {
+              "flags": {
+                "retrieval": true,
+                "workflow_reuse": false,
+                "review": true,
+                "caching": true
+              },
+              "system": "freeforge",
+              "skipped_dead_link_without_reuse": true,
+              "review_removed_dead_link": true,
+              "review_set_ready": true,
+              "checks": {
+                "copyright_year_current": true,
+                "dead_link_removed": true,
+                "update_control_present": true,
+                "status_ready": true
+              }
+            }
+          },
+          {
+            "workload": "website_maintenance",
+            "trial": 4,
+            "correct": true,
+            "elapsed_s": 0.0059,
+            "active_human_s": 0.0,
+            "retries": 0,
+            "model_calls": 0,
+            "failure_recoveries": 0,
+            "setup_s": 0.0025,
+            "maintenance_s": 0.0,
+            "detail": {
+              "flags": {
+                "retrieval": true,
+                "workflow_reuse": false,
+                "review": true,
+                "caching": true
+              },
+              "system": "freeforge",
+              "skipped_dead_link_without_reuse": true,
+              "review_removed_dead_link": true,
+              "review_set_ready": true,
+              "checks": {
+                "copyright_year_current": true,
+                "dead_link_removed": true,
+                "update_control_present": true,
+                "status_ready": true
+              }
+            }
+          },
+          {
+            "workload": "website_maintenance",
+            "trial": 5,
+            "correct": true,
+            "elapsed_s": 0.0054,
+            "active_human_s": 0.0,
+            "retries": 0,
+            "model_calls": 0,
+            "failure_recoveries": 0,
+            "setup_s": 0.0077,
+            "maintenance_s": 0.0,
+            "detail": {
+              "flags": {
+                "retrieval": true,
+                "workflow_reuse": false,
+                "review": true,
+                "caching": true
+              },
+              "system": "freeforge",
+              "skipped_dead_link_without_reuse": true,
+              "review_removed_dead_link": true,
+              "review_set_ready": true,
+              "checks": {
+                "copyright_year_current": true,
+                "dead_link_removed": true,
+                "update_control_present": true,
+                "status_ready": true
+              }
+            }
+          }
+        ]
+      },
+      "no_review": {
+        "aggregate": {
+          "trials": 5,
+          "correct_count": 5,
+          "correct_completion_rate": {
+            "n": 5,
+            "successes": 5,
+            "rate": 1.0,
+            "ci95_low": 0.5655,
+            "ci95_high": 1.0,
+            "small_sample": true,
+            "note": "Small-n Wilson interval; not a substitute for a large held-out study."
+          },
+          "total_elapsed_s_mean": 0.0049,
+          "total_elapsed_s_sum": 0.0243,
+          "active_human_s_mean": 0.0,
+          "active_human_s_sum": 0.0,
+          "retries_total": 0,
+          "model_calls_total": 0,
+          "failure_recoveries_total": 0,
+          "setup_s_sum": 0.019,
+          "maintenance_s_sum": 0.0,
+          "sustainable_daily_volume_est": 5925925.93,
+          "daily_volume_basis": "wall_clock_8h_theoretical",
+          "daily_volume_note": "Theoretical from sub-second deterministic runs; not a claim of interactive daily capacity.",
+          "small_sample": true
+        },
+        "flags": {
+          "retrieval": true,
+          "workflow_reuse": true,
+          "review": false,
+          "caching": true
+        },
+        "trials": [
+          {
+            "workload": "website_maintenance",
+            "trial": 1,
+            "correct": true,
+            "elapsed_s": 0.0047,
+            "active_human_s": 0.0,
+            "retries": 0,
+            "model_calls": 0,
+            "failure_recoveries": 0,
+            "setup_s": 0.004,
+            "maintenance_s": 0.0,
+            "detail": {
+              "flags": {
+                "retrieval": true,
+                "workflow_reuse": true,
+                "review": false,
+                "caching": true
+              },
+              "system": "freeforge",
+              "checks": {
+                "copyright_year_current": true,
+                "dead_link_removed": true,
+                "update_control_present": true,
+                "status_ready": true
+              }
+            }
+          },
+          {
+            "workload": "website_maintenance",
+            "trial": 2,
+            "correct": true,
+            "elapsed_s": 0.0049,
+            "active_human_s": 0.0,
+            "retries": 0,
+            "model_calls": 0,
+            "failure_recoveries": 0,
+            "setup_s": 0.004,
+            "maintenance_s": 0.0,
+            "detail": {
+              "flags": {
+                "retrieval": true,
+                "workflow_reuse": true,
+                "review": false,
+                "caching": true
+              },
+              "system": "freeforge",
+              "cache_hit": true,
+              "checks": {
+                "copyright_year_current": true,
+                "dead_link_removed": true,
+                "update_control_present": true,
+                "status_ready": true
+              }
+            }
+          },
+          {
+            "workload": "website_maintenance",
+            "trial": 3,
+            "correct": true,
+            "elapsed_s": 0.0051,
+            "active_human_s": 0.0,
+            "retries": 0,
+            "model_calls": 0,
+            "failure_recoveries": 0,
+            "setup_s": 0.0039,
+            "maintenance_s": 0.0,
+            "detail": {
+              "flags": {
+                "retrieval": true,
+                "workflow_reuse": true,
+                "review": false,
+                "caching": true
+              },
+              "system": "freeforge",
+              "cache_hit": true,
+              "checks": {
+                "copyright_year_current": true,
+                "dead_link_removed": true,
+                "update_control_present": true,
+                "status_ready": true
+              }
+            }
+          },
+          {
+            "workload": "website_maintenance",
+            "trial": 4,
+            "correct": true,
+            "elapsed_s": 0.005,
+            "active_human_s": 0.0,
+            "retries": 0,
+            "model_calls": 0,
+            "failure_recoveries": 0,
+            "setup_s": 0.0031,
+            "maintenance_s": 0.0,
+            "detail": {
+              "flags": {
+                "retrieval": true,
+                "workflow_reuse": true,
+                "review": false,
+                "caching": true
+              },
+              "system": "freeforge",
+              "cache_hit": true,
+              "checks": {
+                "copyright_year_current": true,
+                "dead_link_removed": true,
+                "update_control_present": true,
+                "status_ready": true
+              }
+            }
+          },
+          {
+            "workload": "website_maintenance",
+            "trial": 5,
+            "correct": true,
+            "elapsed_s": 0.0046,
+            "active_human_s": 0.0,
+            "retries": 0,
+            "model_calls": 0,
+            "failure_recoveries": 0,
+            "setup_s": 0.004,
+            "maintenance_s": 0.0,
+            "detail": {
+              "flags": {
+                "retrieval": true,
+                "workflow_reuse": true,
+                "review": false,
+                "caching": true
+              },
+              "system": "freeforge",
+              "cache_hit": true,
+              "checks": {
+                "copyright_year_current": true,
+                "dead_link_removed": true,
+                "update_control_present": true,
+                "status_ready": true
+              }
+            }
+          }
+        ]
+      },
+      "no_caching": {
+        "aggregate": {
+          "trials": 5,
+          "correct_count": 5,
+          "correct_completion_rate": {
+            "n": 5,
+            "successes": 5,
+            "rate": 1.0,
+            "ci95_low": 0.5655,
+            "ci95_high": 1.0,
+            "small_sample": true,
+            "note": "Small-n Wilson interval; not a substitute for a large held-out study."
+          },
+          "total_elapsed_s_mean": 0.0047,
+          "total_elapsed_s_sum": 0.0233,
+          "active_human_s_mean": 0.0,
+          "active_human_s_sum": 0.0,
+          "retries_total": 0,
+          "model_calls_total": 0,
+          "failure_recoveries_total": 0,
+          "setup_s_sum": 0.0136,
+          "maintenance_s_sum": 0.0,
+          "sustainable_daily_volume_est": 6180257.51,
+          "daily_volume_basis": "wall_clock_8h_theoretical",
+          "daily_volume_note": "Theoretical from sub-second deterministic runs; not a claim of interactive daily capacity.",
+          "small_sample": true
+        },
+        "flags": {
+          "retrieval": true,
+          "workflow_reuse": true,
+          "review": true,
+          "caching": false
+        },
+        "trials": [
+          {
+            "workload": "website_maintenance",
+            "trial": 1,
+            "correct": true,
+            "elapsed_s": 0.0039,
+            "active_human_s": 0.0,
+            "retries": 0,
+            "model_calls": 0,
+            "failure_recoveries": 0,
+            "setup_s": 0.0024,
+            "maintenance_s": 0.0,
+            "detail": {
+              "flags": {
+                "retrieval": true,
+                "workflow_reuse": true,
+                "review": true,
+                "caching": false
+              },
+              "system": "freeforge",
+              "review_set_ready": true,
+              "checks": {
+                "copyright_year_current": true,
+                "dead_link_removed": true,
+                "update_control_present": true,
+                "status_ready": true
+              }
+            }
+          },
+          {
+            "workload": "website_maintenance",
+            "trial": 2,
+            "correct": true,
+            "elapsed_s": 0.0042,
+            "active_human_s": 0.0,
+            "retries": 0,
+            "model_calls": 0,
+            "failure_recoveries": 0,
+            "setup_s": 0.0023,
+            "maintenance_s": 0.0,
+            "detail": {
+              "flags": {
+                "retrieval": true,
+                "workflow_reuse": true,
+                "review": true,
+                "caching": false
+              },
+              "system": "freeforge",
+              "review_set_ready": true,
+              "checks": {
+                "copyright_year_current": true,
+                "dead_link_removed": true,
+                "update_control_present": true,
+                "status_ready": true
+              }
+            }
+          },
+          {
+            "workload": "website_maintenance",
+            "trial": 3,
+            "correct": true,
+            "elapsed_s": 0.0062,
+            "active_human_s": 0.0,
+            "retries": 0,
+            "model_calls": 0,
+            "failure_recoveries": 0,
+            "setup_s": 0.003,
+            "maintenance_s": 0.0,
+            "detail": {
+              "flags": {
+                "retrieval": true,
+                "workflow_reuse": true,
+                "review": true,
+                "caching": false
+              },
+              "system": "freeforge",
+              "review_set_ready": true,
+              "checks": {
+                "copyright_year_current": true,
+                "dead_link_removed": true,
+                "update_control_present": true,
+                "status_ready": true
+              }
+            }
+          },
+          {
+            "workload": "website_maintenance",
+            "trial": 4,
+            "correct": true,
+            "elapsed_s": 0.004,
+            "active_human_s": 0.0,
+            "retries": 0,
+            "model_calls": 0,
+            "failure_recoveries": 0,
+            "setup_s": 0.0036,
+            "maintenance_s": 0.0,
+            "detail": {
+              "flags": {
+                "retrieval": true,
+                "workflow_reuse": true,
+                "review": true,
+                "caching": false
+              },
+              "system": "freeforge",
+              "review_set_ready": true,
+              "checks": {
+                "copyright_year_current": true,
+                "dead_link_removed": true,
+                "update_control_present": true,
+                "status_ready": true
+              }
+            }
+          },
+          {
+            "workload": "website_maintenance",
+            "trial": 5,
+            "correct": true,
+            "elapsed_s": 0.005,
+            "active_human_s": 0.0,
+            "retries": 0,
+            "model_calls": 0,
+            "failure_recoveries": 0,
+            "setup_s": 0.0023,
+            "maintenance_s": 0.0,
+            "detail": {
+              "flags": {
+                "retrieval": true,
+                "workflow_reuse": true,
+                "review": true,
+                "caching": false
+              },
+              "system": "freeforge",
+              "review_set_ready": true,
+              "checks": {
+                "copyright_year_current": true,
+                "dead_link_removed": true,
+                "update_control_present": true,
+                "status_ready": true
+              }
+            }
+          }
+        ]
+      }
+    },
+    "document_reporting": {
+      "full": {
+        "aggregate": {
+          "trials": 5,
+          "correct_count": 5,
+          "correct_completion_rate": {
+            "n": 5,
+            "successes": 5,
+            "rate": 1.0,
+            "ci95_low": 0.5655,
+            "ci95_high": 1.0,
+            "small_sample": true,
+            "note": "Small-n Wilson interval; not a substitute for a large held-out study."
+          },
+          "total_elapsed_s_mean": 0.0042,
+          "total_elapsed_s_sum": 0.0208,
+          "active_human_s_mean": 0.0,
+          "active_human_s_sum": 0.0,
+          "retries_total": 0,
+          "model_calls_total": 0,
+          "failure_recoveries_total": 0,
+          "setup_s_sum": 0.0187,
+          "maintenance_s_sum": 0.0,
+          "sustainable_daily_volume_est": 6923076.92,
+          "daily_volume_basis": "wall_clock_8h_theoretical",
+          "daily_volume_note": "Theoretical from sub-second deterministic runs; not a claim of interactive daily capacity.",
+          "small_sample": true
+        },
+        "flags": {
+          "retrieval": true,
+          "workflow_reuse": true,
+          "review": true,
+          "caching": true
+        },
+        "trials": [
+          {
+            "workload": "document_reporting",
+            "trial": 1,
+            "correct": true,
+            "elapsed_s": 0.0161,
+            "active_human_s": 0.0,
+            "retries": 0,
+            "model_calls": 0,
+            "failure_recoveries": 0,
+            "setup_s": 0.0041,
+            "maintenance_s": 0.0,
+            "detail": {
+              "flags": {
+                "retrieval": true,
+                "workflow_reuse": true,
+                "review": true,
+                "caching": true
+              },
+              "system": "freeforge",
+              "metrics": {
+                "kept": 4,
+                "duplicates_removed": 1,
+                "invalid": 1,
+                "correct": true,
+                "auto_posted_external": false
+              }
+            }
+          },
+          {
+            "workload": "document_reporting",
+            "trial": 2,
+            "correct": true,
+            "elapsed_s": 0.0025,
+            "active_human_s": 0.0,
+            "retries": 0,
+            "model_calls": 0,
+            "failure_recoveries": 0,
+            "setup_s": 0.0026,
+            "maintenance_s": 0.0,
+            "detail": {
+              "flags": {
+                "retrieval": true,
+                "workflow_reuse": true,
+                "review": true,
+                "caching": true
+              },
+              "system": "freeforge",
+              "cache_hit": true,
+              "metrics": {
+                "kept": 4,
+                "duplicates_removed": 1,
+                "invalid": 1,
+                "correct": true,
+                "auto_posted_external": false
+              }
+            }
+          },
+          {
+            "workload": "document_reporting",
+            "trial": 3,
+            "correct": true,
+            "elapsed_s": 0.0007,
+            "active_human_s": 0.0,
+            "retries": 0,
+            "model_calls": 0,
+            "failure_recoveries": 0,
+            "setup_s": 0.0033,
+            "maintenance_s": 0.0,
+            "detail": {
+              "flags": {
+                "retrieval": true,
+                "workflow_reuse": true,
+                "review": true,
+                "caching": true
+              },
+              "system": "freeforge",
+              "cache_hit": true,
+              "metrics": {
+                "kept": 4,
+                "duplicates_removed": 1,
+                "invalid": 1,
+                "correct": true,
+                "auto_posted_external": false
+              }
+            }
+          },
+          {
+            "workload": "document_reporting",
+            "trial": 4,
+            "correct": true,
+            "elapsed_s": 0.0007,
+            "active_human_s": 0.0,
+            "retries": 0,
+            "model_calls": 0,
+            "failure_recoveries": 0,
+            "setup_s": 0.0043,
+            "maintenance_s": 0.0,
+            "detail": {
+              "flags": {
+                "retrieval": true,
+                "workflow_reuse": true,
+                "review": true,
+                "caching": true
+              },
+              "system": "freeforge",
+              "cache_hit": true,
+              "metrics": {
+                "kept": 4,
+                "duplicates_removed": 1,
+                "invalid": 1,
+                "correct": true,
+                "auto_posted_external": false
+              }
+            }
+          },
+          {
+            "workload": "document_reporting",
+            "trial": 5,
+            "correct": true,
+            "elapsed_s": 0.0008,
+            "active_human_s": 0.0,
+            "retries": 0,
+            "model_calls": 0,
+            "failure_recoveries": 0,
+            "setup_s": 0.0044,
+            "maintenance_s": 0.0,
+            "detail": {
+              "flags": {
+                "retrieval": true,
+                "workflow_reuse": true,
+                "review": true,
+                "caching": true
+              },
+              "system": "freeforge",
+              "cache_hit": true,
+              "metrics": {
+                "kept": 4,
+                "duplicates_removed": 1,
+                "invalid": 1,
+                "correct": true,
+                "auto_posted_external": false
+              }
+            }
+          }
+        ]
+      },
+      "no_retrieval": {
+        "aggregate": {
+          "trials": 5,
+          "correct_count": 0,
+          "correct_completion_rate": {
+            "n": 5,
+            "successes": 0,
+            "rate": 0.0,
+            "ci95_low": 0.0,
+            "ci95_high": 0.4345,
+            "small_sample": true,
+            "note": "Small-n Wilson interval; not a substitute for a large held-out study."
+          },
+          "total_elapsed_s_mean": 0.0322,
+          "total_elapsed_s_sum": 0.1608,
+          "active_human_s_mean": 0.0,
+          "active_human_s_sum": 0.0,
+          "retries_total": 5,
+          "model_calls_total": 0,
+          "failure_recoveries_total": 0,
+          "setup_s_sum": 0.0439,
+          "maintenance_s_sum": 0.0,
+          "sustainable_daily_volume_est": 895522.39,
+          "daily_volume_basis": "wall_clock_8h_theoretical",
+          "daily_volume_note": "Theoretical from sub-second deterministic runs; not a claim of interactive daily capacity.",
+          "small_sample": true
+        },
+        "flags": {
+          "retrieval": false,
+          "workflow_reuse": true,
+          "review": true,
+          "caching": true
+        },
+        "trials": [
+          {
+            "workload": "document_reporting",
+            "trial": 1,
+            "correct": false,
+            "elapsed_s": 0.0448,
+            "active_human_s": 0.0,
+            "retries": 1,
+            "model_calls": 0,
+            "failure_recoveries": 0,
+            "setup_s": 0.0089,
+            "maintenance_s": 0.0,
+            "detail": {
+              "flags": {
+                "retrieval": false,
+                "workflow_reuse": true,
+                "review": true,
+                "caching": true
+              },
+              "system": "freeforge",
+              "retrieval_ablation": "truncated_source",
+              "recovery_attempted": true,
+              "metrics": {
+                "kept": 2,
+                "duplicates_removed": 0,
+                "invalid": 0,
+                "correct": false,
+                "auto_posted_external": false
+              }
+            }
+          },
+          {
+            "workload": "document_reporting",
+            "trial": 2,
+            "correct": false,
+            "elapsed_s": 0.0279,
+            "active_human_s": 0.0,
+            "retries": 1,
+            "model_calls": 0,
+            "failure_recoveries": 0,
+            "setup_s": 0.0064,
+            "maintenance_s": 0.0,
+            "detail": {
+              "flags": {
+                "retrieval": false,
+                "workflow_reuse": true,
+                "review": true,
+                "caching": true
+              },
+              "system": "freeforge",
+              "retrieval_ablation": "truncated_source",
+              "recovery_attempted": true,
+              "metrics": {
+                "kept": 2,
+                "duplicates_removed": 0,
+                "invalid": 0,
+                "correct": false,
+                "auto_posted_external": false
+              }
+            }
+          },
+          {
+            "workload": "document_reporting",
+            "trial": 3,
+            "correct": false,
+            "elapsed_s": 0.0301,
+            "active_human_s": 0.0,
+            "retries": 1,
+            "model_calls": 0,
+            "failure_recoveries": 0,
+            "setup_s": 0.0068,
+            "maintenance_s": 0.0,
+            "detail": {
+              "flags": {
+                "retrieval": false,
+                "workflow_reuse": true,
+                "review": true,
+                "caching": true
+              },
+              "system": "freeforge",
+              "retrieval_ablation": "truncated_source",
+              "recovery_attempted": true,
+              "metrics": {
+                "kept": 2,
+                "duplicates_removed": 0,
+                "invalid": 0,
+                "correct": false,
+                "auto_posted_external": false
+              }
+            }
+          },
+          {
+            "workload": "document_reporting",
+            "trial": 4,
+            "correct": false,
+            "elapsed_s": 0.0298,
+            "active_human_s": 0.0,
+            "retries": 1,
+            "model_calls": 0,
+            "failure_recoveries": 0,
+            "setup_s": 0.0055,
+            "maintenance_s": 0.0,
+            "detail": {
+              "flags": {
+                "retrieval": false,
+                "workflow_reuse": true,
+                "review": true,
+                "caching": true
+              },
+              "system": "freeforge",
+              "retrieval_ablation": "truncated_source",
+              "recovery_attempted": true,
+              "metrics": {
+                "kept": 2,
+                "duplicates_removed": 0,
+                "invalid": 0,
+                "correct": false,
+                "auto_posted_external": false
+              }
+            }
+          },
+          {
+            "workload": "document_reporting",
+            "trial": 5,
+            "correct": false,
+            "elapsed_s": 0.0282,
+            "active_human_s": 0.0,
+            "retries": 1,
+            "model_calls": 0,
+            "failure_recoveries": 0,
+            "setup_s": 0.0163,
+            "maintenance_s": 0.0,
+            "detail": {
+              "flags": {
+                "retrieval": false,
+                "workflow_reuse": true,
+                "review": true,
+                "caching": true
+              },
+              "system": "freeforge",
+              "retrieval_ablation": "truncated_source",
+              "recovery_attempted": true,
+              "metrics": {
+                "kept": 2,
+                "duplicates_removed": 0,
+                "invalid": 0,
+                "correct": false,
+                "auto_posted_external": false
+              }
+            }
+          }
+        ]
+      },
+      "no_workflow_reuse": {
+        "aggregate": {
+          "trials": 5,
+          "correct_count": 5,
+          "correct_completion_rate": {
+            "n": 5,
+            "successes": 5,
+            "rate": 1.0,
+            "ci95_low": 0.5655,
+            "ci95_high": 1.0,
+            "small_sample": true,
+            "note": "Small-n Wilson interval; not a substitute for a large held-out study."
+          },
+          "total_elapsed_s_mean": 0.0147,
+          "total_elapsed_s_sum": 0.0734,
+          "active_human_s_mean": 0.0,
+          "active_human_s_sum": 0.0,
+          "retries_total": 0,
+          "model_calls_total": 0,
+          "failure_recoveries_total": 0,
+          "setup_s_sum": 0.0297,
+          "maintenance_s_sum": 0.0,
+          "sustainable_daily_volume_est": 1961852.86,
+          "daily_volume_basis": "wall_clock_8h_theoretical",
+          "daily_volume_note": "Theoretical from sub-second deterministic runs; not a claim of interactive daily capacity.",
+          "small_sample": true
+        },
+        "flags": {
+          "retrieval": true,
+          "workflow_reuse": false,
+          "review": true,
+          "caching": true
+        },
+        "trials": [
+          {
+            "workload": "document_reporting",
+            "trial": 1,
+            "correct": true,
+            "elapsed_s": 0.0142,
+            "active_human_s": 0.0,
+            "retries": 0,
+            "model_calls": 0,
+            "failure_recoveries": 0,
+            "setup_s": 0.0041,
+            "maintenance_s": 0.0,
+            "detail": {
+              "flags": {
+                "retrieval": true,
+                "workflow_reuse": false,
+                "review": true,
+                "caching": true
+              },
+              "system": "freeforge",
+              "metrics": {
+                "kept": 4,
+                "duplicates_removed": 1,
+                "invalid": 1,
+                "correct": true,
+                "auto_posted_external": false
+              }
+            }
+          },
+          {
+            "workload": "document_reporting",
+            "trial": 2,
+            "correct": true,
+            "elapsed_s": 0.0145,
+            "active_human_s": 0.0,
+            "retries": 0,
+            "model_calls": 0,
+            "failure_recoveries": 0,
+            "setup_s": 0.0068,
+            "maintenance_s": 0.0,
+            "detail": {
+              "flags": {
+                "retrieval": true,
+                "workflow_reuse": false,
+                "review": true,
+                "caching": true
+              },
+              "system": "freeforge",
+              "metrics": {
+                "kept": 4,
+                "duplicates_removed": 1,
+                "invalid": 1,
+                "correct": true,
+                "auto_posted_external": false
+              }
+            }
+          },
+          {
+            "workload": "document_reporting",
+            "trial": 3,
+            "correct": true,
+            "elapsed_s": 0.0171,
+            "active_human_s": 0.0,
+            "retries": 0,
+            "model_calls": 0,
+            "failure_recoveries": 0,
+            "setup_s": 0.0061,
+            "maintenance_s": 0.0,
+            "detail": {
+              "flags": {
+                "retrieval": true,
+                "workflow_reuse": false,
+                "review": true,
+                "caching": true
+              },
+              "system": "freeforge",
+              "metrics": {
+                "kept": 4,
+                "duplicates_removed": 1,
+                "invalid": 1,
+                "correct": true,
+                "auto_posted_external": false
+              }
+            }
+          },
+          {
+            "workload": "document_reporting",
+            "trial": 4,
+            "correct": true,
+            "elapsed_s": 0.014,
+            "active_human_s": 0.0,
+            "retries": 0,
+            "model_calls": 0,
+            "failure_recoveries": 0,
+            "setup_s": 0.0064,
+            "maintenance_s": 0.0,
+            "detail": {
+              "flags": {
+                "retrieval": true,
+                "workflow_reuse": false,
+                "review": true,
+                "caching": true
+              },
+              "system": "freeforge",
+              "metrics": {
+                "kept": 4,
+                "duplicates_removed": 1,
+                "invalid": 1,
+                "correct": true,
+                "auto_posted_external": false
+              }
+            }
+          },
+          {
+            "workload": "document_reporting",
+            "trial": 5,
+            "correct": true,
+            "elapsed_s": 0.0136,
+            "active_human_s": 0.0,
+            "retries": 0,
+            "model_calls": 0,
+            "failure_recoveries": 0,
+            "setup_s": 0.0063,
+            "maintenance_s": 0.0,
+            "detail": {
+              "flags": {
+                "retrieval": true,
+                "workflow_reuse": false,
+                "review": true,
+                "caching": true
+              },
+              "system": "freeforge",
+              "metrics": {
+                "kept": 4,
+                "duplicates_removed": 1,
+                "invalid": 1,
+                "correct": true,
+                "auto_posted_external": false
+              }
+            }
+          }
+        ]
+      },
+      "no_review": {
+        "aggregate": {
+          "trials": 5,
+          "correct_count": 0,
+          "correct_completion_rate": {
+            "n": 5,
+            "successes": 0,
+            "rate": 0.0,
+            "ci95_low": 0.0,
+            "ci95_high": 0.4345,
+            "small_sample": true,
+            "note": "Small-n Wilson interval; not a substitute for a large held-out study."
+          },
+          "total_elapsed_s_mean": 0.0291,
+          "total_elapsed_s_sum": 0.1456,
+          "active_human_s_mean": 0.0,
+          "active_human_s_sum": 0.0,
+          "retries_total": 5,
+          "model_calls_total": 0,
+          "failure_recoveries_total": 0,
+          "setup_s_sum": 0.0366,
+          "maintenance_s_sum": 0.0,
+          "sustainable_daily_volume_est": 989010.99,
+          "daily_volume_basis": "wall_clock_8h_theoretical",
+          "daily_volume_note": "Theoretical from sub-second deterministic runs; not a claim of interactive daily capacity.",
+          "small_sample": true
+        },
+        "flags": {
+          "retrieval": true,
+          "workflow_reuse": true,
+          "review": false,
+          "caching": true
+        },
+        "trials": [
+          {
+            "workload": "document_reporting",
+            "trial": 1,
+            "correct": false,
+            "elapsed_s": 0.0284,
+            "active_human_s": 0.0,
+            "retries": 1,
+            "model_calls": 0,
+            "failure_recoveries": 0,
+            "setup_s": 0.0084,
+            "maintenance_s": 0.0,
+            "detail": {
+              "flags": {
+                "retrieval": true,
+                "workflow_reuse": true,
+                "review": false,
+                "caching": true
+              },
+              "system": "freeforge",
+              "review_ablation": "invalid_not_surfaced",
+              "recovery_attempted": true,
+              "metrics": {
+                "kept": 4,
+                "duplicates_removed": 1,
+                "invalid": 0,
+                "correct": false,
+                "auto_posted_external": false
+              }
+            }
+          },
+          {
+            "workload": "document_reporting",
+            "trial": 2,
+            "correct": false,
+            "elapsed_s": 0.0295,
+            "active_human_s": 0.0,
+            "retries": 1,
+            "model_calls": 0,
+            "failure_recoveries": 0,
+            "setup_s": 0.0052,
+            "maintenance_s": 0.0,
+            "detail": {
+              "flags": {
+                "retrieval": true,
+                "workflow_reuse": true,
+                "review": false,
+                "caching": true
+              },
+              "system": "freeforge",
+              "review_ablation": "invalid_not_surfaced",
+              "recovery_attempted": true,
+              "metrics": {
+                "kept": 4,
+                "duplicates_removed": 1,
+                "invalid": 0,
+                "correct": false,
+                "auto_posted_external": false
+              }
+            }
+          },
+          {
+            "workload": "document_reporting",
+            "trial": 3,
+            "correct": false,
+            "elapsed_s": 0.0278,
+            "active_human_s": 0.0,
+            "retries": 1,
+            "model_calls": 0,
+            "failure_recoveries": 0,
+            "setup_s": 0.0081,
+            "maintenance_s": 0.0,
+            "detail": {
+              "flags": {
+                "retrieval": true,
+                "workflow_reuse": true,
+                "review": false,
+                "caching": true
+              },
+              "system": "freeforge",
+              "review_ablation": "invalid_not_surfaced",
+              "recovery_attempted": true,
+              "metrics": {
+                "kept": 4,
+                "duplicates_removed": 1,
+                "invalid": 0,
+                "correct": false,
+                "auto_posted_external": false
+              }
+            }
+          },
+          {
+            "workload": "document_reporting",
+            "trial": 4,
+            "correct": false,
+            "elapsed_s": 0.0275,
+            "active_human_s": 0.0,
+            "retries": 1,
+            "model_calls": 0,
+            "failure_recoveries": 0,
+            "setup_s": 0.0075,
+            "maintenance_s": 0.0,
+            "detail": {
+              "flags": {
+                "retrieval": true,
+                "workflow_reuse": true,
+                "review": false,
+                "caching": true
+              },
+              "system": "freeforge",
+              "review_ablation": "invalid_not_surfaced",
+              "recovery_attempted": true,
+              "metrics": {
+                "kept": 4,
+                "duplicates_removed": 1,
+                "invalid": 0,
+                "correct": false,
+                "auto_posted_external": false
+              }
+            }
+          },
+          {
+            "workload": "document_reporting",
+            "trial": 5,
+            "correct": false,
+            "elapsed_s": 0.0324,
+            "active_human_s": 0.0,
+            "retries": 1,
+            "model_calls": 0,
+            "failure_recoveries": 0,
+            "setup_s": 0.0074,
+            "maintenance_s": 0.0,
+            "detail": {
+              "flags": {
+                "retrieval": true,
+                "workflow_reuse": true,
+                "review": false,
+                "caching": true
+              },
+              "system": "freeforge",
+              "review_ablation": "invalid_not_surfaced",
+              "recovery_attempted": true,
+              "metrics": {
+                "kept": 4,
+                "duplicates_removed": 1,
+                "invalid": 0,
+                "correct": false,
+                "auto_posted_external": false
+              }
+            }
+          }
+        ]
+      },
+      "no_caching": {
+        "aggregate": {
+          "trials": 5,
+          "correct_count": 5,
+          "correct_completion_rate": {
+            "n": 5,
+            "successes": 5,
+            "rate": 1.0,
+            "ci95_low": 0.5655,
+            "ci95_high": 1.0,
+            "small_sample": true,
+            "note": "Small-n Wilson interval; not a substitute for a large held-out study."
+          },
+          "total_elapsed_s_mean": 0.0158,
+          "total_elapsed_s_sum": 0.079,
+          "active_human_s_mean": 0.0,
+          "active_human_s_sum": 0.0,
+          "retries_total": 0,
+          "model_calls_total": 0,
+          "failure_recoveries_total": 0,
+          "setup_s_sum": 0.0292,
+          "maintenance_s_sum": 0.0,
+          "sustainable_daily_volume_est": 1822784.81,
+          "daily_volume_basis": "wall_clock_8h_theoretical",
+          "daily_volume_note": "Theoretical from sub-second deterministic runs; not a claim of interactive daily capacity.",
+          "small_sample": true
+        },
+        "flags": {
+          "retrieval": true,
+          "workflow_reuse": true,
+          "review": true,
+          "caching": false
+        },
+        "trials": [
+          {
+            "workload": "document_reporting",
+            "trial": 1,
+            "correct": true,
+            "elapsed_s": 0.0148,
+            "active_human_s": 0.0,
+            "retries": 0,
+            "model_calls": 0,
+            "failure_recoveries": 0,
+            "setup_s": 0.0056,
+            "maintenance_s": 0.0,
+            "detail": {
+              "flags": {
+                "retrieval": true,
+                "workflow_reuse": true,
+                "review": true,
+                "caching": false
+              },
+              "system": "freeforge",
+              "metrics": {
+                "kept": 4,
+                "duplicates_removed": 1,
+                "invalid": 1,
+                "correct": true,
+                "auto_posted_external": false
+              }
+            }
+          },
+          {
+            "workload": "document_reporting",
+            "trial": 2,
+            "correct": true,
+            "elapsed_s": 0.0166,
+            "active_human_s": 0.0,
+            "retries": 0,
+            "model_calls": 0,
+            "failure_recoveries": 0,
+            "setup_s": 0.0072,
+            "maintenance_s": 0.0,
+            "detail": {
+              "flags": {
+                "retrieval": true,
+                "workflow_reuse": true,
+                "review": true,
+                "caching": false
+              },
+              "system": "freeforge",
+              "metrics": {
+                "kept": 4,
+                "duplicates_removed": 1,
+                "invalid": 1,
+                "correct": true,
+                "auto_posted_external": false
+              }
+            }
+          },
+          {
+            "workload": "document_reporting",
+            "trial": 3,
+            "correct": true,
+            "elapsed_s": 0.0153,
+            "active_human_s": 0.0,
+            "retries": 0,
+            "model_calls": 0,
+            "failure_recoveries": 0,
+            "setup_s": 0.0057,
+            "maintenance_s": 0.0,
+            "detail": {
+              "flags": {
+                "retrieval": true,
+                "workflow_reuse": true,
+                "review": true,
+                "caching": false
+              },
+              "system": "freeforge",
+              "metrics": {
+                "kept": 4,
+                "duplicates_removed": 1,
+                "invalid": 1,
+                "correct": true,
+                "auto_posted_external": false
+              }
+            }
+          },
+          {
+            "workload": "document_reporting",
+            "trial": 4,
+            "correct": true,
+            "elapsed_s": 0.0174,
+            "active_human_s": 0.0,
+            "retries": 0,
+            "model_calls": 0,
+            "failure_recoveries": 0,
+            "setup_s": 0.0046,
+            "maintenance_s": 0.0,
+            "detail": {
+              "flags": {
+                "retrieval": true,
+                "workflow_reuse": true,
+                "review": true,
+                "caching": false
+              },
+              "system": "freeforge",
+              "metrics": {
+                "kept": 4,
+                "duplicates_removed": 1,
+                "invalid": 1,
+                "correct": true,
+                "auto_posted_external": false
+              }
+            }
+          },
+          {
+            "workload": "document_reporting",
+            "trial": 5,
+            "correct": true,
+            "elapsed_s": 0.0149,
+            "active_human_s": 0.0,
+            "retries": 0,
+            "model_calls": 0,
+            "failure_recoveries": 0,
+            "setup_s": 0.0061,
+            "maintenance_s": 0.0,
+            "detail": {
+              "flags": {
+                "retrieval": true,
+                "workflow_reuse": true,
+                "review": true,
+                "caching": false
+              },
+              "system": "freeforge",
+              "metrics": {
+                "kept": 4,
+                "duplicates_removed": 1,
+                "invalid": 1,
+                "correct": true,
+                "auto_posted_external": false
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
+  "disable_policy": {
+    "generated_at": "2026-10-06T18:53:34.663942+00:00",
+    "rule": "Disable feature for workload when ablation correct rate >= full rate (tied or better without it).",
+    "workloads": {
+      "repository_repair": {
+        "retrieval": {
+          "disabled": true,
+          "reason": "ablation_rate_ge_full",
+          "full_rate": 1.0,
+          "ablation_rate": 1.0
+        },
+        "workflow_reuse": {
+          "disabled": true,
+          "reason": "ablation_rate_ge_full",
+          "full_rate": 1.0,
+          "ablation_rate": 1.0
+        },
+        "review": {
+          "disabled": true,
+          "reason": "ablation_rate_ge_full",
+          "full_rate": 1.0,
+          "ablation_rate": 1.0
+        },
+        "caching": {
+          "disabled": true,
+          "reason": "ablation_rate_ge_full",
+          "full_rate": 1.0,
+          "ablation_rate": 1.0
+        }
+      },
+      "website_maintenance": {
+        "retrieval": {
+          "disabled": false,
+          "reason": "ablation_worsened_outcomes",
+          "full_rate": 1.0,
+          "ablation_rate": 0.0,
+          "contribution": 1.0
+        },
+        "workflow_reuse": {
+          "disabled": true,
+          "reason": "ablation_rate_ge_full",
+          "full_rate": 1.0,
+          "ablation_rate": 1.0
+        },
+        "review": {
+          "disabled": true,
+          "reason": "ablation_rate_ge_full",
+          "full_rate": 1.0,
+          "ablation_rate": 1.0
+        },
+        "caching": {
+          "disabled": true,
+          "reason": "ablation_rate_ge_full",
+          "full_rate": 1.0,
+          "ablation_rate": 1.0
+        }
+      },
+      "document_reporting": {
+        "retrieval": {
+          "disabled": false,
+          "reason": "ablation_worsened_outcomes",
+          "full_rate": 1.0,
+          "ablation_rate": 0.0,
+          "contribution": 1.0
+        },
+        "workflow_reuse": {
+          "disabled": true,
+          "reason": "ablation_rate_ge_full",
+          "full_rate": 1.0,
+          "ablation_rate": 1.0
+        },
+        "review": {
+          "disabled": false,
+          "reason": "ablation_worsened_outcomes",
+          "full_rate": 1.0,
+          "ablation_rate": 0.0,
+          "contribution": 1.0
+        },
+        "caching": {
+          "disabled": true,
+          "reason": "ablation_rate_ge_full",
+          "full_rate": 1.0,
+          "ablation_rate": 1.0
+        }
+      }
+    }
+  },
+  "freeforge_simplified": {
+    "repository_repair": {
+      "flags": {
+        "retrieval": false,
+        "workflow_reuse": false,
+        "review": false,
+        "caching": false
+      },
+      "aggregate": {
+        "trials": 5,
+        "correct_count": 0,
+        "correct_completion_rate": {
+          "n": 5,
+          "successes": 0,
+          "rate": 0.0,
+          "ci95_low": 0.0,
+          "ci95_high": 0.4345,
+          "small_sample": true,
+          "note": "Small-n Wilson interval; not a substitute for a large held-out study."
+        },
+        "total_elapsed_s_mean": 0.0068,
+        "total_elapsed_s_sum": 0.0339,
+        "active_human_s_mean": 0.0,
+        "active_human_s_sum": 0.0,
+        "retries_total": 0,
+        "model_calls_total": 0,
+        "failure_recoveries_total": 0,
+        "setup_s_sum": 0.0315,
+        "maintenance_s_sum": 0.0,
+        "sustainable_daily_volume_est": 4247787.61,
+        "daily_volume_basis": "wall_clock_8h_theoretical",
+        "daily_volume_note": "Theoretical from sub-second deterministic runs; not a claim of interactive daily capacity.",
+        "small_sample": true
+      },
+      "trials": [
+        {
+          "workload": "repository_repair",
+          "trial": 1,
+          "correct": false,
+          "elapsed_s": 0.0059,
+          "active_human_s": 0.0,
+          "retries": 0,
+          "model_calls": 0,
+          "failure_recoveries": 0,
+          "setup_s": 0.0061,
+          "maintenance_s": 0.0,
+          "detail": {
+            "flags": {
+              "retrieval": false,
+              "workflow_reuse": false,
+              "review": false,
+              "caching": false
+            },
+            "system": "freeforge",
+            "retrieved": null,
+            "guess": "decoy_ops.py",
+            "patched": "decoy_ops.py"
+          }
+        },
+        {
+          "workload": "repository_repair",
+          "trial": 2,
+          "correct": false,
+          "elapsed_s": 0.0067,
+          "active_human_s": 0.0,
+          "retries": 0,
+          "model_calls": 0,
+          "failure_recoveries": 0,
+          "setup_s": 0.0064,
+          "maintenance_s": 0.0,
+          "detail": {
+            "flags": {
+              "retrieval": false,
+              "workflow_reuse": false,
+              "review": false,
+              "caching": false
+            },
+            "system": "freeforge",
+            "retrieved": null,
+            "guess": "decoy_ops.py",
+            "patched": "decoy_ops.py"
+          }
+        },
+        {
+          "workload": "repository_repair",
+          "trial": 3,
+          "correct": false,
+          "elapsed_s": 0.007,
+          "active_human_s": 0.0,
+          "retries": 0,
+          "model_calls": 0,
+          "failure_recoveries": 0,
+          "setup_s": 0.006,
+          "maintenance_s": 0.0,
+          "detail": {
+            "flags": {
+              "retrieval": false,
+              "workflow_reuse": false,
+              "review": false,
+              "caching": false
+            },
+            "system": "freeforge",
+            "retrieved": null,
+            "guess": "decoy_ops.py",
+            "patched": "decoy_ops.py"
+          }
+        },
+        {
+          "workload": "repository_repair",
+          "trial": 4,
+          "correct": false,
+          "elapsed_s": 0.0073,
+          "active_human_s": 0.0,
+          "retries": 0,
+          "model_calls": 0,
+          "failure_recoveries": 0,
+          "setup_s": 0.0063,
+          "maintenance_s": 0.0,
+          "detail": {
+            "flags": {
+              "retrieval": false,
+              "workflow_reuse": false,
+              "review": false,
+              "caching": false
+            },
+            "system": "freeforge",
+            "retrieved": null,
+            "guess": "decoy_ops.py",
+            "patched": "decoy_ops.py"
+          }
+        },
+        {
+          "workload": "repository_repair",
+          "trial": 5,
+          "correct": false,
+          "elapsed_s": 0.007,
+          "active_human_s": 0.0,
+          "retries": 0,
+          "model_calls": 0,
+          "failure_recoveries": 0,
+          "setup_s": 0.0067,
+          "maintenance_s": 0.0,
+          "detail": {
+            "flags": {
+              "retrieval": false,
+              "workflow_reuse": false,
+              "review": false,
+              "caching": false
+            },
+            "system": "freeforge",
+            "retrieved": null,
+            "guess": "decoy_ops.py",
+            "patched": "decoy_ops.py"
+          }
+        }
+      ]
+    },
+    "website_maintenance": {
+      "flags": {
+        "retrieval": true,
+        "workflow_reuse": false,
+        "review": false,
+        "caching": false
+      },
+      "aggregate": {
+        "trials": 5,
+        "correct_count": 0,
+        "correct_completion_rate": {
+          "n": 5,
+          "successes": 0,
+          "rate": 0.0,
+          "ci95_low": 0.0,
+          "ci95_high": 0.4345,
+          "small_sample": true,
+          "note": "Small-n Wilson interval; not a substitute for a large held-out study."
+        },
+        "total_elapsed_s_mean": 0.0047,
+        "total_elapsed_s_sum": 0.0236,
+        "active_human_s_mean": 0.0,
+        "active_human_s_sum": 0.0,
+        "retries_total": 0,
+        "model_calls_total": 0,
+        "failure_recoveries_total": 0,
+        "setup_s_sum": 0.0235,
+        "maintenance_s_sum": 0.0,
+        "sustainable_daily_volume_est": 6101694.92,
+        "daily_volume_basis": "wall_clock_8h_theoretical",
+        "daily_volume_note": "Theoretical from sub-second deterministic runs; not a claim of interactive daily capacity.",
+        "small_sample": true
+      },
+      "trials": [
+        {
+          "workload": "website_maintenance",
+          "trial": 1,
+          "correct": false,
+          "elapsed_s": 0.0047,
+          "active_human_s": 0.0,
+          "retries": 0,
+          "model_calls": 0,
+          "failure_recoveries": 0,
+          "setup_s": 0.0043,
+          "maintenance_s": 0.0,
+          "detail": {
+            "flags": {
+              "retrieval": true,
+              "workflow_reuse": false,
+              "review": false,
+              "caching": false
+            },
+            "system": "freeforge",
+            "skipped_dead_link_without_reuse": true,
+            "checks": {
+              "copyright_year_current": true,
+              "dead_link_removed": false,
+              "update_control_present": true,
+              "status_ready": true
+            }
+          }
+        },
+        {
+          "workload": "website_maintenance",
+          "trial": 2,
+          "correct": false,
+          "elapsed_s": 0.005,
+          "active_human_s": 0.0,
+          "retries": 0,
+          "model_calls": 0,
+          "failure_recoveries": 0,
+          "setup_s": 0.006,
+          "maintenance_s": 0.0,
+          "detail": {
+            "flags": {
+              "retrieval": true,
+              "workflow_reuse": false,
+              "review": false,
+              "caching": false
+            },
+            "system": "freeforge",
+            "skipped_dead_link_without_reuse": true,
+            "checks": {
+              "copyright_year_current": true,
+              "dead_link_removed": false,
+              "update_control_present": true,
+              "status_ready": true
+            }
+          }
+        },
+        {
+          "workload": "website_maintenance",
+          "trial": 3,
+          "correct": false,
+          "elapsed_s": 0.0047,
+          "active_human_s": 0.0,
+          "retries": 0,
+          "model_calls": 0,
+          "failure_recoveries": 0,
+          "setup_s": 0.0045,
+          "maintenance_s": 0.0,
+          "detail": {
+            "flags": {
+              "retrieval": true,
+              "workflow_reuse": false,
+              "review": false,
+              "caching": false
+            },
+            "system": "freeforge",
+            "skipped_dead_link_without_reuse": true,
+            "checks": {
+              "copyright_year_current": true,
+              "dead_link_removed": false,
+              "update_control_present": true,
+              "status_ready": true
+            }
+          }
+        },
+        {
+          "workload": "website_maintenance",
+          "trial": 4,
+          "correct": false,
+          "elapsed_s": 0.0043,
+          "active_human_s": 0.0,
+          "retries": 0,
+          "model_calls": 0,
+          "failure_recoveries": 0,
+          "setup_s": 0.0045,
+          "maintenance_s": 0.0,
+          "detail": {
+            "flags": {
+              "retrieval": true,
+              "workflow_reuse": false,
+              "review": false,
+              "caching": false
+            },
+            "system": "freeforge",
+            "skipped_dead_link_without_reuse": true,
+            "checks": {
+              "copyright_year_current": true,
+              "dead_link_removed": false,
+              "update_control_present": true,
+              "status_ready": true
+            }
+          }
+        },
+        {
+          "workload": "website_maintenance",
+          "trial": 5,
+          "correct": false,
+          "elapsed_s": 0.0049,
+          "active_human_s": 0.0,
+          "retries": 0,
+          "model_calls": 0,
+          "failure_recoveries": 0,
+          "setup_s": 0.0042,
+          "maintenance_s": 0.0,
+          "detail": {
+            "flags": {
+              "retrieval": true,
+              "workflow_reuse": false,
+              "review": false,
+              "caching": false
+            },
+            "system": "freeforge",
+            "skipped_dead_link_without_reuse": true,
+            "checks": {
+              "copyright_year_current": true,
+              "dead_link_removed": false,
+              "update_control_present": true,
+              "status_ready": true
+            }
+          }
+        }
+      ]
+    },
+    "document_reporting": {
+      "flags": {
+        "retrieval": true,
+        "workflow_reuse": false,
+        "review": true,
+        "caching": false
+      },
+      "aggregate": {
+        "trials": 5,
+        "correct_count": 5,
+        "correct_completion_rate": {
+          "n": 5,
+          "successes": 5,
+          "rate": 1.0,
+          "ci95_low": 0.5655,
+          "ci95_high": 1.0,
+          "small_sample": true,
+          "note": "Small-n Wilson interval; not a substitute for a large held-out study."
+        },
+        "total_elapsed_s_mean": 0.0167,
+        "total_elapsed_s_sum": 0.0836,
+        "active_human_s_mean": 0.0,
+        "active_human_s_sum": 0.0,
+        "retries_total": 0,
+        "model_calls_total": 0,
+        "failure_recoveries_total": 0,
+        "setup_s_sum": 0.0326,
+        "maintenance_s_sum": 0.0,
+        "sustainable_daily_volume_est": 1722488.04,
+        "daily_volume_basis": "wall_clock_8h_theoretical",
+        "daily_volume_note": "Theoretical from sub-second deterministic runs; not a claim of interactive daily capacity.",
+        "small_sample": true
+      },
+      "trials": [
+        {
+          "workload": "document_reporting",
+          "trial": 1,
+          "correct": true,
+          "elapsed_s": 0.0159,
+          "active_human_s": 0.0,
+          "retries": 0,
+          "model_calls": 0,
+          "failure_recoveries": 0,
+          "setup_s": 0.006,
+          "maintenance_s": 0.0,
+          "detail": {
+            "flags": {
+              "retrieval": true,
+              "workflow_reuse": false,
+              "review": true,
+              "caching": false
+            },
+            "system": "freeforge",
+            "metrics": {
+              "kept": 4,
+              "duplicates_removed": 1,
+              "invalid": 1,
+              "correct": true,
+              "auto_posted_external": false
+            }
+          }
+        },
+        {
+          "workload": "document_reporting",
+          "trial": 2,
+          "correct": true,
+          "elapsed_s": 0.0179,
+          "active_human_s": 0.0,
+          "retries": 0,
+          "model_calls": 0,
+          "failure_recoveries": 0,
+          "setup_s": 0.0065,
+          "maintenance_s": 0.0,
+          "detail": {
+            "flags": {
+              "retrieval": true,
+              "workflow_reuse": false,
+              "review": true,
+              "caching": false
+            },
+            "system": "freeforge",
+            "metrics": {
+              "kept": 4,
+              "duplicates_removed": 1,
+              "invalid": 1,
+              "correct": true,
+              "auto_posted_external": false
+            }
+          }
+        },
+        {
+          "workload": "document_reporting",
+          "trial": 3,
+          "correct": true,
+          "elapsed_s": 0.0168,
+          "active_human_s": 0.0,
+          "retries": 0,
+          "model_calls": 0,
+          "failure_recoveries": 0,
+          "setup_s": 0.0072,
+          "maintenance_s": 0.0,
+          "detail": {
+            "flags": {
+              "retrieval": true,
+              "workflow_reuse": false,
+              "review": true,
+              "caching": false
+            },
+            "system": "freeforge",
+            "metrics": {
+              "kept": 4,
+              "duplicates_removed": 1,
+              "invalid": 1,
+              "correct": true,
+              "auto_posted_external": false
+            }
+          }
+        },
+        {
+          "workload": "document_reporting",
+          "trial": 4,
+          "correct": true,
+          "elapsed_s": 0.0163,
+          "active_human_s": 0.0,
+          "retries": 0,
+          "model_calls": 0,
+          "failure_recoveries": 0,
+          "setup_s": 0.0064,
+          "maintenance_s": 0.0,
+          "detail": {
+            "flags": {
+              "retrieval": true,
+              "workflow_reuse": false,
+              "review": true,
+              "caching": false
+            },
+            "system": "freeforge",
+            "metrics": {
+              "kept": 4,
+              "duplicates_removed": 1,
+              "invalid": 1,
+              "correct": true,
+              "auto_posted_external": false
+            }
+          }
+        },
+        {
+          "workload": "document_reporting",
+          "trial": 5,
+          "correct": true,
+          "elapsed_s": 0.0167,
+          "active_human_s": 0.0,
+          "retries": 0,
+          "model_calls": 0,
+          "failure_recoveries": 0,
+          "setup_s": 0.0065,
+          "maintenance_s": 0.0,
+          "detail": {
+            "flags": {
+              "retrieval": true,
+              "workflow_reuse": false,
+              "review": true,
+              "caching": false
+            },
+            "system": "freeforge",
+            "metrics": {
+              "kept": 4,
+              "duplicates_removed": 1,
+              "invalid": 1,
+              "correct": true,
+              "auto_posted_external": false
+            }
+          }
+        }
+      ]
+    }
+  },
+  "claims": [
+    {
+      "workload": "repository_repair",
+      "claim": "freeforge_correct_rate_exceeds_minimal_free_agent",
+      "freeforge_rate": 1.0,
+      "minimal_rate": 0.0,
+      "evidence": "heldout_comparison",
+      "supported": true
+    },
+    {
+      "workload": "repository_repair",
+      "claim": "freeforge_matches_manual_correctness_with_less_active_human_time",
+      "freeforge_rate": 1.0,
+      "manual_rate": 1.0,
+      "freeforge_active_human_s_mean": 0.0,
+      "manual_active_human_s_mean": 135.0,
+      "evidence": "heldout_comparison",
+      "supported": true
+    },
+    {
+      "workload": "repository_repair",
+      "claim": "disable_retrieval_for_this_workload",
+      "supported": true,
+      "evidence": "ablation_rate_ge_full",
+      "detail": {
+        "disabled": true,
+        "reason": "ablation_rate_ge_full",
+        "full_rate": 1.0,
+        "ablation_rate": 1.0
+      }
+    },
+    {
+      "workload": "repository_repair",
+      "claim": "disable_workflow_reuse_for_this_workload",
+      "supported": true,
+      "evidence": "ablation_rate_ge_full",
+      "detail": {
+        "disabled": true,
+        "reason": "ablation_rate_ge_full",
+        "full_rate": 1.0,
+        "ablation_rate": 1.0
+      }
+    },
+    {
+      "workload": "repository_repair",
+      "claim": "disable_review_for_this_workload",
+      "supported": true,
+      "evidence": "ablation_rate_ge_full",
+      "detail": {
+        "disabled": true,
+        "reason": "ablation_rate_ge_full",
+        "full_rate": 1.0,
+        "ablation_rate": 1.0
+      }
+    },
+    {
+      "workload": "repository_repair",
+      "claim": "disable_caching_for_this_workload",
+      "supported": true,
+      "evidence": "ablation_rate_ge_full",
+      "detail": {
+        "disabled": true,
+        "reason": "ablation_rate_ge_full",
+        "full_rate": 1.0,
+        "ablation_rate": 1.0
+      }
+    },
+    {
+      "workload": "website_maintenance",
+      "claim": "freeforge_correct_rate_exceeds_minimal_free_agent",
+      "freeforge_rate": 1.0,
+      "minimal_rate": 0.0,
+      "evidence": "heldout_comparison",
+      "supported": true
+    },
+    {
+      "workload": "website_maintenance",
+      "claim": "freeforge_matches_manual_correctness_with_less_active_human_time",
+      "freeforge_rate": 1.0,
+      "manual_rate": 1.0,
+      "freeforge_active_human_s_mean": 0.0,
+      "manual_active_human_s_mean": 200.0,
+      "evidence": "heldout_comparison",
+      "supported": true
+    },
+    {
+      "workload": "website_maintenance",
+      "claim": "retrieval_improves_correct_rate",
+      "supported": true,
+      "evidence": "ablation_worsened_when_removed",
+      "detail": {
+        "disabled": false,
+        "reason": "ablation_worsened_outcomes",
+        "full_rate": 1.0,
+        "ablation_rate": 0.0,
+        "contribution": 1.0
+      }
+    },
+    {
+      "workload": "website_maintenance",
+      "claim": "disable_workflow_reuse_for_this_workload",
+      "supported": true,
+      "evidence": "ablation_rate_ge_full",
+      "detail": {
+        "disabled": true,
+        "reason": "ablation_rate_ge_full",
+        "full_rate": 1.0,
+        "ablation_rate": 1.0
+      }
+    },
+    {
+      "workload": "website_maintenance",
+      "claim": "disable_review_for_this_workload",
+      "supported": true,
+      "evidence": "ablation_rate_ge_full",
+      "detail": {
+        "disabled": true,
+        "reason": "ablation_rate_ge_full",
+        "full_rate": 1.0,
+        "ablation_rate": 1.0
+      }
+    },
+    {
+      "workload": "website_maintenance",
+      "claim": "disable_caching_for_this_workload",
+      "supported": true,
+      "evidence": "ablation_rate_ge_full",
+      "detail": {
+        "disabled": true,
+        "reason": "ablation_rate_ge_full",
+        "full_rate": 1.0,
+        "ablation_rate": 1.0
+      }
+    },
+    {
+      "workload": "document_reporting",
+      "claim": "freeforge_correct_rate_exceeds_minimal_free_agent",
+      "freeforge_rate": 1.0,
+      "minimal_rate": 0.0,
+      "evidence": "heldout_comparison",
+      "supported": true
+    },
+    {
+      "workload": "document_reporting",
+      "claim": "freeforge_matches_manual_correctness_with_less_active_human_time",
+      "freeforge_rate": 1.0,
+      "manual_rate": 1.0,
+      "freeforge_active_human_s_mean": 0.0,
+      "manual_active_human_s_mean": 245.0,
+      "evidence": "heldout_comparison",
+      "supported": true
+    },
+    {
+      "workload": "document_reporting",
+      "claim": "retrieval_improves_correct_rate",
+      "supported": true,
+      "evidence": "ablation_worsened_when_removed",
+      "detail": {
+        "disabled": false,
+        "reason": "ablation_worsened_outcomes",
+        "full_rate": 1.0,
+        "ablation_rate": 0.0,
+        "contribution": 1.0
+      }
+    },
+    {
+      "workload": "document_reporting",
+      "claim": "disable_workflow_reuse_for_this_workload",
+      "supported": true,
+      "evidence": "ablation_rate_ge_full",
+      "detail": {
+        "disabled": true,
+        "reason": "ablation_rate_ge_full",
+        "full_rate": 1.0,
+        "ablation_rate": 1.0
+      }
+    },
+    {
+      "workload": "document_reporting",
+      "claim": "review_improves_correct_rate",
+      "supported": true,
+      "evidence": "ablation_worsened_when_removed",
+      "detail": {
+        "disabled": false,
+        "reason": "ablation_worsened_outcomes",
+        "full_rate": 1.0,
+        "ablation_rate": 0.0,
+        "contribution": 1.0
+      }
+    },
+    {
+      "workload": "document_reporting",
+      "claim": "disable_caching_for_this_workload",
+      "supported": true,
+      "evidence": "ablation_rate_ge_full",
+      "detail": {
+        "disabled": true,
+        "reason": "ablation_rate_ge_full",
+        "full_rate": 1.0,
+        "ablation_rate": 1.0
+      }
+    },
+    {
+      "workload": "*",
+      "claim": "competitor_claude_code_cursor_e2e",
+      "supported": false,
+      "status": "unmeasured",
+      "note": "No purchased access; competitor runs omitted."
+    },
+    {
+      "workload": "document_reporting",
+      "claim": "simplified_freeforge_preferred_or_tied",
+      "supported": true,
+      "evidence": "post_ablation_simplified_rerun",
+      "full_rate": 1.0,
+      "simplified_rate": 1.0,
+      "flags": {
+        "retrieval": true,
+        "workflow_reuse": false,
+        "review": true,
+        "caching": false
+      }
+    }
+  ],
+  "small_sample_acknowledged": true
+}

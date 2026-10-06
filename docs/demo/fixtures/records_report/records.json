@@ -1,0 +1,5 @@
+[
+  {"id": "r1", "metric": "uptime_hours", "value": 24.0, "unit": "h"},
+  {"id": "r2", "metric": "error_rate", "value": 0.01, "unit": "ratio"},
+  {"id": "r3", "metric": "jobs_completed", "value": 12, "unit": "count"}
+]

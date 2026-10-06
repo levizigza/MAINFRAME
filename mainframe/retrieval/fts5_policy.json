@@ -1,0 +1,14 @@
+{
+  "use_fts5": false,
+  "measured": {
+    "baseline_mean_recall": 1.0,
+    "fts5_mean_recall": 1.0,
+    "baseline_mean_context_chars": 673.0,
+    "fts5_mean_context_chars": 673.0,
+    "baseline_all_ok": true,
+    "fts5_all_ok": true
+  },
+  "reason": "FTS5 disabled: no measured improvement (exact/lexical sufficient)",
+  "paid_embedding_used": false,
+  "remote_vector_db_used": false
+}

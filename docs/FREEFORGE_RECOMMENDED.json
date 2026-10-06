@@ -1,0 +1,785 @@
+{
+  "ok": true,
+  "generated_at": "2026-10-06T19:09:44.076957+00:00",
+  "modes": {
+    "modes": {
+      "deterministic_offline": {
+        "id": "deterministic_offline",
+        "title": "Deterministic offline automation",
+        "default_recommended": true,
+        "requires": [
+          "Python 3.11+",
+          "local disk"
+        ],
+        "inference": "none",
+        "uses_ai": false,
+        "behavior": "Workflows, connectors (fixtures), docreport, coding harness patches, schedule fire, dashboard, project isolation \u2014 all run without models.",
+        "when_inference_unavailable": "N/A \u2014 this mode never calls inference. AI steps are not scheduled.",
+        "optimize_for": "correct completed work per CPU/disk/time \u2014 not agent count or model size",
+        "frontier_claim": false
+      },
+      "deterministic_plus_optional_cpu_ai": {
+        "id": "deterministic_plus_optional_cpu_ai",
+        "title": "Core + optional CPU AI (loopback)",
+        "default_recommended": false,
+        "requires": [
+          "Mode A core",
+          "optional Ollama or llama.cpp on loopback",
+          "installed local weights fitting measured RAM budget"
+        ],
+        "inference": "ollama_local | llamacpp_local",
+        "uses_ai": true,
+        "available_now": false,
+        "behavior": "Same deterministic core. Typed AI steps / coding completion only when an eligible loopback model answers; quota ledger admits requests.",
+        "when_inference_unavailable": "AI-dependent steps pause (checkpoint). Deterministic predecessors/siblings continue. No automatic paid or hosted fallback. Progress preserved.",
+        "observed_on_this_host": {
+          "ollama_reachable": false,
+          "llamacpp_reachable": false,
+          "recommendation": "Keep Mode A as daily driver until a fitted local model is measured available."
+        },
+        "optimize_for": "correct completions within RAM/CPU budget \u2014 not largest parameter count",
+        "frontier_claim": false
+      },
+      "deterministic_plus_eligible_free_hosted_ai": {
+        "id": "deterministic_plus_eligible_free_hosted_ai",
+        "title": "Core + currently eligible free hosted AI",
+        "default_recommended": false,
+        "requires": [
+          "Mode A core",
+          "a provider with verified recurring-free entitlement (none today)"
+        ],
+        "inference": "eligible_free_hosted_only",
+        "uses_ai": true,
+        "available_now": false,
+        "currently_eligible_providers": [],
+        "investigated_not_eligible": [
+          "groq_cloud",
+          "google_gemini_api",
+          "mistral_api"
+        ],
+        "behavior": "Same deterministic core. Hosted inference activates only after verification in eligibility.py \u2014 marketing free tiers are not entitlements.",
+        "when_inference_unavailable": "Today: always unavailable (zero verified hosted entitlements). Behavior: refuse hosted routes; pause AI steps; continue deterministic work; no trial/promo/billing activation; no silent switch to paid endpoints.",
+        "optimize_for": "correct work under verified free quotas \u2014 never unlimited frontier claims",
+        "frontier_claim": false
+      }
+    },
+    "recommended_mode_id": "deterministic_offline",
+    "rationale": "Optimize correct completed work per available resource. On this host local Ollama is paused/unreachable, so Mode A is recommended. Mode C has no currently eligible free hosted providers.",
+    "unavailable_route_contract": {
+      "deterministic": "always proceeds",
+      "cpu_ai": "pause AI step; no paid fallback",
+      "hosted_free": "refuse unless entitlement verified; pause; no paid fallback",
+      "disabled_providers": [
+        "analytics_telemetry",
+        "anthropic_api",
+        "aws_bedrock",
+        "azure_openai",
+        "cloud_databases",
+        "cloud_object_storage",
+        "google_gemini_api",
+        "groq_cloud",
+        "hf_inference_api",
+        "hosted_search",
+        "mistral_api",
+        "model_code_hypothesis",
+        "openai_api",
+        "paid_embedding_api",
+        "remote_execution",
+        "remote_vector_db",
+        "together_fireworks_replicate"
+      ]
+    }
+  },
+  "capability_matrix": {
+    "optimize_objective": "correct_completed_work_per_available_resource",
+    "not_optimize_for": [
+      "agent_count",
+      "model_parameter_count",
+      "cosmetic_frontier_label"
+    ],
+    "modes_summary": {
+      "deterministic_offline": {
+        "title": "Deterministic offline automation",
+        "available_now": true,
+        "uses_ai": false
+      },
+      "deterministic_plus_optional_cpu_ai": {
+        "title": "Core + optional CPU AI (loopback)",
+        "available_now": false,
+        "uses_ai": true
+      },
+      "deterministic_plus_eligible_free_hosted_ai": {
+        "title": "Core + currently eligible free hosted AI",
+        "available_now": false,
+        "uses_ai": true
+      }
+    },
+    "recommended_mode_id": "deterministic_offline",
+    "cells": {
+      "deterministic_automation": {
+        "status": "measured",
+        "mode": "deterministic_offline",
+        "note": "Held-out W1\u2013W3 + workflow fixtures; model_calls=0"
+      },
+      "optional_cpu_ai": {
+        "status": "unknown",
+        "mode": "deterministic_plus_optional_cpu_ai",
+        "correctness_on_this_host": "unknown",
+        "note": "Ollama paused/unreachable \u2014 live local model quality unmeasured on this host."
+      },
+      "eligible_free_hosted_ai": {
+        "status": "unavailable",
+        "mode": "deterministic_plus_eligible_free_hosted_ai",
+        "providers": [],
+        "note": "No verified recurring-free hosted entitlement (see docs/PROVIDERS.md)."
+      },
+      "competitor_claude_code_cursor_e2e": {
+        "status": "unknown",
+        "note": "Unmeasured \u2014 no purchased access."
+      },
+      "frontier_unlimited_performance": {
+        "status": "unknown",
+        "explicitly_not_claimed": true
+      }
+    },
+    "hardware_observations": {
+      "cpu_name": "12th Gen Intel(R) Core(TM) i7-12700H",
+      "logical_cpus": 20,
+      "available_gib": 12.61,
+      "total_gib": 31.69,
+      "free_disk_gib": 104.61,
+      "cpu_inference_budget_gib": 8.11,
+      "ai_probe_status": "paused",
+      "ai_probe_detail": "No free local inference at http://127.0.0.1:11434/api/tags (TCP unreachable for 127.0.0.1:11434). Progress preserved; AI-dependent steps paused.",
+      "host_context": "native_windows"
+    },
+    "heldout_workload_ids": [
+      "repository_repair",
+      "website_maintenance",
+      "document_reporting"
+    ]
+  },
+  "workloads": {
+    "measured_workloads": {
+      "repository_repair": {
+        "freeforge_correct_rate": 1.0,
+        "minimal_correct_rate": 0.0,
+        "manual_correct_rate": 1.0,
+        "n": 5,
+        "ci95": [
+          0.5655,
+          1.0
+        ],
+        "small_sample": true,
+        "model_calls": 0,
+        "mean_elapsed_s": 0.0082,
+        "mean_active_human_s": 0.0,
+        "outperforms_minimal": true,
+        "outperforms_manual_correctness": false,
+        "matches_manual_correctness": true,
+        "less_active_human_than_manual": true,
+        "source": "docs/eval/workloads/HELDOUT_EVAL.md"
+      },
+      "website_maintenance": {
+        "freeforge_correct_rate": 1.0,
+        "minimal_correct_rate": 0.0,
+        "manual_correct_rate": 1.0,
+        "n": 5,
+        "ci95": [
+          0.5655,
+          1.0
+        ],
+        "small_sample": true,
+        "model_calls": 0,
+        "mean_elapsed_s": 0.0058,
+        "mean_active_human_s": 0.0,
+        "outperforms_minimal": true,
+        "matches_manual_correctness": true,
+        "less_active_human_than_manual": true,
+        "retrieval_required": true,
+        "source": "docs/eval/workloads/HELDOUT_EVAL.md"
+      },
+      "document_reporting": {
+        "freeforge_correct_rate": 1.0,
+        "minimal_correct_rate": 0.0,
+        "manual_correct_rate": 1.0,
+        "n": 5,
+        "ci95": [
+          0.5655,
+          1.0
+        ],
+        "small_sample": true,
+        "model_calls": 0,
+        "mean_elapsed_s": 0.0059,
+        "mean_active_human_s": 0.0,
+        "outperforms_minimal": true,
+        "matches_manual_correctness": true,
+        "less_active_human_than_manual": true,
+        "retrieval_required": true,
+        "review_required": true,
+        "source": "docs/eval/workloads/HELDOUT_EVAL.md"
+      }
+    },
+    "sustainable_quotas": {
+      "note": "Wall-clock theoretical volumes from sub-second deterministic runs are NOT interactive capacity. Prefer quota + human review limits.",
+      "theoretical_wall_clock_8h": "unknown_as_operational_capacity",
+      "operational_guidance": {
+        "deterministic_jobs_per_hour": "unknown",
+        "interactive_coding_tasks_per_day": "unknown",
+        "ai_requests_per_window": {
+          "ollama_local_default": {
+            "requests": 60,
+            "tokens": 100000,
+            "context": 32000,
+            "concurrency": 4,
+            "source": "quota ledger default bucket"
+          }
+        }
+      },
+      "reset_unknown": true,
+      "live_bucket_snapshot": {
+        "bucket_key": "ollama_local|local|default",
+        "provider_id": "ollama_local",
+        "entitlement_id": null,
+        "window_id": "default",
+        "limits": {
+          "requests": 60,
+          "tokens": 100000,
+          "context": 32000,
+          "concurrency": 4
+        },
+        "in_flight": {
+          "reservations": 0,
+          "requests": 0,
+          "tokens": 0,
+          "context": 0,
+          "concurrency": 0
+        },
+        "remaining": {
+          "requests": 60,
+          "tokens": 100000,
+          "context": 32000,
+          "concurrency": 4
+        },
+        "reset_at": null,
+        "reset_unknown": true,
+        "cooldown_until": null
+      }
+    },
+    "unresolved_weaknesses": [
+      {
+        "id": "per_feature_vs_joint_ablation",
+        "severity": "medium"
+      },
+      {
+        "id": "small_n_heldout",
+        "severity": "medium"
+      },
+      {
+        "id": "no_local_model_on_host",
+        "severity": "high_for_ai_tasks"
+      },
+      {
+        "id": "no_eligible_hosted_free",
+        "severity": "high_for_hosted_ai"
+      },
+      {
+        "id": "no_os_network_isolation",
+        "severity": "medium"
+      },
+      {
+        "id": "competitor_e2e_unmeasured",
+        "severity": "unknown"
+      },
+      {
+        "id": "schtasks_elevation",
+        "severity": "low"
+      },
+      {
+        "id": "theoretical_daily_volume",
+        "severity": "high_misread_risk"
+      }
+    ],
+    "prioritized_next_improvements": [
+      {
+        "priority": 1,
+        "id": "fit_and_measure_local_cpu_model",
+        "action": "Install a RAM-fitting local model; run modeleval live holdout; update Mode B cells from unknown \u2192 measured"
+      },
+      {
+        "priority": 2,
+        "id": "expand_heldout_n",
+        "action": "Increase held-out n beyond 5 before tightening CI-based claims"
+      },
+      {
+        "priority": 3,
+        "id": "verify_or_keep_refusing_hosted",
+        "action": "Only enable Mode C after recurring-free entitlement evidence; otherwise keep refuse"
+      },
+      {
+        "priority": 4,
+        "id": "operational_quota_calibration",
+        "action": "Replace theoretical wall-clock volume with measured sustainable interactive quotas"
+      },
+      {
+        "priority": 5,
+        "id": "optional_os_network_isolation",
+        "action": "If live connectors needed, verify OS network isolation before re-enabling non-loopback"
+      }
+    ],
+    "vs_baselines": {
+      "outperforms_measured_baselines": [
+        "FreeForge correct rate \u226b minimal free agent on held-out repair / site / docreport (n=5)",
+        "FreeForge matches manual correctness with less active human time on those workloads",
+        "Retrieval improves site + docreport; review improves docreport (ablations)"
+      ],
+      "does_not_outperform_or_unmeasured": [
+        "Does not exceed manual correctness rate on those workloads (tied at 1.0)",
+        "Competitor Claude Code / Cursor E2E: unknown",
+        "Live local/hosted model coding quality on this host: unknown (AI paused)",
+        "Unlimited frontier performance: not claimed"
+      ],
+      "disable_policy_summary": {
+        "repository_repair": {
+          "retrieval": {
+            "disabled": true,
+            "reason": "ablation_rate_ge_full",
+            "full_rate": 1.0,
+            "ablation_rate": 1.0
+          },
+          "workflow_reuse": {
+            "disabled": true,
+            "reason": "ablation_rate_ge_full",
+            "full_rate": 1.0,
+            "ablation_rate": 1.0
+          },
+          "review": {
+            "disabled": true,
+            "reason": "ablation_rate_ge_full",
+            "full_rate": 1.0,
+            "ablation_rate": 1.0
+          },
+          "caching": {
+            "disabled": true,
+            "reason": "ablation_rate_ge_full",
+            "full_rate": 1.0,
+            "ablation_rate": 1.0
+          }
+        },
+        "website_maintenance": {
+          "retrieval": {
+            "disabled": false,
+            "reason": "ablation_worsened_outcomes",
+            "full_rate": 1.0,
+            "ablation_rate": 0.0,
+            "contribution": 1.0
+          },
+          "workflow_reuse": {
+            "disabled": true,
+            "reason": "ablation_rate_ge_full",
+            "full_rate": 1.0,
+            "ablation_rate": 1.0
+          },
+          "review": {
+            "disabled": true,
+            "reason": "ablation_rate_ge_full",
+            "full_rate": 1.0,
+            "ablation_rate": 1.0
+          },
+          "caching": {
+            "disabled": true,
+            "reason": "ablation_rate_ge_full",
+            "full_rate": 1.0,
+            "ablation_rate": 1.0
+          }
+        },
+        "document_reporting": {
+          "retrieval": {
+            "disabled": false,
+            "reason": "ablation_worsened_outcomes",
+            "full_rate": 1.0,
+            "ablation_rate": 0.0,
+            "contribution": 1.0
+          },
+          "workflow_reuse": {
+            "disabled": true,
+            "reason": "ablation_rate_ge_full",
+            "full_rate": 1.0,
+            "ablation_rate": 1.0
+          },
+          "review": {
+            "disabled": false,
+            "reason": "ablation_worsened_outcomes",
+            "full_rate": 1.0,
+            "ablation_rate": 0.0,
+            "contribution": 1.0
+          },
+          "caching": {
+            "disabled": true,
+            "reason": "ablation_rate_ge_full",
+            "full_rate": 1.0,
+            "ablation_rate": 1.0
+          }
+        }
+      },
+      "claims_from_heldout": [
+        {
+          "workload": "repository_repair",
+          "claim": "freeforge_correct_rate_exceeds_minimal_free_agent",
+          "freeforge_rate": 1.0,
+          "minimal_rate": 0.0,
+          "evidence": "heldout_comparison",
+          "supported": true
+        },
+        {
+          "workload": "repository_repair",
+          "claim": "freeforge_matches_manual_correctness_with_less_active_human_time",
+          "freeforge_rate": 1.0,
+          "manual_rate": 1.0,
+          "freeforge_active_human_s_mean": 0.0,
+          "manual_active_human_s_mean": 135.0,
+          "evidence": "heldout_comparison",
+          "supported": true
+        },
+        {
+          "workload": "repository_repair",
+          "claim": "disable_retrieval_for_this_workload",
+          "supported": true,
+          "evidence": "ablation_rate_ge_full",
+          "detail": {
+            "disabled": true,
+            "reason": "ablation_rate_ge_full",
+            "full_rate": 1.0,
+            "ablation_rate": 1.0
+          }
+        },
+        {
+          "workload": "repository_repair",
+          "claim": "disable_workflow_reuse_for_this_workload",
+          "supported": true,
+          "evidence": "ablation_rate_ge_full",
+          "detail": {
+            "disabled": true,
+            "reason": "ablation_rate_ge_full",
+            "full_rate": 1.0,
+            "ablation_rate": 1.0
+          }
+        },
+        {
+          "workload": "repository_repair",
+          "claim": "disable_review_for_this_workload",
+          "supported": true,
+          "evidence": "ablation_rate_ge_full",
+          "detail": {
+            "disabled": true,
+            "reason": "ablation_rate_ge_full",
+            "full_rate": 1.0,
+            "ablation_rate": 1.0
+          }
+        },
+        {
+          "workload": "repository_repair",
+          "claim": "disable_caching_for_this_workload",
+          "supported": true,
+          "evidence": "ablation_rate_ge_full",
+          "detail": {
+            "disabled": true,
+            "reason": "ablation_rate_ge_full",
+            "full_rate": 1.0,
+            "ablation_rate": 1.0
+          }
+        },
+        {
+          "workload": "website_maintenance",
+          "claim": "freeforge_correct_rate_exceeds_minimal_free_agent",
+          "freeforge_rate": 1.0,
+          "minimal_rate": 0.0,
+          "evidence": "heldout_comparison",
+          "supported": true
+        },
+        {
+          "workload": "website_maintenance",
+          "claim": "freeforge_matches_manual_correctness_with_less_active_human_time",
+          "freeforge_rate": 1.0,
+          "manual_rate": 1.0,
+          "freeforge_active_human_s_mean": 0.0,
+          "manual_active_human_s_mean": 200.0,
+          "evidence": "heldout_comparison",
+          "supported": true
+        },
+        {
+          "workload": "website_maintenance",
+          "claim": "retrieval_improves_correct_rate",
+          "supported": true,
+          "evidence": "ablation_worsened_when_removed",
+          "detail": {
+            "disabled": false,
+            "reason": "ablation_worsened_outcomes",
+            "full_rate": 1.0,
+            "ablation_rate": 0.0,
+            "contribution": 1.0
+          }
+        },
+        {
+          "workload": "website_maintenance",
+          "claim": "disable_workflow_reuse_for_this_workload",
+          "supported": true,
+          "evidence": "ablation_rate_ge_full",
+          "detail": {
+            "disabled": true,
+            "reason": "ablation_rate_ge_full",
+            "full_rate": 1.0,
+            "ablation_rate": 1.0
+          }
+        },
+        {
+          "workload": "website_maintenance",
+          "claim": "disable_review_for_this_workload",
+          "supported": true,
+          "evidence": "ablation_rate_ge_full",
+          "detail": {
+            "disabled": true,
+            "reason": "ablation_rate_ge_full",
+            "full_rate": 1.0,
+            "ablation_rate": 1.0
+          }
+        },
+        {
+          "workload": "website_maintenance",
+          "claim": "disable_caching_for_this_workload",
+          "supported": true,
+          "evidence": "ablation_rate_ge_full",
+          "detail": {
+            "disabled": true,
+            "reason": "ablation_rate_ge_full",
+            "full_rate": 1.0,
+            "ablation_rate": 1.0
+          }
+        },
+        {
+          "workload": "document_reporting",
+          "claim": "freeforge_correct_rate_exceeds_minimal_free_agent",
+          "freeforge_rate": 1.0,
+          "minimal_rate": 0.0,
+          "evidence": "heldout_comparison",
+          "supported": true
+        },
+        {
+          "workload": "document_reporting",
+          "claim": "freeforge_matches_manual_correctness_with_less_active_human_time",
+          "freeforge_rate": 1.0,
+          "manual_rate": 1.0,
+          "freeforge_active_human_s_mean": 0.0,
+          "manual_active_human_s_mean": 245.0,
+          "evidence": "heldout_comparison",
+          "supported": true
+        },
+        {
+          "workload": "document_reporting",
+          "claim": "retrieval_improves_correct_rate",
+          "supported": true,
+          "evidence": "ablation_worsened_when_removed",
+          "detail": {
+            "disabled": false,
+            "reason": "ablation_worsened_outcomes",
+            "full_rate": 1.0,
+            "ablation_rate": 0.0,
+            "contribution": 1.0
+          }
+        },
+        {
+          "workload": "document_reporting",
+          "claim": "disable_workflow_reuse_for_this_workload",
+          "supported": true,
+          "evidence": "ablation_rate_ge_full",
+          "detail": {
+            "disabled": true,
+            "reason": "ablation_rate_ge_full",
+            "full_rate": 1.0,
+            "ablation_rate": 1.0
+          }
+        },
+        {
+          "workload": "document_reporting",
+          "claim": "review_improves_correct_rate",
+          "supported": true,
+          "evidence": "ablation_worsened_when_removed",
+          "detail": {
+            "disabled": false,
+            "reason": "ablation_worsened_outcomes",
+            "full_rate": 1.0,
+            "ablation_rate": 0.0,
+            "contribution": 1.0
+          }
+        },
+        {
+          "workload": "document_reporting",
+          "claim": "disable_caching_for_this_workload",
+          "supported": true,
+          "evidence": "ablation_rate_ge_full",
+          "detail": {
+            "disabled": true,
+            "reason": "ablation_rate_ge_full",
+            "full_rate": 1.0,
+            "ablation_rate": 1.0
+          }
+        },
+        {
+          "workload": "*",
+          "claim": "competitor_claude_code_cursor_e2e",
+          "supported": false,
+          "status": "unmeasured",
+          "note": "No purchased access; competitor runs omitted."
+        },
+        {
+          "workload": "document_reporting",
+          "claim": "simplified_freeforge_preferred_or_tied",
+          "supported": true,
+          "evidence": "post_ablation_simplified_rerun",
+          "full_rate": 1.0,
+          "simplified_rate": 1.0,
+          "flags": {
+            "retrieval": true,
+            "workflow_reuse": false,
+            "review": true,
+            "caching": false
+          }
+        }
+      ],
+      "comparison_raw_present": true
+    }
+  },
+  "hardware": {
+    "cpu_name": "12th Gen Intel(R) Core(TM) i7-12700H",
+    "logical_cpus": 20,
+    "available_gib": 12.61,
+    "total_gib": 31.69,
+    "free_disk_gib": 104.61,
+    "cpu_inference_budget_gib": 8.11,
+    "ai_probe_status": "paused",
+    "ai_probe_detail": "No free local inference at http://127.0.0.1:11434/api/tags (TCP unreachable for 127.0.0.1:11434). Progress preserved; AI-dependent steps paused.",
+    "host_context": "native_windows"
+  },
+  "demos": {
+    "coding": {
+      "ok": true,
+      "kind": "coding_task",
+      "task": "heldout_repository_repair_w1",
+      "harness": "freeforge",
+      "feature_flags_used": "recommended_simplified",
+      "model_calls": 0,
+      "correct": true,
+      "elapsed_s": 0.0035,
+      "contract": "deterministic_offline \u2014 no paid/hosted inference",
+      "blocker": null,
+      "detail": {
+        "correct": true,
+        "elapsed_s": 0.0035,
+        "retries": 0,
+        "model_calls": 0,
+        "failure_recoveries": 0
+      },
+      "flags": {
+        "retrieval": true,
+        "workflow_reuse": false,
+        "review": false,
+        "caching": false
+      }
+    },
+    "codingbench": {
+      "ok": true,
+      "kind": "coding_task_codingbench",
+      "task_id": "cb_hold_logic",
+      "harness_id": "freeforge",
+      "success": true,
+      "contract": "mock_integration_fixture_strong",
+      "blocker": null,
+      "detail": {
+        "success": true,
+        "status": null,
+        "model_calls": 1
+      }
+    },
+    "automation": {
+      "ok": true,
+      "kind": "reusable_automation",
+      "workflow_id": "input_to_report",
+      "fixture": "input_to_report",
+      "contract": "deterministic_offline",
+      "blocker": null,
+      "outputs": {
+        "write_report": {
+          "artifact_path": "report.json",
+          "sha256": "395678eaa52340df1b4e8ea3427eaca3140a3869f4836bbcb23e5fafa71aadfd",
+          "bytes": 305,
+          "operation_id": "op_aad11dc0fa26a5c8",
+          "effect_receipt": {
+            "operation_id": "op_aad11dc0fa26a5c8",
+            "effect_kind": "create_local_artifact",
+            "execution_status": "succeeded",
+            "delivery_status": "not_requested",
+            "outcome": "succeeded",
+            "duplicate_suppressed": false,
+            "side_effect_occurred": true,
+            "detail": {
+              "path": "report.json",
+              "sha256": "395678eaa52340df1b4e8ea3427eaca3140a3869f4836bbcb23e5fafa71aadfd"
+            },
+            "compensation": {
+              "supported": true,
+              "operation": "create_local_artifact",
+              "inverse": "delete_local_artifact",
+              "capability": "local.artifact",
+              "note": "Local artifact removal; does not retract external delivery."
+            }
+          },
+          "_effect_kind": "create_local_artifact"
+        },
+        "artifact_path": "report.json",
+        "sha256": "395678eaa52340df1b4e8ea3427eaca3140a3869f4836bbcb23e5fafa71aadfd",
+        "bytes": 305,
+        "operation_id": "op_aad11dc0fa26a5c8",
+        "effect_receipt": {
+          "operation_id": "op_aad11dc0fa26a5c8",
+          "effect_kind": "create_local_artifact",
+          "execution_status": "succeeded",
+          "delivery_status": "not_requested",
+          "outcome": "succeeded",
+          "duplicate_suppressed": false,
+          "side_effect_occurred": true,
+          "detail": {
+            "path": "report.json",
+            "sha256": "395678eaa52340df1b4e8ea3427eaca3140a3869f4836bbcb23e5fafa71aadfd"
+          },
+          "compensation": {
+            "supported": true,
+            "operation": "create_local_artifact",
+            "inverse": "delete_local_artifact",
+            "capability": "local.artifact",
+            "note": "Local artifact removal; does not retract external delivery."
+          }
+        },
+        "_effect_kind": "create_local_artifact"
+      },
+      "state": "succeeded"
+    }
+  },
+  "acceptance": {
+    "recommended_mode_published": true,
+    "three_modes_explicit": true,
+    "unavailable_routes_described": true,
+    "coding_demo_ok": true,
+    "automation_demo_ok": true,
+    "unmeasured_marked_unknown": true,
+    "no_frontier_unlimited_claim": true,
+    "mode_c_honest_empty": true
+  },
+  "evidence_sources": {
+    "heldout": "docs/eval/workloads/HELDOUT_EVAL.json",
+    "disable_policy": "docs/eval/workloads/feature_disable_policy.json",
+    "cost_audit": "docs/COST_AUDIT.json",
+    "providers": "docs/PROVIDERS.md"
+  },
+  "report_md": "docs/FREEFORGE_RECOMMENDED.md",
+  "report_json": "docs/FREEFORGE_RECOMMENDED.json"
+}

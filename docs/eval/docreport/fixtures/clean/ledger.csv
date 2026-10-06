@@ -1,0 +1,4 @@
+record_id,date,amount,unit,party,notes
+INV-1001,2024-01-15,100.50,USD,Acme Corp,Net 30
+INV-1002,2024-02-01,250.00,USD,Beta LLC,Paid
+INV-1003,2024-03-10,75.25,EUR,Gamma GmbH,

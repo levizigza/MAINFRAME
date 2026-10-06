@@ -1,0 +1,84 @@
+# Optional CI — not required to run MAINFRAME locally (stdlib + local checks remain authoritative).
+name: surfaces
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: surfaces-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  local-checks:
+    name: Local Python surfaces (web + application)
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Core status (no pip install)
+        run: python -m mainframe status
+
+      - name: Build dual surfaces + accept
+        run: python -m mainframe surfaces accept
+
+      - name: Recommend accept (evidence config)
+        run: python -m mainframe recommend accept
+
+      - name: Upload web artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: mainframe-web
+          path: dist/web/
+
+      - name: Upload application artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: mainframe-application
+          path: dist/application/
+
+  pages:
+    name: Optional GitHub Pages (web surface)
+    needs: local-checks
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Build web only
+        run: python -m mainframe surfaces build-web
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist/web
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

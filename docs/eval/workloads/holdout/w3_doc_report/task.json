@@ -1,0 +1,22 @@
+{
+  "id": "hold_w3_batch",
+  "workload": "document_reporting",
+  "split": "holdout",
+  "acceptance": {
+    "min_kept_records": 3,
+    "duplicates_removed_min": 1,
+    "unresolved_or_invalid_min": 1,
+    "csv_emitted": true,
+    "report_emitted": true,
+    "auto_posted_external": false
+  },
+  "expected_descriptions": ["Holdout Alpha", "Holdout Beta", "Holdout Delta"],
+  "human_manual_steps": [
+    {"action": "open_spreadsheet", "active_human_s": 30},
+    {"action": "spot_duplicate", "active_human_s": 50},
+    {"action": "flag_bad_amount", "active_human_s": 40},
+    {"action": "write_summary", "active_human_s": 90},
+    {"action": "export_csv", "active_human_s": 35}
+  ],
+  "note": "Held out from scorecard W3 markdown and docreport accept fixtures (clean/scanned/malformed/duplicate)."
+}

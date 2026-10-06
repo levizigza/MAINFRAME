@@ -1,0 +1,37 @@
+{
+  "name": "freeforge-editor",
+  "displayName": "FreeForge Editor Bridge",
+  "description": "Chat-to-task, selection context, reviewable diffs — shared state with MAINFRAME CLI. Uses VS Code Extension API only (no Void workbench copy).",
+  "version": "0.1.0",
+  "publisher": "mainframe",
+  "engines": { "vscode": "^1.85.0" },
+  "categories": ["Other"],
+  "activationEvents": ["onCommand:freeforge.chatToTask", "onStartupFinished"],
+  "main": "./extension.js",
+  "contributes": {
+    "commands": [
+      { "command": "freeforge.chatToTask", "title": "FreeForge: Chat to Task" },
+      { "command": "freeforge.attachSelection", "title": "FreeForge: Attach Selection to Task" },
+      { "command": "freeforge.syncDirtyBuffers", "title": "FreeForge: Sync Unsaved Buffers" },
+      { "command": "freeforge.cancelTask", "title": "FreeForge: Cancel Task" },
+      { "command": "freeforge.resumeTask", "title": "FreeForge: Resume Task" }
+    ],
+    "configuration": {
+      "title": "FreeForge",
+      "properties": {
+        "freeforge.python": {
+          "type": "string",
+          "default": "python",
+          "description": "Python interpreter for mainframe CLI"
+        },
+        "freeforge.workspaceRoot": {
+          "type": "string",
+          "default": "",
+          "description": "MAINFRAME / project root (empty = workspace folder)"
+        }
+      }
+    }
+  },
+  "license": "MIT",
+  "repository": { "type": "git", "url": "local" }
+}

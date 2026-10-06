@@ -1,0 +1,259 @@
+{
+  "ok": true,
+  "generated_at": "2026-10-06T19:12:40.459260+00:00",
+  "catalog": {
+    "objective": "correct_completed_work_per_available_resource",
+    "surfaces": {
+      "web": {
+        "id": "web",
+        "title": "Web surface",
+        "optimized_for": [
+          "websites",
+          "web applications",
+          "browser maintenance",
+          "HTTP connectors",
+          "static/loopback web UI",
+          "Playwright DOM evidence"
+        ],
+        "primary_workloads": [
+          "website_maintenance",
+          "document_reporting_for_web_content",
+          "connectors_readonly",
+          "browser_tools",
+          "visual_bridge_optional"
+        ],
+        "deliverables": [
+          "static site under dist/web/ (GitHub Pages\u2013ready, optional)",
+          "loopback dashboard HTML tuned for browser use",
+          "web workflow fixtures and site-holdout evals"
+        ],
+        "not_for": [
+          "App Store / Play Store binary submission",
+          "native iOS/Android packaging (see application surface)"
+        ],
+        "hosted_pages_required": false,
+        "note": "Local `python -m mainframe surfaces build-web` produces artifacts; Pages is optional."
+      },
+      "application": {
+        "id": "application",
+        "title": "Application surface",
+        "optimized_for": [
+          "desktop Windows apps",
+          "desktop packaging metadata",
+          "mobile app-store oriented projects (iOS/Android) as target markets",
+          "local automation against app codebases",
+          "editor extension + FreeForge CLI"
+        ],
+        "primary_workloads": [
+          "repository_repair",
+          "codingbench_holdout",
+          "editor_bridge",
+          "release_package_desktop",
+          "project_isolation"
+        ],
+        "deliverables": [
+          "desktop release tree under dist/application/",
+          "store-readiness checklist (not a signed store upload)",
+          "VS Code/FreeForge editor extension path"
+        ],
+        "not_for": [
+          "Claiming App Store / Play distribution without separate store accounts",
+          "Replacing web-site maintenance workflows (use web surface)"
+        ],
+        "app_store_upload_required": false,
+        "code_signing_service_required": false,
+        "note": "Application surface prepares local desktop packages and store-oriented checklists. Actual iOS/Android store submission needs developer accounts outside MAINFRAME's free contract and is labeled DOCUMENTED_NOT_TESTED until the user runs those steps."
+      }
+    },
+    "shared_core": [
+      "deterministic_offline mode",
+      "eligibility / cost_gate",
+      "quota ledger",
+      "workflows + receipts",
+      "recommend config"
+    ],
+    "non_requirements": {
+      "hosted_ci": false,
+      "github_pages": false,
+      "app_store_account": false,
+      "code_signing_saas": false
+    }
+  },
+  "web": {
+    "ok": true,
+    "surface": "web",
+    "dest": "C:\\Users\\levyz\\OneDrive\\Microsoft Copilot Chat Files\\Documents\\MAINFRAME\\dist\\web",
+    "index": "C:\\Users\\levyz\\OneDrive\\Microsoft Copilot Chat Files\\Documents\\MAINFRAME\\dist\\web\\index.html",
+    "manifest": {
+      "surface": "web",
+      "version": "0.1.50",
+      "generated_at": "2026-10-06T19:12:39.771848+00:00",
+      "focus": {
+        "id": "web",
+        "title": "Web surface",
+        "optimized_for": [
+          "websites",
+          "web applications",
+          "browser maintenance",
+          "HTTP connectors",
+          "static/loopback web UI",
+          "Playwright DOM evidence"
+        ],
+        "primary_workloads": [
+          "website_maintenance",
+          "document_reporting_for_web_content",
+          "connectors_readonly",
+          "browser_tools",
+          "visual_bridge_optional"
+        ],
+        "deliverables": [
+          "static site under dist/web/ (GitHub Pages\u2013ready, optional)",
+          "loopback dashboard HTML tuned for browser use",
+          "web workflow fixtures and site-holdout evals"
+        ],
+        "not_for": [
+          "App Store / Play Store binary submission",
+          "native iOS/Android packaging (see application surface)"
+        ],
+        "hosted_pages_required": false,
+        "note": "Local `python -m mainframe surfaces build-web` produces artifacts; Pages is optional."
+      },
+      "paths": {
+        "index": "index.html",
+        "demo_site": "demos/site_maintenance/index.html"
+      },
+      "github_pages_optional": true,
+      "local_command": "python -m mainframe surfaces build-web"
+    },
+    "hosted_pages_required": false
+  },
+  "application": {
+    "ok": true,
+    "surface": "application",
+    "dest": "C:\\Users\\levyz\\OneDrive\\Microsoft Copilot Chat Files\\Documents\\MAINFRAME\\dist\\application",
+    "desktop_package": {
+      "ok": true,
+      "dest": "C:\\Users\\levyz\\OneDrive\\Microsoft Copilot Chat Files\\Documents\\MAINFRAME\\dist\\application\\mainframe-desktop-0.1.50",
+      "file_count": 421,
+      "missing": [],
+      "target": {
+        "os": {
+          "sys_platform": "win32",
+          "platform_string": "Windows-11-10.0.26200-SP0",
+          "machine": "AMD64",
+          "nt_version": {
+            "probe_ok": true,
+            "raw": "{\"ProductName\":\"Windows 10 Home\",\"DisplayVersion\":\"25H2\",\"CurrentBuild\":\"26200\",\"InstallationType\":\"Client\"}",
+            "product_name": "Windows 10 Home",
+            "display_version": "25H2",
+            "current_build": "26200",
+            "installation_type": "Client"
+          },
+          "note": "platform.platform()=Windows-11-10.0.26200-SP0; registry ProductName=Windows 10 Home; DisplayVersion=25H2; CurrentBuild=26200. Build 26200 is the Windows 11 25H2 family; registry ProductName may still say 'Windows 10 Home' on some Home SKUs \u2014 document both observed values."
+        },
+        "python": {
+          "version": "3.12.4",
+          "executable": "C:\\Users\\levyz\\miniconda3\\python.exe",
+          "implementation": "CPython",
+          "meets_3_11": true
+        },
+        "tools": {
+          "node": {
+            "present": true,
+            "path": "C:\\Program Files\\nodejs\\node.EXE",
+            "version": "v22.12.0"
+          },
+          "git": {
+            "present": true,
+            "path": "C:\\Program Files\\Git\\cmd\\git.EXE",
+            "version": "git version 2.47.1.windows.1"
+          },
+          "rg": {
+            "present": true,
+            "path": "c:\\Users\\levyz\\Documents\\cursor\\resources\\app\\node_modules\\@vscode\\ripgrep\\bin\\rg.EXE"
+          }
+        },
+        "obsolete_installer_commands_refused": [
+          {
+            "command": "choco install python",
+            "reason": "Not verified on this host; Python already present via miniconda path",
+            "documented_as_required": false
+          },
+          {
+            "command": "winget install Python.Python.3",
+            "reason": "Not run; target already has Python 3.12 \u2014 do not invent installer steps",
+            "documented_as_required": false
+          },
+          {
+            "command": "pip install -r requirements.txt",
+            "reason": "Core has no required pip deps",
+            "documented_as_required": false
+          },
+          {
+            "command": "docker compose up",
+            "reason": "Docker Desktop not required for core; not present on this host",
+            "documented_as_required": false
+          }
+        ],
+        "setup_commands_verified_on_this_host": [
+          "\"C:\\Users\\levyz\\miniconda3\\python.exe\" -m mainframe status",
+          "\"C:\\Users\\levyz\\miniconda3\\python.exe\" -m mainframe doctor",
+          "\"C:\\Users\\levyz\\miniconda3\\python.exe\" -m mainframe run echo --param message=hello"
+        ],
+        "optional_not_present": {
+          "openclaw": true,
+          "docker": true
+        }
+      },
+      "manifest": "MANIFEST.json"
+    },
+    "store_checklist": [
+      {
+        "id": "desktop_windows_local_package",
+        "status": "supported",
+        "note": "Built via release package / surfaces build-app \u2014 local folder, no store account"
+      },
+      {
+        "id": "macos_app_bundle",
+        "status": "documented_not_tested",
+        "note": "Target market listed; packaging not executed on this Windows host"
+      },
+      {
+        "id": "ios_app_store",
+        "status": "documented_not_tested",
+        "note": "Requires Apple Developer Program \u2014 outside MAINFRAME free contract; not uploaded"
+      },
+      {
+        "id": "android_play_store",
+        "status": "documented_not_tested",
+        "note": "Requires Google Play Console \u2014 outside free contract; not uploaded"
+      },
+      {
+        "id": "microsoft_store",
+        "status": "documented_not_tested",
+        "note": "Optional later; local Win32/folder distribution is the verified path"
+      },
+      {
+        "id": "code_signing_service",
+        "status": "not_required",
+        "note": "No code-signing SaaS required for local application surface"
+      }
+    ],
+    "app_store_upload_required": false,
+    "documented_not_tested": [
+      "macos_app_bundle",
+      "ios_app_store",
+      "android_play_store",
+      "microsoft_store"
+    ]
+  },
+  "github_actions": {
+    "required": false,
+    "workflow": ".github/workflows/surfaces.yml",
+    "actions_url_template": "https://github.com/levizigza/MAINFRAME/actions",
+    "pages_url_optional": "https://levizigza.github.io/MAINFRAME/",
+    "note": "Actions/Pages are optional mirrors; local builds remain authoritative."
+  },
+  "report_md": "docs/SURFACES.md",
+  "report_json": "docs/SURFACES.json"
+}

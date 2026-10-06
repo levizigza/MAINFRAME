@@ -1,0 +1,49 @@
+[
+  {
+    "id": "misleading_names",
+    "root": "misleading_names",
+    "goal": "Fix compute_total so cart totals sum all prices",
+    "issue_text": "Users report wrong cart totals. Someone renamed auth_bug.py during triage but that file is unrelated. Error: AssertionError: assert 10 == 60 in test_payments.py. Function compute_total in payments/processor.py looks suspicious.",
+    "relevant_files": ["payments/processor.py"],
+    "irrelevant_must_not_rank_first": ["auth/auth_bug.py"],
+    "follow_up": null,
+    "expect_no_evidence": false
+  },
+  {
+    "id": "bug_outside_stack",
+    "root": "bug_outside_stack",
+    "goal": "Withdrawals must decrease account balance",
+    "issue_text": "Traceback (most recent call last):\n  File \"api/handler.py\", line 4, in route_withdraw\n    return adjust_balance(account, -amount)\nValueError: negative balance\nWithdraw via route_withdraw fails for some accounts; stack only shows handler.",
+    "relevant_files": ["lib/calc.py"],
+    "stack_only_file": "api/handler.py",
+    "follow_up": null,
+    "expect_no_evidence": false
+  },
+  {
+    "id": "exact_identifier",
+    "root": "exact_id",
+    "goal": "Correct ISBN validation for 10- and 13-digit codes",
+    "issue_text": "validate_isbn rejects valid codes. See catalog/isbn.py.",
+    "relevant_files": ["catalog/isbn.py"],
+    "follow_up": null,
+    "expect_no_evidence": false
+  },
+  {
+    "id": "follow_up_narrow",
+    "root": "bug_outside_stack",
+    "goal": "Withdrawals must decrease account balance",
+    "issue_text": "Traceback (most recent call last):\n  File \"api/handler.py\", line 4, in route_withdraw\n    return adjust_balance(account, -amount)\nValueError: negative balance",
+    "relevant_files": ["lib/calc.py"],
+    "follow_up": "inspect adjust_balance abs delta in lib/calc.py",
+    "expect_no_evidence": false
+  },
+  {
+    "id": "no_relevant_evidence",
+    "root": "no_evidence",
+    "goal": "Diagnose Kubernetes ingress TLS certificate rotation",
+    "issue_text": "Cluster ingress-nginx failed after cert-manager CertificateRequest timeout in us-east-1.",
+    "relevant_files": [],
+    "follow_up": null,
+    "expect_no_evidence": true
+  }
+]

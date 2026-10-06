@@ -1,0 +1,83 @@
+{
+  "version": 1,
+  "note": "Held-out coding benchmark. Keys under keys/ are never copied into agent workspaces.",
+  "splits": ["tune", "holdout"],
+  "categories": [
+    "logic_bug",
+    "multifile",
+    "dependency_trap",
+    "ui_behavior",
+    "should_decline",
+    "should_clarify"
+  ],
+  "budget_defaults": {
+    "max_tool_calls": 24,
+    "max_model_calls": 6,
+    "timeout_s": 120
+  },
+  "tasks": [
+    {
+      "id": "cb_tune_add",
+      "split": "tune",
+      "category": "logic_bug",
+      "fixture": "cb_tune_add",
+      "prompt_file": "TASK.md",
+      "decline_expected": false,
+      "clarify_expected": false
+    },
+    {
+      "id": "cb_hold_logic",
+      "split": "holdout",
+      "category": "logic_bug",
+      "fixture": "cb_hold_logic",
+      "prompt_file": "TASK.md",
+      "decline_expected": false,
+      "clarify_expected": false
+    },
+    {
+      "id": "cb_hold_multifile",
+      "split": "holdout",
+      "category": "multifile",
+      "fixture": "cb_hold_multifile",
+      "prompt_file": "TASK.md",
+      "decline_expected": false,
+      "clarify_expected": false
+    },
+    {
+      "id": "cb_hold_dep_trap",
+      "split": "holdout",
+      "category": "dependency_trap",
+      "fixture": "cb_hold_dep_trap",
+      "prompt_file": "TASK.md",
+      "decline_expected": false,
+      "clarify_expected": false
+    },
+    {
+      "id": "cb_hold_ui",
+      "split": "holdout",
+      "category": "ui_behavior",
+      "fixture": "cb_hold_ui",
+      "prompt_file": "TASK.md",
+      "decline_expected": false,
+      "clarify_expected": false
+    },
+    {
+      "id": "cb_hold_decline",
+      "split": "holdout",
+      "category": "should_decline",
+      "fixture": "cb_hold_decline",
+      "prompt_file": "TASK.md",
+      "decline_expected": true,
+      "clarify_expected": false
+    },
+    {
+      "id": "cb_hold_clarify",
+      "split": "holdout",
+      "category": "should_clarify",
+      "fixture": "cb_hold_clarify",
+      "prompt_file": "TASK.md",
+      "decline_expected": false,
+      "clarify_expected": true
+    }
+  ]
+}

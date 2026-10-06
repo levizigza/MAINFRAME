@@ -1,0 +1,35 @@
+{
+  "name": "@mainframe/freeforge-cli",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Minimal FreeForge TypeScript CLI + OpenClaw adapter (loopback, free-only policy)",
+  "type": "module",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "bin": {
+    "freeforge": "./dist/cli.js"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "ff": "tsx src/cli.ts",
+    "accept": "tsx src/accept.ts",
+    "doctor": "tsx src/cli.ts doctor",
+    "start": "tsx src/cli.ts"
+  },
+  "dependencies": {
+    "commander": "12.1.0",
+    "sql.js": "1.12.0"
+  },
+  "devDependencies": {
+    "@types/node": "22.10.2",
+    "tsx": "4.19.2",
+    "typescript": "5.7.2"
+  },
+  "openclawPin": {
+    "ref": "v2026.9.6",
+    "commit": "eb377ac59e6c9fd6c7705028034812becf00271b",
+    "packageVersion": "2026.9.6",
+    "note": "Version-specific integration lives under src/openclaw/v2026_9_6/"
+  }
+}

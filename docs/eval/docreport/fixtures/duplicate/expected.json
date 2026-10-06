@@ -1,0 +1,5 @@
+[
+  {"record_id": "DUP-001", "date": "2024-05-01", "amount": "99.99", "unit": "USD", "party": "Same Party"},
+  {"record_id": "DUP-002", "date": "2024-05-02", "amount": "10.00", "unit": "USD", "party": "Other Party"},
+  {"record_id": "DUP-003", "date": "2024-05-03", "amount": "5.00", "unit": "USD", "party": "Third Party"}
+]

@@ -1,0 +1,34 @@
+{
+  "snapshot_id": "public-apis@8939d468fa45",
+  "source": {
+    "git_url": "https://github.com/public-apis/public-apis",
+    "pin_commit": "8939d468fa4580039c4e22cc4998eb3fef8130d1",
+    "source_tree": "https://github.com/public-apis/public-apis/tree/8939d468fa4580039c4e22cc4998eb3fef8130d1",
+    "readme_raw": "https://raw.githubusercontent.com/public-apis/public-apis/8939d468fa4580039c4e22cc4998eb3fef8130d1/README.md",
+    "license_raw": "https://raw.githubusercontent.com/public-apis/public-apis/8939d468fa4580039c4e22cc4998eb3fef8130d1/LICENSE"
+  },
+  "catalog_license": {
+    "spdx": "MIT",
+    "holder": "public-apis",
+    "file": "LICENSE",
+    "note": "MIT covers the catalog list text. Individual APIs have separate API terms and returned-data licenses."
+  },
+  "policy": {
+    "execute_linked_code": false,
+    "install_listed_mcp_servers": false,
+    "mark_every_entry_free_automatically": false,
+    "ads_confer_entitlement": false,
+    "commercial_listings_confer_entitlement": false,
+    "discovery_calls_listed_endpoints": false
+  },
+  "entry_count": 1959,
+  "advertisement_count": 36,
+  "readme_sha256": "078ba68ac522e0e3eab120393a79e9e4aa5b42ec60ce76fefe6d392b4195c6f7",
+  "marketing_noise_samples": [
+    "# APILayer Unified Suite in now Live! \ud83c\udf89 \ud83e\udd73",
+    "[APILayer unified suite](https://apilayer.com/products?utm_source=Github&utm_medium=Referral&utm_campaign=Public-apis-repo) allows you to integrate production-grade REST APIs using **One Account, One Dashboard, and One API key.** Whether you need to geocode an address, validate an email, fetch a flight, pull stock market data, or scrape a search result.",
+    "[Sign up](https://app.apilayer.com?utm_source=Github&utm_medium=Referral&utm_campaign=Public-apis-repo) and start building today!",
+    "Fork our official [APILayer Postman Collection](https://www.postman.com/apilayer/apilayer/collection/2uo8qbu/apilayer-suite) and get started in under 60 seconds.",
+    "![APILayer Banner](https://raw.githubusercontent.com/public-apis/public-apis/refs/heads/master/.github/assets/apilayer-banner.png)"
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "file_count_min": 12,
+  "privacy_excluded_paths": [".env", "secrets.json"],
+  "privacy_excluded_count_min": 2,
+  "ignored_must_not_appear": ["build/out.txt", "noise.bin"],
+  "packages": [
+    {"path": "pyproject.toml", "ecosystem": "python_package"},
+    {"path": "packages/alpha/package.json", "ecosystem": "node_package"},
+    {"path": "packages/beta/package.json", "ecosystem": "node_package"}
+  ],
+  "source_roots_must_include": ["src", "packages", "tests"],
+  "entry_points_must_include": ["src/app/__main__.py", "packages/alpha/index.ts"],
+  "tests_must_include": ["tests/test_util.py"],
+  "generated_must_include": ["package-lock.json"],
+  "dependencies_must_include": ["requirements.txt"],
+  "build_config_must_include": ["Makefile"],
+  "languages_must_include": ["python", "typescript", "json", "markdown"],
+  "embedding_service_used": false,
+  "model_request_used": false
+}

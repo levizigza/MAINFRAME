@@ -1,0 +1,6 @@
+{
+  "status": 200,
+  "headers": {"content-type": "text/plain"},
+  "body_text": "NOT_JSON{{{{",
+  "body": null
+}

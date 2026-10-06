@@ -1,0 +1,4 @@
+{
+  "required_keys": ["title", "source_hash", "sections", "generated_by"],
+  "section_min_count": 1
+}

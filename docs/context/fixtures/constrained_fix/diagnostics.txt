@@ -1,0 +1,1 @@
+FAIL tests/test_compute_total\nAssertionError: assert 10 == 60\nbuggy.py:6: in compute_total\n    return min(prices)\n

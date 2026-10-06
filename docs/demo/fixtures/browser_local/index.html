@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Local browser fixture</title>
+</head>
+<body>
+  <h1 id="heading">Before click</h1>
+  <button id="go" type="button">Go</button>
+  <script>
+    document.getElementById("go").addEventListener("click", function () {
+      document.getElementById("heading").textContent = "Clicked offline";
+    });
+  </script>
+</body>
+</html>

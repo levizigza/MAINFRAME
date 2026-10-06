@@ -1,0 +1,523 @@
+{
+  "ok": true,
+  "generated_at": "2026-10-06T19:03:53.753145+00:00",
+  "release_version": "0.1.48",
+  "target": {
+    "os": {
+      "sys_platform": "win32",
+      "platform_string": "Windows-11-10.0.26200-SP0",
+      "machine": "AMD64",
+      "nt_version": {
+        "probe_ok": true,
+        "raw": "{\"ProductName\":\"Windows 10 Home\",\"DisplayVersion\":\"25H2\",\"CurrentBuild\":\"26200\",\"InstallationType\":\"Client\"}",
+        "product_name": "Windows 10 Home",
+        "display_version": "25H2",
+        "current_build": "26200",
+        "installation_type": "Client"
+      },
+      "note": "platform.platform()=Windows-11-10.0.26200-SP0; registry ProductName=Windows 10 Home; DisplayVersion=25H2; CurrentBuild=26200. Build 26200 is the Windows 11 25H2 family; registry ProductName may still say 'Windows 10 Home' on some Home SKUs \u2014 document both observed values."
+    },
+    "python": {
+      "version": "3.12.4",
+      "executable": "C:\\Users\\levyz\\miniconda3\\python.exe",
+      "implementation": "CPython",
+      "meets_3_11": true
+    },
+    "tools": {
+      "node": {
+        "present": true,
+        "path": "C:\\Program Files\\nodejs\\node.EXE",
+        "version": "v22.12.0"
+      },
+      "git": {
+        "present": true,
+        "path": "C:\\Program Files\\Git\\cmd\\git.EXE",
+        "version": "git version 2.47.1.windows.1"
+      },
+      "rg": {
+        "present": true,
+        "path": "c:\\Users\\levyz\\Documents\\cursor\\resources\\app\\node_modules\\@vscode\\ripgrep\\bin\\rg.EXE"
+      }
+    },
+    "obsolete_installer_commands_refused": [
+      {
+        "command": "choco install python",
+        "reason": "Not verified on this host; Python already present via miniconda path",
+        "documented_as_required": false
+      },
+      {
+        "command": "winget install Python.Python.3",
+        "reason": "Not run; target already has Python 3.12 \u2014 do not invent installer steps",
+        "documented_as_required": false
+      },
+      {
+        "command": "pip install -r requirements.txt",
+        "reason": "Core has no required pip deps",
+        "documented_as_required": false
+      },
+      {
+        "command": "docker compose up",
+        "reason": "Docker Desktop not required for core; not present on this host",
+        "documented_as_required": false
+      }
+    ],
+    "setup_commands_verified_on_this_host": [
+      "\"C:\\Users\\levyz\\miniconda3\\python.exe\" -m mainframe status",
+      "\"C:\\Users\\levyz\\miniconda3\\python.exe\" -m mainframe doctor",
+      "\"C:\\Users\\levyz\\miniconda3\\python.exe\" -m mainframe run echo --param message=hello"
+    ],
+    "optional_not_present": {
+      "openclaw": true,
+      "docker": true
+    }
+  },
+  "pins": {
+    "release_version": "0.1.48",
+    "package_version": "0.1.48",
+    "python_core": {
+      "id": "python_stdlib_cli",
+      "requirement": "Python 3.11+ already installed",
+      "pip_install_required": false,
+      "license": "PSF + MAINFRAME MIT",
+      "source": "https://docs.python.org/3/library/",
+      "note": "Core `python -m mainframe` launches with zero pip packages."
+    },
+    "freeforge_cli": {
+      "id": "freeforge_cli_optional",
+      "required_for_core": false,
+      "engines": {
+        "node": ">=22.12.0"
+      },
+      "dependencies": {
+        "commander": "12.1.0",
+        "sql.js": "1.12.0"
+      },
+      "devDependencies": {
+        "@types/node": "22.10.2",
+        "tsx": "4.19.2",
+        "typescript": "5.7.2"
+      },
+      "licenses": {
+        "commander": "MIT",
+        "sql.js": "MIT",
+        "typescript": "Apache-2.0",
+        "tsx": "MIT",
+        "@types/node": "MIT"
+      },
+      "source": "freeforge-cli/package.json",
+      "openclaw_pin": {
+        "ref": "v2026.9.6",
+        "commit": "eb377ac59e6c9fd6c7705028034812becf00271b",
+        "packageVersion": "2026.9.6",
+        "license": "MIT",
+        "source": "https://github.com/openclaw/openclaw",
+        "required_for_core": false
+      }
+    },
+    "freeforge_cli_package_json_matches_pins": true,
+    "upstream_pins": {
+      "pinned_at": "2026-09-29",
+      "method": "GitHub REST API + upstream LICENSE/README/docs (no gh auth). Pins prefer release tags when present.",
+      "components": {
+        "openclaw/openclaw": {
+          "role": "local_gateway_and_scheduling",
+          "git_url": "https://github.com/openclaw/openclaw",
+          "default_branch": "main",
+          "pin_kind": "release_tag",
+          "pin_ref": "v2026.9.6",
+          "pin_commit": "eb377ac59e6c9fd6c7705028034812becf00271b",
+          "package_version_at_pin": "2026.9.6",
+          "observed_main_HEAD_at_audit": "e89ae266d753c55f127f4235adda7f24fe6c7fc1",
+          "license_spdx_github": "NOASSERTION",
+          "license_file_observed": "MIT (LICENSE Copyright 2026 OpenClaw Foundation)",
+          "notices": "THIRD_PARTY_NOTICES.md required when redistributing OpenClaw source portions",
+          "archived": false
+        },
+        "voideditor/void": {
+          "role": "deprecated_editor_reference_source_only",
+          "git_url": "https://github.com/voideditor/void",
+          "default_branch": "main",
+          "pin_kind": "commit",
+          "pin_ref": "b3166e7ef2aefbdfeb139445fdf248a561b85d4d",
+          "pin_commit": "b3166e7ef2aefbdfeb139445fdf248a561b85d4d",
+          "license_spdx_github": "Apache-2.0",
+          "license_file_observed": "Apache-2.0 (LICENSE.txt; appendix notice Copyright 2025 Glass Devtools, Inc.)",
+          "archived": true,
+          "status_note": "README states Void is deprecated and no longer accepting contributions; use as reusable editor source, not an automatically maintainable foundation."
+        },
+        "public-apis/public-apis": {
+          "role": "api_discovery_catalog",
+          "git_url": "https://github.com/public-apis/public-apis",
+          "default_branch": "master",
+          "pin_kind": "commit",
+          "pin_ref": "8939d468fa4580039c4e22cc4998eb3fef8130d1",
+          "pin_commit": "8939d468fa4580039c4e22cc4998eb3fef8130d1",
+          "license_spdx_github": "MIT",
+          "license_file_observed": "MIT (Copyright 2022 public-apis)",
+          "archived": false,
+          "snapshot_path": "docs/freeforge/public-apis-snapshot",
+          "maintenance_note": "Community-curated list; README also promotes APILayer commercial suite \u2014 FreeForge discovery must not treat APILayer marketing as a free required dependency. Local snapshot preserves MIT LICENSE + source links; entries default to unverified; ads confer no entitlement."
+        }
+      },
+      "coding_engine_selection": {
+        "selected": "openclaw_embedded_agent_runtime",
+        "not_selected": "opencode_acp_worker",
+        "spike_basis": "OpenClaw docs: embedded agent is one integrated loop; ACP launches a separate external harness process. Nesting both for the same FreeForge job is refused. Local probe 2026-09-29: openclaw=absent, opencode=absent, playwright=present."
+      },
+      "browser": {
+        "engine": "playwright",
+        "ownership": "FreeForge browser checks / site-maintenance verification"
+      },
+      "sqlite": {
+        "path": ".mainframe/freeforge.sqlite",
+        "ownership": "FreeForge-owned records only (distinct from OpenClaw ~/.openclaw SQLite)"
+      }
+    },
+    "notices_path": "docs/NOTICES.md",
+    "license_path": "LICENSE",
+    "license_spdx": "MIT",
+    "non_requirements": {
+      "hosted_ci": false,
+      "code_signing_service": false,
+      "cloud_storage": false,
+      "public_hosting": false,
+      "paid_account": false,
+      "trial_or_promo": false
+    }
+  },
+  "doctor": {
+    "ok": true,
+    "host_context": "native_windows",
+    "startup_tasks_enabled": false,
+    "docker_required": false
+  },
+  "credentials": {
+    "ok": true,
+    "credentials_required_for_core": false,
+    "eligible_inference_providers": [
+      "llamacpp_local",
+      "ollama_local"
+    ],
+    "eligible_inference_credentials": "none \u2014 loopback Ollama/llama.cpp; no API key",
+    "connectors_no_key": [
+      {
+        "id": "dog_ceo",
+        "auth_kind": "none"
+      },
+      {
+        "id": "open_meteo",
+        "auth_kind": "none"
+      },
+      {
+        "id": "frankfurter",
+        "auth_kind": "none"
+      }
+    ],
+    "connectors_with_auth_fields": [],
+    "secret_facility": {
+      "available": true,
+      "mechanism_preferred": "windows_dpapi",
+      "path_hint": ".mainframe/secrets/",
+      "never_in_config_json": true
+    },
+    "facility_status": {
+      "facility": "windows_dpapi",
+      "dpapi_available": true,
+      "root": "C:\\Users\\levyz\\OneDrive\\Microsoft Copilot Chat Files\\Documents\\MAINFRAME\\.mainframe\\secrets",
+      "entries": {}
+    },
+    "setup_steps": [
+      "Core: no credentials to configure.",
+      "Optional local model: install Ollama yourself; no MAINFRAME account.",
+      "Optional secrets: use secretdata facility only for eligible local adapters.",
+      "Hosted OpenAI/Anthropic/Groq/etc.: refused \u2014 do not store keys for them."
+    ],
+    "paid_hosted_credential_setup": false
+  },
+  "package": {
+    "ok": true,
+    "dest": "C:\\Users\\levyz\\OneDrive\\Microsoft Copilot Chat Files\\Documents\\MAINFRAME\\dist\\release\\mainframe-0.1.48",
+    "file_count": 408,
+    "missing": [],
+    "target": {
+      "os": {
+        "sys_platform": "win32",
+        "platform_string": "Windows-11-10.0.26200-SP0",
+        "machine": "AMD64",
+        "nt_version": {
+          "probe_ok": true,
+          "raw": "{\"ProductName\":\"Windows 10 Home\",\"DisplayVersion\":\"25H2\",\"CurrentBuild\":\"26200\",\"InstallationType\":\"Client\"}",
+          "product_name": "Windows 10 Home",
+          "display_version": "25H2",
+          "current_build": "26200",
+          "installation_type": "Client"
+        },
+        "note": "platform.platform()=Windows-11-10.0.26200-SP0; registry ProductName=Windows 10 Home; DisplayVersion=25H2; CurrentBuild=26200. Build 26200 is the Windows 11 25H2 family; registry ProductName may still say 'Windows 10 Home' on some Home SKUs \u2014 document both observed values."
+      },
+      "python": {
+        "version": "3.12.4",
+        "executable": "C:\\Users\\levyz\\miniconda3\\python.exe",
+        "implementation": "CPython",
+        "meets_3_11": true
+      },
+      "tools": {
+        "node": {
+          "present": true,
+          "path": "C:\\Program Files\\nodejs\\node.EXE",
+          "version": "v22.12.0"
+        },
+        "git": {
+          "present": true,
+          "path": "C:\\Program Files\\Git\\cmd\\git.EXE",
+          "version": "git version 2.47.1.windows.1"
+        },
+        "rg": {
+          "present": true,
+          "path": "c:\\Users\\levyz\\Documents\\cursor\\resources\\app\\node_modules\\@vscode\\ripgrep\\bin\\rg.EXE"
+        }
+      },
+      "obsolete_installer_commands_refused": [
+        {
+          "command": "choco install python",
+          "reason": "Not verified on this host; Python already present via miniconda path",
+          "documented_as_required": false
+        },
+        {
+          "command": "winget install Python.Python.3",
+          "reason": "Not run; target already has Python 3.12 \u2014 do not invent installer steps",
+          "documented_as_required": false
+        },
+        {
+          "command": "pip install -r requirements.txt",
+          "reason": "Core has no required pip deps",
+          "documented_as_required": false
+        },
+        {
+          "command": "docker compose up",
+          "reason": "Docker Desktop not required for core; not present on this host",
+          "documented_as_required": false
+        }
+      ],
+      "setup_commands_verified_on_this_host": [
+        "\"C:\\Users\\levyz\\miniconda3\\python.exe\" -m mainframe status",
+        "\"C:\\Users\\levyz\\miniconda3\\python.exe\" -m mainframe doctor",
+        "\"C:\\Users\\levyz\\miniconda3\\python.exe\" -m mainframe run echo --param message=hello"
+      ],
+      "optional_not_present": {
+        "openclaw": true,
+        "docker": true
+      }
+    },
+    "manifest": "MANIFEST.json"
+  },
+  "clean_install_smoke": {
+    "ok": true,
+    "release_version": "0.1.48",
+    "tree": "C:\\Users\\levyz\\OneDrive\\Microsoft Copilot Chat Files\\Documents\\MAINFRAME\\dist\\release\\mainframe-0.1.48",
+    "passed": 3,
+    "total": 3,
+    "checks": [
+      {
+        "id": "status",
+        "ok": true,
+        "detail": 0
+      },
+      {
+        "id": "echo",
+        "ok": true,
+        "detail": 0
+      },
+      {
+        "id": "offline_fixture",
+        "ok": true,
+        "detail": 0,
+        "stderr_tail": ""
+      }
+    ],
+    "pip_install_used": false,
+    "hosted_ci_used": false
+  },
+  "backup_restore": {
+    "ok": true,
+    "backup": {
+      "ok": true,
+      "archive": "C:\\Users\\levyz\\OneDrive\\Microsoft Copilot Chat Files\\Documents\\MAINFRAME\\.mainframe\\backups\\mainframe-backup-20261006T190402Z.zip",
+      "included_count": 26,
+      "skipped": [
+        "freeforge_schedule.sqlite",
+        "projects/proj_a_184058422655/secrets/db_pass.sealed",
+        "projects/proj_a_184058422655/secrets/index.json",
+        "projects/proj_a_184415837503/secrets/db_pass.sealed",
+        "projects/proj_a_184415837503/secrets/index.json"
+      ],
+      "include_secrets": false,
+      "cloud_storage": false
+    },
+    "restore": {
+      "ok": true,
+      "archive": "C:\\Users\\levyz\\OneDrive\\Microsoft Copilot Chat Files\\Documents\\MAINFRAME\\.mainframe\\backups\\mainframe-backup-20261006T190402Z.zip",
+      "restored_count": 26,
+      "dest": "C:\\Users\\levyz\\OneDrive\\Microsoft Copilot Chat Files\\Documents\\MAINFRAME\\.mainframe",
+      "cloud_storage": false
+    }
+  },
+  "migrate": {
+    "ok": true,
+    "workflow": {
+      "ok": true,
+      "from_version": "0.9",
+      "to_version": "1.0",
+      "saved_to": "C:\\Users\\levyz\\OneDrive\\Microsoft Copilot Chat Files\\Documents\\MAINFRAME\\.mainframe\\workflows\\migrated\\input_to_report\\workflow.json"
+    },
+    "db_recovery": {
+      "ok": true,
+      "cols_before": [
+        "created_at",
+        "error",
+        "format_version",
+        "inputs_json",
+        "outputs_json",
+        "run_id",
+        "state",
+        "updated_at",
+        "workflow_id"
+      ],
+      "cols_after": [
+        "cancel_requested",
+        "created_at",
+        "error",
+        "format_version",
+        "inputs_json",
+        "outputs_json",
+        "run_id",
+        "state",
+        "updated_at",
+        "workflow_id"
+      ],
+      "legacy_row_preserved": "run_legacy",
+      "recovered_db": "C:\\Users\\levyz\\OneDrive\\Microsoft Copilot Chat Files\\Documents\\MAINFRAME\\.mainframe\\migrate_recovery\\recovered_receipts.sqlite",
+      "store_path": "C:\\Users\\levyz\\AppData\\Local\\Temp\\mf-migrate-7erquqcz\\legacy_receipts.sqlite"
+    }
+  },
+  "upgrade": {
+    "ok": true,
+    "compatible": true,
+    "from_version": "0.1.48",
+    "to_release_version": "0.1.48",
+    "package_version": "0.1.48",
+    "workflow_format_supported": [
+      "1.0"
+    ],
+    "compat_floor": "0.1.0",
+    "state_files_present": {
+      "config.json": true,
+      "freeforge_schedule.sqlite": false,
+      "freeforge_workflow_receipts.sqlite": true
+    },
+    "freeforge_cli_pins_match": true,
+    "package_lock_present": true,
+    "issues": [],
+    "breaking_changes": [],
+    "migration_required": {
+      "workflows": "format_version must be in ['1.0']",
+      "sqlite": "WorkflowReceiptStore applies additive migrations on open"
+    },
+    "hosted_ci_required": false,
+    "notes": "Core Python path remains stdlib-only across upgrades. Optional Node CLI uses pinned package.json + lockfile when present.",
+    "pins_summary": {
+      "release_version": "0.1.48",
+      "license_spdx": "MIT",
+      "non_requirements": {
+        "hosted_ci": false,
+        "code_signing_service": false,
+        "cloud_storage": false,
+        "public_hosting": false,
+        "paid_account": false,
+        "trial_or_promo": false
+      }
+    },
+    "package_json_path": "C:\\Users\\levyz\\OneDrive\\Microsoft Copilot Chat Files\\Documents\\MAINFRAME\\freeforge-cli\\package.json"
+  },
+  "startup": {
+    "ok": true,
+    "register": {
+      "ok": true,
+      "os_logon": {
+        "attempted": true,
+        "ok": false,
+        "create": {
+          "ok": false,
+          "exit_code": 1,
+          "stdout": "",
+          "stderr": "ERROR: Access is denied."
+        },
+        "access_denied": true
+      },
+      "not_tested": [
+        "actual_logon_fire",
+        "schtasks_create_elevated"
+      ]
+    },
+    "status_local_after_create": true,
+    "remove": {
+      "ok": true,
+      "local_after": false
+    },
+    "auto_enabled_by_install": false
+  },
+  "uninstall_plan": {
+    "release_version": "0.1.48",
+    "steps": [
+      {
+        "id": "remove_startup_task",
+        "command": "python -m mainframe release startup-remove",
+        "required": false,
+        "present": false
+      },
+      {
+        "id": "optional_delete_state",
+        "path": "C:\\Users\\levyz\\OneDrive\\Microsoft Copilot Chat Files\\Documents\\MAINFRAME\\.mainframe",
+        "note": "Back up first; contains user notes and local DBs",
+        "required": false
+      },
+      {
+        "id": "delete_install_tree",
+        "path": "C:\\Users\\levyz\\OneDrive\\Microsoft Copilot Chat Files\\Documents\\MAINFRAME",
+        "note": "Delete the folder you extracted or cloned",
+        "required": true
+      }
+    ],
+    "not_applicable": [
+      "cancel_cloud_subscription",
+      "revoke_hosted_ci",
+      "remove_code_signing_cert_service",
+      "empty_cloud_object_storage",
+      "unpublish_public_hosting"
+    ],
+    "global_pip_package": false,
+    "windows_service": false
+  },
+  "documented_not_tested": [
+    "OpenClaw Gateway install/start (openclaw binary absent on packaging host)",
+    "Docker Desktop install (not present; not required)",
+    "Actual Windows logon Task Scheduler create (Access denied without elevation on this host; local FreeForge startup job register/remove verified instead)",
+    "Actual Windows logon fire of MAINFRAME-LocalStatus task",
+    "winget/choco Python installers (Python already present \u2014 commands refused)",
+    "Code-signing a release binary (no signing service; source tree distribution only)",
+    "Uploading package to cloud object storage or public hosting"
+  ],
+  "acceptance": {
+    "clean_install_smoke": true,
+    "backup_restore": true,
+    "migrate_workflow_and_db": true,
+    "upgrade_check": true,
+    "startup_explicit_removable": true,
+    "doctor_ran": true,
+    "pins_and_licenses_present": true,
+    "no_hosted_ci_signing_cloud_hosting_required": true,
+    "obsolete_installers_not_required": true,
+    "credentials_not_required_for_core": true
+  },
+  "report_md": "docs/RELEASE.md",
+  "report_json": "docs/RELEASE.json"
+}

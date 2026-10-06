@@ -1,0 +1,21 @@
+{
+  "status": 200,
+  "headers": {"content-type": "application/json"},
+  "pages": [
+    {
+      "status": 200,
+      "body": {
+        "items": [{"code": "USD"}, {"code": "EUR"}, {"code": "GBP"}, {"code": "JPY"}, {"code": "CAD"}],
+        "next": "page2",
+        "_partial": true
+      }
+    },
+    {
+      "status": 200,
+      "body": {
+        "items": [{"code": "CHF"}],
+        "next": null
+      }
+    }
+  ]
+}

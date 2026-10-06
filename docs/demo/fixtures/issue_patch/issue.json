@@ -1,0 +1,12 @@
+{
+  "issue_id": "ISSUE-42",
+  "title": "multiply returns sum instead of product",
+  "file": "mathlib.py",
+  "failing_test": "test_mathlib.py",
+  "scripted_model_output": {
+    "tool": "apply_patch",
+    "path": "mathlib.py",
+    "old": "return a + b  # BUG: should multiply",
+    "new": "return a * b  # fixed by mock inference fixture"
+  }
+}

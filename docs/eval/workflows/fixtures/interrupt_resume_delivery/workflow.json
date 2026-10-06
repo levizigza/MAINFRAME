@@ -1,0 +1,123 @@
+{
+  "format_version": "1.0",
+  "id": "interrupt_resume_delivery",
+  "description": "Multi-step: write artifact then deliver — for interrupt/resume/delivery tests",
+  "permissions": ["local.read", "local.write", "local.artifact", "human.decide"],
+  "artifacts": [
+    {"id": "report_json", "path": "report.json", "content_type": "application/json"}
+  ],
+  "inputs": {
+    "type": "object",
+    "properties": {"title": {"type": "string"}},
+    "additionalProperties": false
+  },
+  "outputs": {
+    "type": "object",
+    "properties": {
+      "artifact_path": {"type": "string"},
+      "sha256": {"type": "string"},
+      "delivery_status": {"type": "string"}
+    }
+  },
+  "output_steps": ["write_report", "deliver"],
+  "steps": [
+    {
+      "id": "load",
+      "kind": "deterministic",
+      "handler": "load_records",
+      "depends_on": [],
+      "permissions": ["local.read"],
+      "effects": [],
+      "timeout_ms": 5000,
+      "retries": {"max": 1, "backoff_ms": 10},
+      "args": {"path": "records.json"},
+      "inputs": {"type": "object", "properties": {}},
+      "outputs": {
+        "type": "object",
+        "required": ["records", "count"],
+        "properties": {"records": {"type": "array"}, "count": {"type": "integer"}}
+      }
+    },
+    {
+      "id": "transform",
+      "kind": "deterministic",
+      "handler": "transform_report",
+      "depends_on": ["load"],
+      "permissions": ["local.read"],
+      "effects": [],
+      "timeout_ms": 5000,
+      "retries": {"max": 0, "backoff_ms": 0},
+      "inputs": {
+        "type": "object",
+        "required": ["records", "count"],
+        "properties": {
+          "records": {"type": "array"},
+          "count": {"type": "integer"},
+          "title": {"type": "string"}
+        }
+      },
+      "outputs": {
+        "type": "object",
+        "required": ["report"],
+        "properties": {"report": {"type": "object"}}
+      }
+    },
+    {
+      "id": "write_report",
+      "kind": "deterministic",
+      "handler": "write_artifact",
+      "depends_on": ["transform"],
+      "permissions": ["local.write", "local.artifact"],
+      "effects": ["write_report_json"],
+      "mutates": true,
+      "artifact_refs": ["report_json"],
+      "timeout_ms": 5000,
+      "retries": {"max": 0, "backoff_ms": 0},
+      "args": {"path": "report.json"},
+      "inputs": {
+        "type": "object",
+        "required": ["report"],
+        "properties": {"report": {"type": "object"}}
+      },
+      "outputs": {
+        "type": "object",
+        "required": ["artifact_path", "sha256"],
+        "properties": {
+          "artifact_path": {"type": "string"},
+          "sha256": {"type": "string"},
+          "bytes": {"type": "integer"},
+          "operation_id": {"type": "string"},
+          "effect_receipt": {"type": "object"}
+        }
+      }
+    },
+    {
+      "id": "deliver",
+      "kind": "deterministic",
+      "handler": "deliver_report",
+      "depends_on": ["write_report"],
+      "permissions": ["local.write"],
+      "effects": ["deliver_external"],
+      "mutates": true,
+      "timeout_ms": 5000,
+      "retries": {"max": 0, "backoff_ms": 0},
+      "inputs": {
+        "type": "object",
+        "required": ["artifact_path"],
+        "properties": {
+          "artifact_path": {"type": "string"},
+          "sha256": {"type": "string"}
+        }
+      },
+      "outputs": {
+        "type": "object",
+        "properties": {
+          "delivery_status": {"type": "string"},
+          "execution_status": {"type": "string"},
+          "operation_id": {"type": "string"},
+          "effect_receipt": {"type": "object"}
+        }
+      }
+    }
+  ]
+}

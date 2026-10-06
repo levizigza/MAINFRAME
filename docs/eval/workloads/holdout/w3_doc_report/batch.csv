@@ -1,0 +1,6 @@
+record_id,date,amount,unit,party,notes
+HOLD-001,2026-01-02,12.50,USD,Holdout Alpha,ok
+HOLD-002,2026-01-03,7.25,USD,Holdout Beta,ok
+HOLD-002,2026-01-03,7.25,USD,Holdout Beta,ok
+HOLD-003,2026-01-04,bad,USD,Holdout Gamma,invalid amount
+HOLD-004,2026-01-05,3.00,USD,Holdout Delta,ok

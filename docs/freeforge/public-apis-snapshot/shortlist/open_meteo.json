@@ -1,0 +1,35 @@
+{
+  "id": "open_meteo",
+  "catalog_name": "Open-Meteo",
+  "official_docs": "https://open-meteo.com/en/docs",
+  "pricing_evidence": {
+    "model": "free_no_key",
+    "recurring_free": true,
+    "trial_only": false,
+    "paid_upgrade_required": false,
+    "evidence_url": "https://open-meteo.com/en/docs",
+    "evidence_note": "Non-commercial free API documented; no API key for standard forecast. Verified endpoint 200 on 2026-09-29.",
+    "verified_at": "2026-09-29"
+  },
+  "authentication": {"required": false, "schemes": [], "note": "No key for documented forecast path."},
+  "recurring_quotas": {
+    "documented": true,
+    "hard_cap": null,
+    "note": "Fair-use; treat as best-effort public service.",
+    "verified_at": "2026-09-29"
+  },
+  "intended_use_restrictions": [],
+  "attribution": {
+    "required": true,
+    "text": "Weather data by Open-Meteo.com (CC BY 4.0)"
+  },
+  "retention": {"stores_caller_content": false, "note": "Coordinates in query only."},
+  "availability": {"status": "available", "note": "Live forecast probe 200 at verification."},
+  "licenses": {
+    "catalog_license": {"spdx": "MIT", "scope": "public-apis list entry if present", "source": "docs/freeforge/public-apis-snapshot/LICENSE"},
+    "api_terms": {"summary": "Open-Meteo free API terms / CC BY attribution for data.", "url": "https://open-meteo.com/en/docs", "verified_at": "2026-09-29"},
+    "returned_data_license": {"summary": "CC BY 4.0 weather data (attribution required).", "spdx": "CC-BY-4.0", "note": "Distinct from catalog MIT."}
+  },
+  "last_verification": "2026-09-29",
+  "evidence_expires_at": "2027-09-29"
+}

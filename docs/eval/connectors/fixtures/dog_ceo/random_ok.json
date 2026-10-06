@@ -1,0 +1,8 @@
+{
+  "status": 200,
+  "headers": {"content-type": "application/json"},
+  "body": {
+    "message": "https://images.dog.ceo/breeds/hound-afghan/n02088094_1003.jpg",
+    "status": "success"
+  }
+}

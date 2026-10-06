@@ -1,0 +1,4 @@
+[
+  {"record_id": "MAL-002", "date": null, "amount": "10.00", "unit": "USD", "party": "Ok Party"},
+  {"record_id": "MAL-003", "date": null, "amount": "12.50", "unit": "USD", "party": "Delta Inc"}
+]

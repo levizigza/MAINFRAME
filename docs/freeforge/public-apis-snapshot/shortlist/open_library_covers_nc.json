@@ -1,0 +1,59 @@
+{
+  "id": "open_library_covers_nc",
+  "catalog_name": "Open Library",
+  "catalog_link_contains": "openlibrary.org",
+  "official_docs": "https://openlibrary.org/developers/api",
+  "pricing_evidence": {
+    "model": "free_with_restrictions",
+    "recurring_free": true,
+    "trial_only": false,
+    "paid_upgrade_required": false,
+    "evidence_url": "https://openlibrary.org/developers/api",
+    "evidence_note": "Fixture shortlist encodes a noncommercial-only intended-use restriction for acceptance of commercial-workflow rejection.",
+    "verified_at": "2026-09-29"
+  },
+  "authentication": {
+    "required": false,
+    "schemes": [],
+    "note": "Public developer API documented without mandatory paid key."
+  },
+  "recurring_quotas": {
+    "documented": true,
+    "hard_cap": null,
+    "note": "Rate limits may apply; not a paid entitlement.",
+    "verified_at": "2026-09-29"
+  },
+  "intended_use_restrictions": ["noncommercial_only"],
+  "attribution": {
+    "required": true,
+    "text": "Attribute Open Library / Internet Archive when required by upstream terms."
+  },
+  "retention": {
+    "stores_caller_content": false,
+    "note": "Public catalog queries."
+  },
+  "availability": {
+    "status": "available",
+    "note": "Docs present; activation still blocked for commercial workflows by intended-use restriction."
+  },
+  "licenses": {
+    "catalog_license": {
+      "spdx": "MIT",
+      "scope": "public-apis list entry only",
+      "source": "docs/freeforge/public-apis-snapshot/LICENSE"
+    },
+    "api_terms": {
+      "summary": "Developer API terms; shortlist records noncommercial_only for commercial-workflow gating.",
+      "url": "https://openlibrary.org/developers/api",
+      "verified_at": "2026-09-29"
+    },
+    "returned_data_license": {
+      "summary": "Bibliographic/cover data rights are separate from the public-apis MIT catalog license.",
+      "spdx": null,
+      "note": "Returned-data license ≠ catalog license ≠ API terms."
+    }
+  },
+  "last_verification": "2026-09-29",
+  "evidence_expires_at": "2027-09-29",
+  "notes": "Restricted: noncommercial_only — reject activation when workflow_purpose=commercial."
+}

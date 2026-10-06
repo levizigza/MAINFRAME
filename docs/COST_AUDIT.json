@@ -1,0 +1,1009 @@
+{
+  "suite": "reproducible_cost_audit",
+  "generated_at": "2026-10-06T18:57:14.576309+00:00",
+  "contract": "strict_free_only",
+  "cost_posture": {
+    "required_fees": false,
+    "required_api_keys": false,
+    "required_subscriptions": false,
+    "required_hosting": false,
+    "required_gpu": false,
+    "paid_accounts_allowed": false,
+    "trials_allowed": false,
+    "promotional_credits_allowed": false,
+    "paid_fallbacks_allowed": false,
+    "hosted_engines_allowed": false,
+    "cloud_databases_allowed": false,
+    "remote_execution_allowed": false,
+    "analytics_allowed": false,
+    "hosted_search_allowed": false,
+    "cloud_storage_allowed": false,
+    "local_llm_required": false,
+    "deterministic_without_ai": true
+  },
+  "surfaces": {
+    "surfaces_catalog": [
+      {
+        "id": "installation",
+        "checks": [
+          "pip_required",
+          "node_required_for_core",
+          "account_signup"
+        ],
+        "expected": "stdlib Python launch; no required pip/paid install"
+      },
+      {
+        "id": "runtime",
+        "checks": [
+          "hosted_runtime",
+          "cloud_minutes",
+          "remote_exec"
+        ],
+        "expected": "local python -m mainframe only"
+      },
+      {
+        "id": "inference",
+        "checks": [
+          "hosted_llm",
+          "auto_fallback_paid",
+          "trial_unlock"
+        ],
+        "expected": "loopback Ollama/llama.cpp optional; else pause"
+      },
+      {
+        "id": "search",
+        "checks": [
+          "hosted_search",
+          "paid_embeddings",
+          "remote_vector_db"
+        ],
+        "expected": "local retrieve / inspect only"
+      },
+      {
+        "id": "models",
+        "checks": [
+          "cloud_model_aliases",
+          "auto_pull_billing",
+          "colon_cloud"
+        ],
+        "expected": "explicit local pull; :cloud refused"
+      },
+      {
+        "id": "plugins",
+        "checks": [
+          "marketplace_fees",
+          "auto_install_network",
+          "mcp_paid"
+        ],
+        "expected": "no required paid plugins; MCP fee/permission re-eval"
+      },
+      {
+        "id": "browser_use",
+        "checks": [
+          "cloud_browser",
+          "hosted_playwright"
+        ],
+        "expected": "local Playwright/Chromium optional"
+      },
+      {
+        "id": "storage",
+        "checks": [
+          "cloud_db",
+          "object_storage",
+          "hosted_cache"
+        ],
+        "expected": ".mainframe/ local files + SQLite"
+      },
+      {
+        "id": "notifications",
+        "checks": [
+          "openclaw_announce_auto",
+          "paid_webhook",
+          "sms"
+        ],
+        "expected": "local inbox default; OpenClaw deliver gated/--no-deliver"
+      },
+      {
+        "id": "backups",
+        "checks": [
+          "cloud_backup_saas"
+        ],
+        "expected": "no required hosted backup product"
+      },
+      {
+        "id": "ci",
+        "checks": [
+          "hosted_ci_minutes",
+          "required_github_actions_billing"
+        ],
+        "expected": "local accept/faults; no required hosted CI"
+      },
+      {
+        "id": "distribution",
+        "checks": [
+          "app_store_fees",
+          "paid_installer"
+        ],
+        "expected": "source tree + MIT; no paid distribution required"
+      }
+    ],
+    "findings": [
+      {
+        "surface": "installation",
+        "hidden_paid": false,
+        "detail": {
+          "requirements_txt_at_root": false,
+          "core_launch": "python -m mainframe (stdlib)",
+          "note": "Optional tools (Playwright, Ollama, Tesseract) are not required to install MAINFRAME."
+        },
+        "ok": true
+      },
+      {
+        "surface": "inference",
+        "hidden_paid": false,
+        "eligible": [
+          "llamacpp_local",
+          "ollama_local"
+        ],
+        "disabled": [
+          "analytics_telemetry",
+          "anthropic_api",
+          "aws_bedrock",
+          "azure_openai",
+          "cloud_databases",
+          "cloud_object_storage",
+          "google_gemini_api",
+          "groq_cloud",
+          "hf_inference_api",
+          "hosted_search",
+          "mistral_api",
+          "model_code_hypothesis",
+          "openai_api",
+          "paid_embedding_api",
+          "remote_execution",
+          "remote_vector_db",
+          "together_fireworks_replicate"
+        ],
+        "fallback_scan": {
+          "ok": true,
+          "hits": []
+        },
+        "ok": true
+      },
+      {
+        "surface": "search",
+        "components": [
+          {
+            "component": "hosted_search",
+            "status": "disabled"
+          },
+          {
+            "component": "remote_vector_db",
+            "status": "disabled"
+          },
+          {
+            "component": "paid_embedding_api",
+            "status": "disabled"
+          },
+          {
+            "component": "sqlite_fts5_local",
+            "status": "eligible"
+          }
+        ],
+        "hidden_paid": false,
+        "ok": true,
+        "detail": "Disabled hosted rows must not appear as eligible."
+      },
+      {
+        "surface": "storage",
+        "components": [
+          {
+            "component": "cloud_databases",
+            "status": "disabled"
+          },
+          {
+            "component": "cloud_object_storage",
+            "status": "disabled"
+          },
+          {
+            "component": "local_state_files",
+            "status": "eligible"
+          }
+        ],
+        "hidden_paid": false,
+        "ok": true,
+        "detail": "Disabled hosted rows must not appear as eligible."
+      },
+      {
+        "surface": "runtime",
+        "components": [
+          {
+            "component": "remote_execution",
+            "status": "disabled"
+          },
+          {
+            "component": "python_stdlib_cli",
+            "status": "eligible"
+          }
+        ],
+        "hidden_paid": false,
+        "ok": true,
+        "detail": "Disabled hosted rows must not appear as eligible."
+      },
+      {
+        "surface": "browser_use",
+        "components": [
+          {
+            "component": "playwright_browser_tools",
+            "status": "unknown"
+          }
+        ],
+        "hidden_paid": false,
+        "ok": true,
+        "detail": "Disabled hosted rows must not appear as eligible."
+      },
+      {
+        "surface": "ci",
+        "components": [
+          {
+            "component": "fault_injection_matrix",
+            "status": "unknown"
+          }
+        ],
+        "hidden_paid": false,
+        "ok": true,
+        "detail": "Disabled hosted rows must not appear as eligible."
+      },
+      {
+        "surface": "notifications",
+        "components": [
+          {
+            "component": "local_dashboard",
+            "status": "unknown"
+          },
+          {
+            "component": "openclaw_schedule_integration",
+            "status": "unknown"
+          }
+        ],
+        "hidden_paid": false,
+        "ok": true,
+        "detail": "Disabled hosted rows must not appear as eligible."
+      },
+      {
+        "surface": "plugins",
+        "hidden_paid": false,
+        "ok": true,
+        "detail": "MCP optional; fee/permission fingerprint re-eval; no marketplace required"
+      },
+      {
+        "surface": "backups",
+        "hidden_paid": false,
+        "ok": true,
+        "detail": "No SaaS backup product wired; local .mainframe/ only"
+      },
+      {
+        "surface": "distribution",
+        "hidden_paid": false,
+        "ok": true,
+        "license_file": "LICENSE",
+        "detail": "MIT source distribution; no paid installer required"
+      }
+    ],
+    "all_surfaces_clear": true,
+    "entitlements_path": "C:\\Users\\levyz\\OneDrive\\Microsoft Copilot Chat Files\\Documents\\MAINFRAME\\.mainframe\\entitlements.json",
+    "entitlements": [],
+    "inherited_defaults": {
+      "cost_posture_forces_free": true,
+      "ai_provider_default": "ollama_local",
+      "notify_default_channel": "local_inbox",
+      "notify_auto_outbound": false,
+      "openclaw_messaging_enabled": false,
+      "connector_default_mode": "fixture",
+      "spending_switches_never_honored": [
+        "ALLOW_BILLING",
+        "ALLOW_PAID",
+        "AUTO_UPGRADE",
+        "ENABLE_SPENDING",
+        "FORCE_PAID",
+        "FREEFORGE_ALLOW_PAID",
+        "MAINFRAME_ALLOW_PAID",
+        "UNLOCK_PAID_ROUTES"
+      ]
+    },
+    "zero_fee_claims": [
+      "no_required_software_subscription",
+      "no_required_api_key_purchase",
+      "no_required_hosted_runtime",
+      "no_required_trial_or_promotional_credit",
+      "no_automatic_paid_fallback"
+    ],
+    "physical_resources_not_fees": [
+      "electricity",
+      "local_cpu_gpu_time",
+      "local_disk",
+      "local_ram",
+      "user_internet_for_optional_free_apis",
+      "optional_model_download_bandwidth"
+    ],
+    "separation": {
+      "zero_fees_mean": "No required paid account, trial, promo credit, or hosted SaaS for core.",
+      "physical_resources_mean": "Electricity, CPU/GPU, disk, RAM, and optional bandwidth for user-chosen local model downloads or optional free API calls remain user-borne."
+    }
+  },
+  "outbound": {
+    "paths": [
+      {
+        "component": "openclaw_scheduler",
+        "owner": "openclaw_gateway",
+        "path": "schedule \u2192 openclaw --command-argv + --no-deliver",
+        "default_destination": "none",
+        "control": "freeforge_schedule_policy + --no-deliver",
+        "may_reach_internet": false,
+        "note": "Command jobs do not start agent turns; delivery defaults to none"
+      },
+      {
+        "component": "openclaw_messaging",
+        "owner": "dashboard.notify",
+        "path": "announce/webhook channels",
+        "default_destination": "disabled",
+        "control": "refuse_openclaw_outbound until fee/connector/recipient/disclosure verified",
+        "may_reach_internet": false
+      },
+      {
+        "component": "coding_engine",
+        "owner": "local_model / ai / workflows.ai_runtime",
+        "path": "loopback Ollama / llama.cpp only",
+        "default_destination": "127.0.0.1",
+        "control": "eligibility + cost_gate.authorize(inference)",
+        "may_reach_internet": false
+      },
+      {
+        "component": "connectors_live",
+        "owner": "connectors.http_client.LiveTransport",
+        "path": "allowlisted free APIs (dog.ceo, open-meteo, frankfurter)",
+        "default_destination": "fixture mode",
+        "control": "host allowlist + costaudit.boundary.gate_url",
+        "may_reach_internet": true,
+        "note": "Live mode refused when OS network isolation unavailable"
+      },
+      {
+        "component": "plugins_mcp",
+        "owner": "tools.mcp_bridge",
+        "path": "optional MCP registration",
+        "default_destination": "none until fingerprint+fee re-eval",
+        "control": "fee_or_permission_changed refuse",
+        "may_reach_internet": false
+      },
+      {
+        "component": "workers_browser",
+        "owner": "browser.session",
+        "path": "local Chromium user-data profiles",
+        "default_destination": "user-navigated URLs",
+        "control": "per-project profile; submit_guard holds external posts",
+        "may_reach_internet": true,
+        "note": "Browser can reach internet if user/page navigates \u2014 not an OS jail"
+      },
+      {
+        "component": "visual_bridge",
+        "owner": "visual.server",
+        "path": "loopback HTTP form",
+        "default_destination": "127.0.0.1",
+        "control": "loopback_only host check",
+        "may_reach_internet": false
+      },
+      {
+        "component": "dashboard",
+        "owner": "dashboard.server",
+        "path": "loopback HTML + local inbox",
+        "default_destination": "127.0.0.1 / .mainframe/notifications",
+        "control": "loopback_only; OpenClaw notify refused",
+        "may_reach_internet": false
+      }
+    ],
+    "network_enforcement": {
+      "os_network_isolation": false,
+      "application_policy_alone_constrains_arbitrary_processes": false,
+      "note": "Application-level policy cannot constrain arbitrary processes that already have network access. Non-loopback live outbound is disabled unless OS network isolation is verified on this host.",
+      "job_object_process_limits": true,
+      "isolation_mechanism": "windows_job_object"
+    },
+    "eligible_inference": [
+      "llamacpp_local",
+      "ollama_local"
+    ],
+    "disabled_hosted": [
+      "analytics_telemetry",
+      "anthropic_api",
+      "aws_bedrock",
+      "azure_openai",
+      "cloud_databases",
+      "cloud_object_storage",
+      "google_gemini_api",
+      "groq_cloud",
+      "hf_inference_api",
+      "hosted_search",
+      "mistral_api",
+      "model_code_hypothesis",
+      "openai_api",
+      "paid_embedding_api",
+      "remote_execution",
+      "remote_vector_db",
+      "together_fireworks_replicate"
+    ],
+    "control_proofs": [
+      {
+        "path": "inference:openai_api",
+        "passed_control": true,
+        "detail": {
+          "allowed": false,
+          "capability": "inference",
+          "target": "openai_api",
+          "reason": "Target 'openai_api' is registered as non-free / chargeable \u2014 blocked before dispatch.",
+          "local_zero_fee": false,
+          "entitlement_id": null,
+          "denied_code": "chargeable_or_disabled_target",
+          "spending_switch_attempted": false,
+          "zero_token_price_rejected": false
+        }
+      },
+      {
+        "path": "inference:anthropic_api",
+        "passed_control": true,
+        "detail": {
+          "allowed": false,
+          "capability": "inference",
+          "target": "anthropic_api",
+          "reason": "Target 'anthropic_api' is registered as non-free / chargeable \u2014 blocked before dispatch.",
+          "local_zero_fee": false,
+          "entitlement_id": null,
+          "denied_code": "chargeable_or_disabled_target",
+          "spending_switch_attempted": false,
+          "zero_token_price_rejected": false
+        }
+      },
+      {
+        "path": "inference:groq_cloud",
+        "passed_control": true,
+        "detail": {
+          "allowed": false,
+          "capability": "inference",
+          "target": "groq_cloud",
+          "reason": "Target 'groq_cloud' is registered as non-free / chargeable \u2014 blocked before dispatch.",
+          "local_zero_fee": false,
+          "entitlement_id": null,
+          "denied_code": "chargeable_or_disabled_target",
+          "spending_switch_attempted": false,
+          "zero_token_price_rejected": false
+        }
+      },
+      {
+        "path": "openclaw_messaging",
+        "passed_control": true,
+        "detail": {
+          "ok": false,
+          "refused": true,
+          "error": "openclaw_messaging_not_verified",
+          "destination": "billing@example.com",
+          "outbound_attempted": false,
+          "work_rerun": false,
+          "policy": {
+            "default_channel": "local_inbox",
+            "openclaw_messaging_enabled": false,
+            "automatic_outbound_delivery": false,
+            "inherited_auto_deliver_disabled": true,
+            "scheduler_owner": "openclaw_gateway",
+            "openclaw_channel_requirements": [
+              "verify_account_fees_zero_or_eligible",
+              "verify_connector_behavior",
+              "verify_recipient_authorization",
+              "verify_disclosure_scope"
+            ],
+            "note": "OpenClaw announce/webhook channels stay disabled until fees, connector behavior, recipient authorization, and disclosure scope are verified. Schedule payloads continue to use --no-deliver by default."
+          },
+          "note": "Notification failure or refusal must not rerun completed work or retarget delivery."
+        }
+      },
+      {
+        "path": "openclaw_command_payload",
+        "passed_control": true,
+        "detail": {
+          "ok": true,
+          "delivery": {
+            "mode": "none",
+            "outbound_enabled": false
+          },
+          "has_no_deliver": true
+        }
+      },
+      {
+        "path": "non_loopback_live",
+        "passed_control": true,
+        "detail": {
+          "allowed": false,
+          "purpose": "cost_audit_probe",
+          "error": "non_loopback_live_disabled_without_os_network_isolation",
+          "fallback": "fixture_or_loopback_only",
+          "paid_fallback_used": false,
+          "hosted_fallback_used": false,
+          "os_network_isolation": false,
+          "application_policy_alone_constrains_arbitrary_processes": false,
+          "note": "Application-level policy cannot constrain arbitrary processes that already have network access. Non-loopback live outbound is disabled unless OS network isolation is verified on this host.",
+          "job_object_process_limits": true,
+          "isolation_mechanism": "windows_job_object",
+          "url": "https://api.openai.com/v1/chat"
+        }
+      },
+      {
+        "path": "loopback_inference",
+        "passed_control": true,
+        "detail": {
+          "allowed": true,
+          "reason": "loopback",
+          "url": "http://127.0.0.1:11434/api/chat",
+          "purpose": "ollama_local",
+          "enforcement": "loopback_policy"
+        }
+      },
+      {
+        "path": "notification_defaults",
+        "passed_control": true,
+        "detail": {
+          "default_channel": "local_inbox",
+          "openclaw_messaging_enabled": false,
+          "automatic_outbound_delivery": false,
+          "inherited_auto_deliver_disabled": true,
+          "scheduler_owner": "openclaw_gateway",
+          "openclaw_channel_requirements": [
+            "verify_account_fees_zero_or_eligible",
+            "verify_connector_behavior",
+            "verify_recipient_authorization",
+            "verify_disclosure_scope"
+          ],
+          "note": "OpenClaw announce/webhook channels stay disabled until fees, connector behavior, recipient authorization, and disclosure scope are verified. Schedule payloads continue to use --no-deliver by default."
+        }
+      }
+    ],
+    "limitation": "This inventory is a code-path catalog plus gate proofs. It is not a kernel packet filter. Arbitrary OS processes with network rights are outside application policy."
+  },
+  "network_boundary": {
+    "os_network_isolation": false,
+    "application_policy_alone_constrains_arbitrary_processes": false,
+    "note": "Application-level policy cannot constrain arbitrary processes that already have network access. Non-loopback live outbound is disabled unless OS network isolation is verified on this host.",
+    "job_object_process_limits": true,
+    "isolation_mechanism": "windows_job_object"
+  },
+  "hosted_gone_simulation": {
+    "scenario": "all_hosted_providers_disappeared_or_became_paid",
+    "hosted_providers_simulated": [
+      "analytics_telemetry",
+      "anthropic_api",
+      "aws_bedrock",
+      "azure_openai",
+      "cloud_databases",
+      "cloud_object_storage",
+      "google_gemini_api",
+      "groq_cloud",
+      "hf_inference_api",
+      "hosted_search",
+      "mistral_api",
+      "model_code_hypothesis",
+      "openai_api",
+      "paid_embedding_api",
+      "remote_execution",
+      "remote_vector_db",
+      "together_fireworks_replicate"
+    ],
+    "hosted_refuses": [
+      {
+        "provider_id": "analytics_telemetry",
+        "allowed": false,
+        "fallback_used": false,
+        "detail": "Target 'analytics_telemetry' is registered as non-free / chargeable \u2014 blocked before dispatch."
+      },
+      {
+        "provider_id": "anthropic_api",
+        "allowed": false,
+        "fallback_used": false,
+        "detail": "Target 'anthropic_api' is registered as non-free / chargeable \u2014 blocked before dispatch."
+      },
+      {
+        "provider_id": "aws_bedrock",
+        "allowed": false,
+        "fallback_used": false,
+        "detail": "Target 'aws_bedrock' is registered as non-free / chargeable \u2014 blocked before dispatch."
+      },
+      {
+        "provider_id": "azure_openai",
+        "allowed": false,
+        "fallback_used": false,
+        "detail": "Target 'azure_openai' is registered as non-free / chargeable \u2014 blocked before dispatch."
+      },
+      {
+        "provider_id": "cloud_databases",
+        "allowed": false,
+        "fallback_used": false,
+        "detail": "Target 'cloud_databases' is registered as non-free / chargeable \u2014 blocked before dispatch."
+      },
+      {
+        "provider_id": "cloud_object_storage",
+        "allowed": false,
+        "fallback_used": false,
+        "detail": "Target 'cloud_object_storage' is registered as non-free / chargeable \u2014 blocked before dispatch."
+      },
+      {
+        "provider_id": "google_gemini_api",
+        "allowed": false,
+        "fallback_used": false,
+        "detail": "Target 'google_gemini_api' is registered as non-free / chargeable \u2014 blocked before dispatch."
+      },
+      {
+        "provider_id": "groq_cloud",
+        "allowed": false,
+        "fallback_used": false,
+        "detail": "Target 'groq_cloud' is registered as non-free / chargeable \u2014 blocked before dispatch."
+      },
+      {
+        "provider_id": "hf_inference_api",
+        "allowed": false,
+        "fallback_used": false,
+        "detail": "Target 'hf_inference_api' is registered as non-free / chargeable \u2014 blocked before dispatch."
+      },
+      {
+        "provider_id": "hosted_search",
+        "allowed": false,
+        "fallback_used": false,
+        "detail": "Target 'hosted_search' is registered as non-free / chargeable \u2014 blocked before dispatch."
+      },
+      {
+        "provider_id": "mistral_api",
+        "allowed": false,
+        "fallback_used": false,
+        "detail": "Target 'mistral_api' is registered as non-free / chargeable \u2014 blocked before dispatch."
+      },
+      {
+        "provider_id": "model_code_hypothesis",
+        "allowed": false,
+        "fallback_used": false,
+        "detail": "Target 'model_code_hypothesis' is registered as non-free / chargeable \u2014 blocked before dispatch."
+      },
+      {
+        "provider_id": "openai_api",
+        "allowed": false,
+        "fallback_used": false,
+        "detail": "Target 'openai_api' is registered as non-free / chargeable \u2014 blocked before dispatch."
+      },
+      {
+        "provider_id": "paid_embedding_api",
+        "allowed": false,
+        "fallback_used": false,
+        "detail": "Target 'paid_embedding_api' is registered as non-free / chargeable \u2014 blocked before dispatch."
+      },
+      {
+        "provider_id": "remote_execution",
+        "allowed": false,
+        "fallback_used": false,
+        "detail": "Target 'remote_execution' is registered as non-free / chargeable \u2014 blocked before dispatch."
+      },
+      {
+        "provider_id": "remote_vector_db",
+        "allowed": false,
+        "fallback_used": false,
+        "detail": "Target 'remote_vector_db' is registered as non-free / chargeable \u2014 blocked before dispatch."
+      },
+      {
+        "provider_id": "together_fireworks_replicate",
+        "allowed": false,
+        "fallback_used": false,
+        "detail": "Target 'together_fireworks_replicate' is registered as non-free / chargeable \u2014 blocked before dispatch."
+      },
+      {
+        "provider_id": "ollama_local_forced_nonlocal",
+        "allowed": false,
+        "note": "eligible id with local=False must not unlock hosted spend"
+      },
+      {
+        "provider_id": "llamacpp_local_forced_nonlocal",
+        "allowed": false,
+        "note": "eligible id with local=False must not unlock hosted spend"
+      }
+    ],
+    "all_hosted_refused": true,
+    "ai_probe": {
+      "status": "paused",
+      "provider": null,
+      "detail": "No free local inference at http://127.0.0.1:11434/api/tags (TCP unreachable for 127.0.0.1:11434). Progress preserved; AI-dependent steps paused.",
+      "free_only": true,
+      "eligibility": {
+        "eligible": true,
+        "provider_id": "ollama_local",
+        "reason": "Eligible: local free-only adapter on loopback; no credentials required.",
+        "endpoint": "http://127.0.0.1:11434"
+      }
+    },
+    "ai_step": {
+      "paused": true,
+      "ok": false,
+      "fallback_used": false,
+      "provider": null
+    },
+    "deterministic": {
+      "tasks_listed": 4,
+      "echo_ok": true,
+      "echo": {
+        "task": "echo",
+        "ok": true,
+        "started_at": "2026-10-06T18:57:14.575662+00:00",
+        "finished_at": "2026-10-06T18:57:14.575662+00:00",
+        "duration_ms": 0,
+        "output": {
+          "message": "hosted_gone_still_works"
+        },
+        "error": null
+      }
+    },
+    "contract": {
+      "deterministic_local_workflows_usable": true,
+      "ai_pauses_without_approved_local_model": true,
+      "no_automatic_paid_fallback": true,
+      "ai_behavior_ok": true
+    }
+  },
+  "dependency_migration_table": [
+    {
+      "component": "ollama_local",
+      "status": "eligible",
+      "purpose": "Optional local CPU/GPU inference via Ollama native /api/chat on loopback",
+      "license": "Ollama MIT; model weights vary by model (verify via /api/show)",
+      "cost_conditions": "No account required for local use. Software is free. Models downloaded explicitly by the user; no MAINFRAME-required fee. Not required for core automation. Cloud/:cloud models refused.",
+      "replacement": "n/a (eligible)",
+      "affected_behavior": "ai probe / ai ask / local-model when loopback Ollama + local model present; OpenClaw-aligned native route (no /v1)"
+    },
+    {
+      "component": "llamacpp_local",
+      "status": "eligible",
+      "purpose": "Optional local llama.cpp server on loopback (/health, /completion)",
+      "license": "MIT (llama.cpp); GGUF weight licenses vary",
+      "cost_conditions": "Optional; user-supplied GGUF; no MAINFRAME-required fee. Not required for core automation.",
+      "replacement": "n/a (eligible) or pause",
+      "affected_behavior": "local-model status/bench when llama-server on loopback"
+    },
+    {
+      "component": "openai_api",
+      "status": "disabled",
+      "purpose": "Hosted chat/completions",
+      "license": "Proprietary service",
+      "cost_conditions": "Paid account / API billing; free tiers are promotional/trial",
+      "replacement": "ollama_local (optional) or pause AI steps",
+      "affected_behavior": "No remote OpenAI calls; AI pauses if local unavailable"
+    },
+    {
+      "component": "anthropic_api",
+      "status": "disabled",
+      "purpose": "Hosted Claude API",
+      "license": "Proprietary service",
+      "cost_conditions": "Paid account / usage billing; trials excluded",
+      "replacement": "ollama_local (optional) or pause AI steps",
+      "affected_behavior": "Adapter refuses; no Anthropic fallback"
+    },
+    {
+      "component": "azure_openai",
+      "status": "disabled",
+      "purpose": "Proprietary hosted OpenAI on Azure",
+      "license": "Proprietary / cloud contract",
+      "cost_conditions": "Azure billing",
+      "replacement": "ollama_local (optional) or pause",
+      "affected_behavior": "Disabled; no cloud LLM route"
+    },
+    {
+      "component": "google_gemini_api",
+      "status": "disabled",
+      "purpose": "Hosted Gemini API (investigated candidate \u2014 not preapproved)",
+      "license": "Proprietary service / Google AI terms",
+      "cost_conditions": "Free unpaid quota uses Unpaid Services data terms; Paid Tier requires Cloud Billing; auto tier upgrades. Unverifiable recurring free entitlement.",
+      "replacement": "ollama_local (optional) or pause",
+      "affected_behavior": "Fixture adapter only; live disabled (unverified_live)"
+    },
+    {
+      "component": "aws_bedrock",
+      "status": "disabled",
+      "purpose": "Hosted foundation models",
+      "license": "AWS proprietary service",
+      "cost_conditions": "AWS account billing",
+      "replacement": "ollama_local (optional) or pause",
+      "affected_behavior": "Disabled"
+    },
+    {
+      "component": "groq_cloud",
+      "status": "disabled",
+      "purpose": "Hosted GroqCloud inference (investigated candidate \u2014 not preapproved)",
+      "license": "Proprietary service",
+      "cost_conditions": "Rate limits with Developer plan upgrade path; published token prices. Unverifiable recurring free without billing dependency.",
+      "replacement": "ollama_local (optional) or pause",
+      "affected_behavior": "Fixture adapter only; live disabled (unverified_live)"
+    },
+    {
+      "component": "mistral_api",
+      "status": "disabled",
+      "purpose": "Mistral La Plateforme API (investigated candidate \u2014 not preapproved)",
+      "license": "Proprietary service / model licenses vary",
+      "cost_conditions": "Free mode for eval/prototype; pay-as-you-go extends usage and unlocks tiers. Unverifiable billing-independent recurring free access.",
+      "replacement": "ollama_local (optional) or pause",
+      "affected_behavior": "Fixture adapter only; live disabled (unverified_live)"
+    },
+    {
+      "component": "together_fireworks_replicate",
+      "status": "disabled",
+      "purpose": "Hosted model marketplaces",
+      "license": "Proprietary services",
+      "cost_conditions": "Paid or trial credits",
+      "replacement": "ollama_local (optional) or pause",
+      "affected_behavior": "Disabled"
+    },
+    {
+      "component": "hf_inference_api",
+      "status": "disabled",
+      "purpose": "Hugging Face hosted inference",
+      "license": "Service ToS; models vary",
+      "cost_conditions": "Hosted endpoints may require paid plans / tokens",
+      "replacement": "ollama_local with locally pulled weights",
+      "affected_behavior": "Remote HF Inference API disabled; local weights via Ollama OK"
+    },
+    {
+      "component": "cloud_databases",
+      "status": "disabled",
+      "purpose": "Supabase / Firebase / Atlas / Neon / PlanetScale",
+      "license": "Vendor proprietary SaaS",
+      "cost_conditions": "Hosted DB; free tiers are promotional/limited",
+      "replacement": "Local files under .mainframe/ (JSON, notes)",
+      "affected_behavior": "No cloud DB clients; local state only"
+    },
+    {
+      "component": "remote_execution",
+      "status": "disabled",
+      "purpose": "Cloud CI runners / remote agents / hosted sandboxes",
+      "license": "Vendor SaaS",
+      "cost_conditions": "Often billed beyond free minutes",
+      "replacement": "Local `python -m mainframe` on existing PC",
+      "affected_behavior": "No remote execution hooks in core"
+    },
+    {
+      "component": "analytics_telemetry",
+      "status": "disabled",
+      "purpose": "Sentry / Segment / PostHog / Mixpanel / similar",
+      "license": "Vendor SaaS",
+      "cost_conditions": "Paid plans after trials",
+      "replacement": "Local run logs in .mainframe/runs/",
+      "affected_behavior": "No outbound analytics"
+    },
+    {
+      "component": "hosted_search",
+      "status": "disabled",
+      "purpose": "Algolia / Elastic Cloud / proprietary web search APIs",
+      "license": "Vendor SaaS",
+      "cost_conditions": "Paid or trial credits",
+      "replacement": "Local workspace inspect / list-tree",
+      "affected_behavior": "No hosted search clients"
+    },
+    {
+      "component": "cloud_object_storage",
+      "status": "disabled",
+      "purpose": "S3 / GCS / Azure Blob",
+      "license": "Cloud vendor",
+      "cost_conditions": "Storage + egress billing",
+      "replacement": "Local filesystem under repo / .mainframe/",
+      "affected_behavior": "No cloud storage SDKs"
+    },
+    {
+      "component": "remote_vector_db",
+      "status": "disabled",
+      "purpose": "Hosted vector databases / remote embedding search",
+      "license": "Vendor SaaS",
+      "cost_conditions": "Typically paid or trial credits",
+      "replacement": "Local issue\u2192code retrieve (exact + lexical \u00b1 measured FTS5)",
+      "affected_behavior": "Not wired; retrieve refuses remote vectors"
+    },
+    {
+      "component": "paid_embedding_api",
+      "status": "disabled",
+      "purpose": "Cloud embedding endpoints",
+      "license": "Vendor API",
+      "cost_conditions": "Billed tokens / accounts",
+      "replacement": "Exact identifiers/stack/error/import cues + optional local FTS5",
+      "affected_behavior": "Not wired; no embedding client in retrieve"
+    },
+    {
+      "component": "model_code_hypothesis",
+      "status": "disabled",
+      "purpose": "LLM guesses treated as symbol/API facts",
+      "license": "n/a",
+      "cost_conditions": "Not a verified fact source",
+      "replacement": "codeintel language_server_fact / parser_approximate / installed_api_fact",
+      "affected_behavior": "codeintel never emits model_hypothesis evidence"
+    },
+    {
+      "component": "python_stdlib_cli",
+      "status": "eligible",
+      "purpose": "CLI, config, automation, inspect, accept",
+      "license": "MIT (MAINFRAME) + Python PSF",
+      "cost_conditions": "No fee; uses already-installed Python",
+      "replacement": "n/a",
+      "affected_behavior": "status/inspect/run/accept offline"
+    },
+    {
+      "component": "local_state_files",
+      "status": "eligible",
+      "purpose": "Config, user notes, run logs under .mainframe/",
+      "license": "User data + MIT code",
+      "cost_conditions": "Local disk only",
+      "replacement": "n/a (replaces cloud DB/storage)",
+      "affected_behavior": "Persists without hosted services"
+    },
+    {
+      "component": "pip_pypi_required_deps",
+      "status": "disabled",
+      "purpose": "Required third-party packages for core",
+      "license": "n/a",
+      "cost_conditions": "Core must not require paid or network installs",
+      "replacement": "stdlib only for core paths",
+      "affected_behavior": "No requirements.txt needed to launch"
+    },
+    {
+      "component": "sqlite_fts5_local",
+      "status": "eligible",
+      "purpose": "Optional local FTS5 index for issue\u2192code lexical search",
+      "license": "SQLite (public domain)",
+      "cost_conditions": "Free local; enabled only when accept measures improvement",
+      "replacement": "n/a (exact/lexical path always available)",
+      "affected_behavior": "retrieve may use FTS5 after measured ablation"
+    },
+    {
+      "component": "issue_to_code_retrieval_local",
+      "status": "eligible",
+      "purpose": "Local issue\u2192code retrieval with explainable signals",
+      "license": "MIT (MAINFRAME)",
+      "cost_conditions": "Local disk only; no embeddings required",
+      "replacement": "n/a",
+      "affected_behavior": "python -m mainframe retrieve search|accept"
+    },
+    {
+      "component": "stdlib_ast_codeintel",
+      "status": "eligible",
+      "purpose": "Python symbol/caller/import analysis via ast",
+      "license": "MIT + PSF",
+      "cost_conditions": "Stdlib only; always available",
+      "replacement": "n/a",
+      "affected_behavior": "codeintel lookup/callers/imports without Jedi"
+    },
+    {
+      "component": "jedi_optional",
+      "status": "eligible",
+      "purpose": "Optional goto/signatures when Jedi already installed",
+      "license": "MIT",
+      "cost_conditions": "Free local; not required to launch MAINFRAME",
+      "replacement": "stdlib_ast_codeintel",
+      "affected_behavior": "codeintel definition/signature when importable"
+    },
+    {
+      "component": "pyright_optional",
+      "status": "eligible",
+      "purpose": "Optional diagnostics when pyright already available",
+      "license": "Pyright license",
+      "cost_conditions": "Free local; not required to launch",
+      "replacement": "AST path without diagnostics",
+      "affected_behavior": "codeintel diagnostics"
+    }
+  ],
+  "acceptance": {
+    "no_required_paid_account": true,
+    "no_trial_or_promo_required": true,
+    "no_required_hosted_component": true,
+    "zero_fees_separated_from_physical_resources": true,
+    "outbound_controls_proven": true,
+    "paths_outside_enforceable_boundary_handled": true,
+    "deterministic_usable_when_hosted_gone": true,
+    "ai_pauses_without_local_model": true,
+    "no_automatic_paid_fallback": true
+  },
+  "ok": true
+}

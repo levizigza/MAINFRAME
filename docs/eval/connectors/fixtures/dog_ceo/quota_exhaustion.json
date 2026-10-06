@@ -1,0 +1,5 @@
+{
+  "status": 429,
+  "headers": {"content-type": "application/json", "retry-after": "2"},
+  "body": {"status": "error", "message": "rate limit"}
+}

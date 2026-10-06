@@ -1,0 +1,60 @@
+{
+  "id": "weather_saas_trial",
+  "catalog_name": "OpenWeatherMap",
+  "catalog_link_contains": "openweathermap.org",
+  "official_docs": "https://openweathermap.org/api",
+  "pricing_evidence": {
+    "model": "trial_only",
+    "recurring_free": false,
+    "trial_only": true,
+    "paid_upgrade_required": true,
+    "trial_days": 14,
+    "evidence_url": "https://openweathermap.org/price",
+    "evidence_note": "Free tier / trial paths require accounts and upgrade to paid plans for sustained use — treated as trial-only under MAINFRAME free-only contract.",
+    "verified_at": "2026-09-29"
+  },
+  "authentication": {
+    "required": true,
+    "schemes": ["api_key"],
+    "note": "API key required; account signup."
+  },
+  "recurring_quotas": {
+    "documented": true,
+    "hard_cap": "tiered",
+    "note": "Paid tiers unlock higher quotas; free/trial is not a verified recurring unpaid entitlement.",
+    "verified_at": "2026-09-29"
+  },
+  "intended_use_restrictions": [],
+  "attribution": {
+    "required": true,
+    "text": "Follow OpenWeatherMap attribution requirements."
+  },
+  "retention": {
+    "stores_caller_content": true,
+    "note": "Account-bound usage metering."
+  },
+  "availability": {
+    "status": "available",
+    "note": "Service exists; rejected because pricing evidence is trial/paid-upgrade."
+  },
+  "licenses": {
+    "catalog_license": {
+      "spdx": "MIT",
+      "scope": "public-apis list entry only",
+      "source": "docs/freeforge/public-apis-snapshot/LICENSE"
+    },
+    "api_terms": {
+      "summary": "Commercial API terms with free/trial tiers and paid upgrades.",
+      "url": "https://openweathermap.org/price",
+      "verified_at": "2026-09-29"
+    },
+    "returned_data_license": {
+      "summary": "Weather data licensing per OpenWeatherMap terms — not catalog MIT.",
+      "spdx": null,
+      "note": "Returned-data license is distinct."
+    }
+  },
+  "last_verification": "2026-09-29",
+  "evidence_expires_at": "2027-09-29",
+  "notes": "Rejected: trial_only / paid upgrade path."
+}

@@ -1,0 +1,35 @@
+{
+  "id": "frankfurter",
+  "catalog_name": "Frankfurter",
+  "official_docs": "https://frankfurter.dev/",
+  "pricing_evidence": {
+    "model": "free_no_key",
+    "recurring_free": true,
+    "trial_only": false,
+    "paid_upgrade_required": false,
+    "evidence_url": "https://frankfurter.dev/",
+    "evidence_note": "Open FX API wrapping ECB reference rates; no API key. Live /v1/latest 200 on 2026-09-29.",
+    "verified_at": "2026-09-29"
+  },
+  "authentication": {"required": false, "schemes": [], "note": "No authentication."},
+  "recurring_quotas": {
+    "documented": true,
+    "hard_cap": null,
+    "note": "Public best-effort service.",
+    "verified_at": "2026-09-29"
+  },
+  "intended_use_restrictions": [],
+  "attribution": {
+    "required": true,
+    "text": "Rates from Frankfurter (ECB reference rates)"
+  },
+  "retention": {"stores_caller_content": false, "note": "Query params only."},
+  "availability": {"status": "available", "note": "api.frankfurter.dev reachable at verification."},
+  "licenses": {
+    "catalog_license": {"spdx": "MIT", "scope": "public-apis list entry if present", "source": "docs/freeforge/public-apis-snapshot/LICENSE"},
+    "api_terms": {"summary": "Frankfurter open API; ECB reference rate redistribution.", "url": "https://frankfurter.dev/", "verified_at": "2026-09-29"},
+    "returned_data_license": {"summary": "ECB reference rates via Frankfurter — not catalog MIT.", "spdx": null, "note": "Distinct from catalog license."}
+  },
+  "last_verification": "2026-09-29",
+  "evidence_expires_at": "2027-09-29"
+}

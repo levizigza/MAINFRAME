@@ -1,0 +1,107 @@
+{
+  "kind": "failure_matrix",
+  "hosting": "local_deterministic_no_hosted_ci",
+  "integration_fixtures": 11,
+  "live_observations": 0,
+  "live_note": "Live service observations are recorded separately when eligible; this matrix run uses integration fixtures only.",
+  "passed": 11,
+  "failed": 0,
+  "critical_failures": [],
+  "gate_before_more_connectors": {
+    "data_loss": true,
+    "duplicate_effects": true,
+    "unauthorized_actions": true,
+    "paid_fallback": true,
+    "allow_more_connectors": true
+  },
+  "rows": [
+    {
+      "scenario": "duplicate_events",
+      "class": "integration_fixture",
+      "live_service": false,
+      "expected_recovery": "one_run_duplicate_suppressed",
+      "actual_recovery": "one_run_duplicate_suppressed",
+      "pass": true
+    },
+    {
+      "scenario": "clock_changes",
+      "class": "integration_fixture",
+      "live_service": false,
+      "expected_recovery": "record_anomaly_defer_catchup_to_scheduler_owner",
+      "actual_recovery": "record_anomaly_defer_catchup_to_scheduler_owner",
+      "pass": true
+    },
+    {
+      "scenario": "interrupted_files",
+      "class": "integration_fixture",
+      "live_service": false,
+      "expected_recovery": "discard_tmp_atomic_complete_no_corruption",
+      "actual_recovery": "discard_tmp_atomic_complete_no_corruption",
+      "pass": true
+    },
+    {
+      "scenario": "process_crashes",
+      "class": "integration_fixture",
+      "live_service": false,
+      "expected_recovery": "resume_suppress_duplicate_write_effect",
+      "actual_recovery": "resume_suppress_duplicate_write_effect",
+      "pass": true
+    },
+    {
+      "scenario": "service_timeouts",
+      "class": "integration_fixture",
+      "live_service": false,
+      "expected_recovery": "no_blind_retry_reconcile_or_unknown",
+      "actual_recovery": "no_blind_retry_reconcile_or_unknown",
+      "pass": true
+    },
+    {
+      "scenario": "malformed_model_output",
+      "class": "integration_fixture",
+      "live_service": false,
+      "expected_recovery": "reject_unsupported_no_side_effect",
+      "actual_recovery": "reject_unsupported_no_side_effect",
+      "pass": true
+    },
+    {
+      "scenario": "expired_credentials",
+      "class": "integration_fixture",
+      "live_service": false,
+      "expected_recovery": "refuse_use_require_refresh_or_pause",
+      "actual_recovery": "refuse_use_require_refresh_or_pause",
+      "pass": true
+    },
+    {
+      "scenario": "exhausted_free_quotas",
+      "class": "integration_fixture",
+      "live_service": false,
+      "expected_recovery": "pause_no_paid_fallback",
+      "actual_recovery": "pause_no_paid_fallback",
+      "pass": true
+    },
+    {
+      "scenario": "lost_acknowledgement_external_write",
+      "class": "integration_fixture",
+      "live_service": false,
+      "expected_recovery": "outcome_unknown_visible_no_blind_retry",
+      "actual_recovery": "outcome_unknown_visible_no_blind_retry",
+      "pass": true
+    },
+    {
+      "scenario": "cancellation_completed_effects_recorded",
+      "class": "integration_fixture",
+      "live_service": false,
+      "expected_recovery": "cancel_blocks_new_effects_completed_remain",
+      "actual_recovery": "cancel_blocks_new_effects_completed_remain",
+      "pass": true
+    },
+    {
+      "scenario": "unauthorized_actions_and_paid_fallback",
+      "class": "integration_fixture",
+      "live_service": false,
+      "expected_recovery": "deny_no_paid_fallback",
+      "actual_recovery": "deny_no_paid_fallback",
+      "pass": true
+    }
+  ]
+}

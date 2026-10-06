@@ -1,0 +1,37 @@
+---
+description: MAINFRAME zero-cost build rules — apply every prompt
+alwaysApply: true
+---
+
+# MAINFRAME Core Rules
+
+## Mission
+
+MAINFRAME is an open-source coding and automation system with **zero required** software, API, subscription, or hosting fees. It runs on the user's existing Windows PC. No GPU purchase. Hardware, electricity, and internet are physical prerequisites — not things the software makes free.
+
+## Every prompt — mandatory loop
+
+1. **Inspect** existing instructions (`.cursor/rules/`, `docs/`, README) and code before changing anything.
+2. **Preserve** user work — never overwrite or delete user data, configs, or notes without explicit ask.
+3. **Implement** one runnable increment (small, shippable, locally executable).
+4. **Accept** with a meaningful real check (command run, exit code, observed output).
+5. **Record** results in `docs/PROGRESS.md` (what changed, how verified, pass/fail, blockers).
+
+Never invent a successful test, live account check, or availability claim.
+
+## Cost posture (hard)
+
+- Exclude paid accounts, billing activation, trials, expiring promotions, promotional credits, and paid fallbacks.
+- Prefer Python stdlib and already-installed free tools.
+- Optional local CPU AI only; no local LLM is required.
+- If free inference is unavailable: preserve progress, **pause** AI-dependent steps, keep deterministic automation usable.
+- Do not suggest paid SaaS, cloud GPUs, or “upgrade to unlock” paths.
+- Nonqualifying routes (hosted LLMs, cloud DB, remote exec, analytics, hosted search/storage) must be **disabled in code** via `mainframe/eligibility.py` — not merely hidden from settings. No automatic fallbacks.
+- Retain eligible adapters (e.g. loopback Ollama) behind the eligibility gate; do not rebuild working automation/inspect/accept modules needlessly.
+- Keep `docs/DEPENDENCIES.md` migration table current when adding integrations.
+
+## Engineering
+
+- Deterministic automation must work with AI offline/paused.
+- Prefer additive changes; ask before destructive refactors of user content.
+- Keep increments runnable via `python -m mainframe ...` with no pip install required for core paths.

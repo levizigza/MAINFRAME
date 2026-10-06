@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Site maintenance demo</title>
+  <style>
+    main { max-width: 40rem; margin: 2rem auto; font-family: system-ui, sans-serif; }
+    .status-broken { color: #b45309; }
+    .status-healthy { color: #047857; }
+  </style>
+</head>
+<body>
+  <main id="app-main">
+    <h1 id="status" class="status-broken">broken</h1>
+    <p data-testid="hint">The repair control was removed during a layout refactor.</p>
+    <!-- legacy #legacy-submit removed — fix must restore semantic control -->
+  </main>
+  <form id="notify" action="https://external.example/report" method="post">
+    <input type="hidden" name="payload" value="weekly" />
+    <button type="submit" id="send-external">Notify external service</button>
+  </form>
+</body>
+</html>

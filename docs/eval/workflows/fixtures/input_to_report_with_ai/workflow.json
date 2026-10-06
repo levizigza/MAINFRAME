@@ -1,0 +1,112 @@
+{
+  "format_version": "1.0",
+  "id": "input_to_report_with_ai",
+  "description": "Same as input_to_report but inserts an unavailable AI step after transform",
+  "permissions": ["local.read", "local.write", "local.artifact", "human.decide", "ai.infer"],
+  "artifacts": [
+    {"id": "report_json", "path": "report.json", "content_type": "application/json"}
+  ],
+  "inputs": {
+    "type": "object",
+    "properties": {"title": {"type": "string"}},
+    "additionalProperties": false
+  },
+  "outputs": {
+    "type": "object",
+    "properties": {
+      "artifact_path": {"type": "string"},
+      "sha256": {"type": "string"}
+    }
+  },
+  "output_steps": ["write_report"],
+  "steps": [
+    {
+      "id": "load",
+      "kind": "deterministic",
+      "handler": "load_records",
+      "depends_on": [],
+      "permissions": ["local.read"],
+      "effects": [],
+      "timeout_ms": 5000,
+      "retries": {"max": 0, "backoff_ms": 0},
+      "args": {"path": "records.json"},
+      "inputs": {"type": "object", "properties": {}},
+      "outputs": {
+        "type": "object",
+        "required": ["records", "count"],
+        "properties": {
+          "records": {"type": "array"},
+          "count": {"type": "integer"}
+        }
+      }
+    },
+    {
+      "id": "transform",
+      "kind": "deterministic",
+      "handler": "transform_report",
+      "depends_on": ["load"],
+      "permissions": ["local.read"],
+      "effects": [],
+      "timeout_ms": 5000,
+      "retries": {"max": 0, "backoff_ms": 0},
+      "inputs": {
+        "type": "object",
+        "required": ["records", "count"],
+        "properties": {
+          "records": {"type": "array"},
+          "count": {"type": "integer"}
+        }
+      },
+      "outputs": {
+        "type": "object",
+        "required": ["report"],
+        "properties": {"report": {"type": "object"}}
+      }
+    },
+    {
+      "id": "ai_summary",
+      "kind": "ai",
+      "handler": "ai_summarize",
+      "depends_on": ["transform"],
+      "permissions": ["ai.infer"],
+      "effects": [],
+      "timeout_ms": 60000,
+      "retries": {"max": 0, "backoff_ms": 0},
+      "inputs": {
+        "type": "object",
+        "required": ["report"],
+        "properties": {"report": {"type": "object"}}
+      },
+      "outputs": {
+        "type": "object",
+        "properties": {"summary": {"type": "string"}}
+      }
+    },
+    {
+      "id": "write_report",
+      "kind": "deterministic",
+      "handler": "write_artifact",
+      "depends_on": ["ai_summary", "transform"],
+      "permissions": ["local.write", "local.artifact"],
+      "effects": ["write_report_json"],
+      "mutates": true,
+      "artifact_refs": ["report_json"],
+      "timeout_ms": 5000,
+      "retries": {"max": 0, "backoff_ms": 0},
+      "args": {"path": "report.json"},
+      "inputs": {
+        "type": "object",
+        "required": ["report"],
+        "properties": {"report": {"type": "object"}}
+      },
+      "outputs": {
+        "type": "object",
+        "required": ["artifact_path", "sha256"],
+        "properties": {
+          "artifact_path": {"type": "string"},
+          "sha256": {"type": "string"}
+        }
+      }
+    }
+  ]
+}

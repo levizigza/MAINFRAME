@@ -1,0 +1,3 @@
+record_id,date,amount,unit,party,notes
+DUP-001,2024-05-01,99.99,USD,Same Party,first copy
+DUP-002,2024-05-02,10.00,USD,Other Party,unique
