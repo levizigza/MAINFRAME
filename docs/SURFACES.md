@@ -1,6 +1,6 @@
 # MAINFRAME product surfaces
 
-Generated: `2026-10-06T19:30:49.803628+00:00`
+Generated: `2026-10-07T02:51:09.669092+00:00`
 
 Two optimized surfaces share the same free-only FreeForge core:
 
@@ -9,14 +9,14 @@ Two optimized surfaces share the same free-only FreeForge core:
 
 ## Web
 
-- Artifact: `C:\Users\levyz\OneDrive\Microsoft Copilot Chat Files\Documents\MAINFRAME\dist\web`
-- Index: `C:\Users\levyz\OneDrive\Microsoft Copilot Chat Files\Documents\MAINFRAME\dist\web\index.html`
+- Artifact: `/workspace/dist/web`
+- Index: `/workspace/dist/web/index.html`
 - Build: `python -m mainframe surfaces build-web`
 - GitHub Pages: optional (not required)
 
 ## Application
 
-- Artifact: `C:\Users\levyz\OneDrive\Microsoft Copilot Chat Files\Documents\MAINFRAME\dist\application`
+- Artifact: `/workspace/dist/application`
 - Build: `python -m mainframe surfaces build-app`
 - App Store / Play uploads: **not performed**; see checklist for DOCUMENTED_NOT_TESTED items
 

@@ -1,0 +1,10 @@
+{
+  "name": "freeforge-workbench-overlay",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Thin FreeForge contrib for vscode pin — not a full workbench build",
+  "type": "module",
+  "scripts": {
+    "check": "node --experimental-strip-types ./check.mjs"
+  }
+}

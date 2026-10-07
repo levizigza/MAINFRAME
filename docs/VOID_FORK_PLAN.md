@@ -1,37 +1,59 @@
-# Optional Void / VS Code full-fork plan
+# FreeForge Workbench fork plan (vscode pin + thin overlay)
 
-This plan is **optional**. FreeForge’s default editor path is a maintained extension + shared CLI task state (`docs/VOID_EVAL.md`).
+**Product decision (locked):** FreeForge ships a **branded workbench** downstream of pinned `microsoft/vscode`, with a thin overlay under `src/vs/workbench/contrib/freeforge/`. Void is an **archived UX reference only** (`docs/VOID_EVAL.md`) — do **not** vendor Void `editCodeService` / React workbench internals.
 
-A full fork of Void (or vscode) is only justified when Extension API limits block required UX. If pursued, treat it as a separate product track.
+CLI + `extensions/freeforge-editor` remain the headless / Extension API twin. The IDE quality track is the desktop workbench.
 
-## Concrete requirements before forking
+## Layout
 
-### 1. Upstream update strategy
+| Path | Role |
+|------|------|
+| `workbench/PIN.json` | Upstream tag, Void reference commit, inference policy |
+| `workbench/overlay/freeforge/` | Thin contrib (chat, AI status, bridge contracts, diff review helpers) |
+| `workbench/scripts/bootstrap.ps1` / `bootstrap.sh` | Clone pin + copy overlay |
+| `mainframe/workbench/` | Status, model-fit, bootstrap, agent sessions, accept |
+| `.workbench-build/` | Local clone/build (gitignored) |
 
-- Track microsoft/vscode release tags on a schedule (e.g. monthly).
-- Rebase or merge Void-derived patches as a thin overlay under `src/vs/workbench/contrib/freeforge/` — never silent multi-month drift.
-- Pin Electron / Node versions to vscode’s published dependency set for that tag.
-- Document every conflict class (build tooling, CSP, React mount) and an owner.
+## Upstream update strategy
 
-### 2. Security
+- Track microsoft/vscode release tags (e.g. monthly deliberate bumps in `PIN.json`).
+- Rebase or merge as a **thin overlay** only — never silent multi-month drift of deep workbench forks.
+- Pin Electron / Node to vscode’s published dependency set for that tag.
+- Document conflict classes (build tooling, CSP) when they appear.
+
+## Security
 
 - Inherit vscode security advisories; subscribe to GHSA for Electron and vscode.
-- No auto-update channel that ships unsigned binaries.
+- No auto-update channel that ships unsigned binaries as a required path.
 - Secrets stay in FreeForge `LocalSecretFacility` — never in fork settings JSON exported to chat.
-- Renderer CSP: LLM traffic only via main-process IPC (Void pattern) or Extension Host — not ad-hoc `fetch` from untrusted webviews without review.
+- LLM traffic: Extension Host / main-process bridge to `python -m mainframe …` — loopback Ollama only (`eligibility` + `cost_gate`).
 
-### 3. Build
+## Build
 
-- Use a public build pipeline (Void’s void-builder is a reference, not a dependency).
-- Reproducible builds: lockfiles, pinned toolchains, SBOM.
-- CI must build Windows (primary MAINFRAME target) without paid cloud GPU / hosted secrets.
+- Primary OS: Windows. Bootstrap scripts prove pin + overlay without hosted CI.
+- Full Electron build is a **local opt-in** step (see `workbench/README.md`); MAINFRAME CLI accept does not require it.
+- Reproducible: lockfiles inside the vscode pin; FreeForge overlay is MIT.
 
-### 4. Distribution
+## Distribution
 
-- Optional install path only; CORE CLI must work without the fork.
-- License bundle: Apache-2.0 (Void-derived overlay) + MIT (vscode) + full ThirdPartyNotices.
-- Auto-update is opt-in and fee-free; no telemetry SaaS.
+- Application surface copies pin + overlay pointer under `dist/application/workbench/`.
+- License: MIT (vscode) + ThirdPartyNotices retention + FreeForge MIT overlay.
+- Code-signing SaaS and App Store upload are **not required** for core usefulness.
 
-### 5. Exit criteria to *not* fork
+## Agent UX (wired to Python)
 
-If chat-to-task, selection context, reviewable diffs, diagnostics, cancel/resume, and shared patch apply work via the Extension API + CLI (acceptance in `editor accept`), **do not fork**.
+- Streaming chat panel → `workbench session-start|turn`
+- Context chips → `workbench context` / editor selection
+- Tool loop → retrieve / propose / verify via MAINFRAME
+- Diff review → Accept/Reject via `workbench apply` (never silent overwrite)
+- Cancel/resume → async bridge (extension uses `spawn`, not blocking `spawnSync`)
+
+## Inference
+
+- Mode B: `ollama_local` / `llamacpp_local` only; pause when unavailable.
+- Mode A: editing + deterministic CLI always work.
+- No paid OpenAI/Anthropic/Cursor API path.
+
+## Exit criteria that still matter
+
+If a contributor only needs chat-to-task + reviewable apply inside stock VS Code, the extension path (`editor accept`) is enough. The **branded workbench** is the north-star shell for IDE parity claims — those claims stay **unknown** until measured (`docs/eval/ide/`, codingbench live).

@@ -17,6 +17,9 @@ venv/
 freeforge-cli/node_modules/
 freeforge-cli/dist/
 
+# FreeForge Workbench clone / Electron build (local only)
+.workbench-build/
+
 # OS / editor
 Thumbs.db
 Desktop.ini

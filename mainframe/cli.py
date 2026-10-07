@@ -61,6 +61,7 @@ from mainframe.costaudit import run_cost_audit, run_costaudit_accept
 from mainframe.release import run_release_accept, run_release_package
 from mainframe.recommend import run_recommend, run_recommend_accept
 from mainframe.surfaces import run_surfaces, run_surfaces_accept
+from mainframe.workbench import model_fit_report, run_workbench_accept, workbench_status
 from mainframe.discovery import (
     activate_connector,
     list_shortlist_ids,
@@ -1668,6 +1669,82 @@ def cmd_surfaces(args: argparse.Namespace) -> int:
         _print_json(out)
         return 0 if out.get("ok") else 1
     print("Unknown surfaces subcommand", file=sys.stderr)
+    return 2
+
+
+def cmd_workbench(args: argparse.Namespace) -> int:
+    """FreeForge Workbench — branded vscode-class shell + local AI bridge."""
+    from pathlib import Path
+
+    from mainframe.workbench.agent import (
+        agent_turn,
+        apply_session_patch,
+        attach_context,
+        cancel_session,
+        resume_session,
+        start_session,
+    )
+    from mainframe.workbench.bootstrap import bootstrap_workbench, run_overlay_check
+
+    ensure_state()
+    cmd = args.workbench_command
+    if cmd == "accept":
+        out = run_workbench_accept()
+        _print_json(out)
+        return 0 if out.get("ok") else 1
+    if cmd == "status":
+        _print_json(workbench_status())
+        return 0
+    if cmd == "model-fit":
+        _print_json(model_fit_report())
+        return 0
+    if cmd == "bootstrap":
+        out = bootstrap_workbench(skip_clone=bool(args.skip_clone))
+        _print_json(out)
+        return 0 if out.get("ok") else 1
+    if cmd == "overlay-check":
+        out = run_overlay_check()
+        _print_json(out)
+        return 0 if out.get("ok") else 1
+    if cmd == "session-start":
+        out = start_session(workspace=Path(args.workspace), chat=args.chat)
+        _print_json(out)
+        return 0 if out.get("ok") else 1
+    if cmd == "context":
+        payload = json.loads(args.json)
+        out = attach_context(
+            args.session,
+            path=payload["path"],
+            text=payload["text"],
+            start_line=payload.get("start_line"),
+            end_line=payload.get("end_line"),
+        )
+        _print_json(out)
+        return 0 if out.get("ok") else 1
+    if cmd == "turn":
+        out = agent_turn(
+            args.session,
+            message=args.message,
+            use_model=not bool(args.no_model),
+        )
+        _print_json(out)
+        return 0 if out.get("ok") else 1
+    if cmd == "apply":
+        accept = bool(args.accept) and not bool(args.reject)
+        if args.reject:
+            accept = False
+        out = apply_session_patch(args.session, accept=accept)
+        _print_json(out)
+        return 0 if out.get("ok") else 1
+    if cmd == "cancel":
+        out = cancel_session(args.session)
+        _print_json(out)
+        return 0 if out.get("ok") else 1
+    if cmd == "resume":
+        out = resume_session(args.session)
+        _print_json(out)
+        return 0 if out.get("ok") else 1
+    print("Unknown workbench subcommand", file=sys.stderr)
     return 2
 
 
@@ -3948,6 +4025,47 @@ def build_parser() -> argparse.ArgumentParser:
     surf_web.set_defaults(func=cmd_surfaces)
     surf_app = surf_sub.add_parser("build-app", help="Build dist/application desktop surface")
     surf_app.set_defaults(func=cmd_surfaces)
+
+    p_wb = sub.add_parser(
+        "workbench",
+        help="FreeForge Workbench: vscode pin, overlay, Mode B status, agent sessions",
+    )
+    wb_sub = p_wb.add_subparsers(dest="workbench_command", required=True)
+    wb_st = wb_sub.add_parser("status", help="Pin, overlay inventory, AI probe")
+    wb_st.set_defaults(func=cmd_workbench)
+    wb_mf = wb_sub.add_parser("model-fit", help="Recommend local models from measured RAM (no download)")
+    wb_mf.set_defaults(func=cmd_workbench)
+    wb_boot = wb_sub.add_parser("bootstrap", help="Clone pin + apply overlay (or --skip-clone)")
+    wb_boot.add_argument("--skip-clone", action="store_true")
+    wb_boot.set_defaults(func=cmd_workbench)
+    wb_oc = wb_sub.add_parser("overlay-check", help="Run overlay check.mjs under Node")
+    wb_oc.set_defaults(func=cmd_workbench)
+    wb_acc = wb_sub.add_parser("accept", help="Workbench accept + docs/eval/ide report")
+    wb_acc.set_defaults(func=cmd_workbench)
+    wb_ss = wb_sub.add_parser("session-start", help="Start agent session + editor task")
+    wb_ss.add_argument("--workspace", required=True)
+    wb_ss.add_argument("--chat", required=True)
+    wb_ss.set_defaults(func=cmd_workbench)
+    wb_ctx = wb_sub.add_parser("context", help="Attach selection context chip")
+    wb_ctx.add_argument("--session", required=True)
+    wb_ctx.add_argument("--json", required=True)
+    wb_ctx.set_defaults(func=cmd_workbench)
+    wb_turn = wb_sub.add_parser("turn", help="Agent turn (deterministic-first; optional local model)")
+    wb_turn.add_argument("--session", required=True)
+    wb_turn.add_argument("--message", required=True)
+    wb_turn.add_argument("--no-model", action="store_true")
+    wb_turn.set_defaults(func=cmd_workbench)
+    wb_ap = wb_sub.add_parser("apply", help="Accept or reject pending reviewable patch")
+    wb_ap.add_argument("--session", required=True)
+    wb_ap.add_argument("--accept", action="store_true")
+    wb_ap.add_argument("--reject", action="store_true")
+    wb_ap.set_defaults(func=cmd_workbench)
+    wb_can = wb_sub.add_parser("cancel", help="Cancel workbench session / task")
+    wb_can.add_argument("--session", required=True)
+    wb_can.set_defaults(func=cmd_workbench)
+    wb_res = wb_sub.add_parser("resume", help="Resume workbench session / task")
+    wb_res.add_argument("--session", required=True)
+    wb_res.set_defaults(func=cmd_workbench)
 
     return parser
 

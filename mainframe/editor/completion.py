@@ -36,4 +36,7 @@ def completion_gate(*, requested: bool = False) -> dict[str, Any]:
         "eligible_model": True,
         "budgeted": True,
         "max_tokens_default": 64,
+        "max_tokens_hard_cap": 128,
+        "mode": "mode_b_only",
+        "note": "Inline completion budgeted; disabled automatically when Mode B probe is not available.",
     }

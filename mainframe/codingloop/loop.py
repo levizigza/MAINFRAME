@@ -50,11 +50,7 @@ def _phase_record(phase: str, **payload: Any) -> dict[str, Any]:
     return {"phase": phase, "at": _utc(), **payload}
 
 
-def propose_fixes(root: Path, hypothesis: str) -> dict[str, Any]:
-    """
-    Deterministic proposer for known fixtures — returns a *proposal* only.
-    Never marks applied/verified.
-    """
+def _deterministic_fixture_edits(root: Path) -> list[dict[str, Any]]:
     edits: list[dict[str, Any]] = []
     mathutil = root / "mathutil.py"
     greeter = root / "greeter.py"
@@ -74,6 +70,64 @@ def propose_fixes(root: Path, hypothesis: str) -> dict[str, Any]:
                 "new": '    return "; ".join(parts)\n',
             }
         )
+    return edits
+
+
+def _parse_model_edits(text: str, root: Path) -> list[dict[str, Any]]:
+    """Accept only JSON list of {path,old,new} that match current file contents."""
+    raw = (text or "").strip()
+    if "```" in raw:
+        parts = raw.split("```")
+        for part in parts:
+            chunk = part.strip()
+            if chunk.startswith("json"):
+                chunk = chunk[4:].strip()
+            if chunk.startswith("["):
+                raw = chunk
+                break
+    try:
+        start = raw.find("[")
+        end = raw.rfind("]")
+        if start < 0 or end <= start:
+            return []
+        data = json.loads(raw[start : end + 1])
+    except (json.JSONDecodeError, TypeError, ValueError):
+        return []
+    if not isinstance(data, list):
+        return []
+    out: list[dict[str, Any]] = []
+    for item in data:
+        if not isinstance(item, dict):
+            continue
+        path = str(item.get("path") or "").replace("\\", "/").lstrip("./")
+        old = item.get("old")
+        new = item.get("new")
+        if not path or not isinstance(old, str) or not isinstance(new, str):
+            continue
+        if ".." in path.split("/"):
+            continue
+        fp = root / path
+        if not fp.is_file():
+            continue
+        disk = fp.read_text(encoding="utf-8")
+        if old not in disk:
+            continue
+        out.append({"path": path, "old": old, "new": new})
+    return out
+
+
+def propose_fixes(
+    root: Path,
+    hypothesis: str,
+    *,
+    allow_model: bool = False,
+) -> dict[str, Any]:
+    """
+    Deterministic-first proposer — returns a *proposal* only.
+    Optional local model path when allow_model and eligibility probe is available.
+    Never marks applied/verified. Never calls paid/hosted providers.
+    """
+    root = Path(root)
     # Impossible fixture: no safe deterministic fix without oracle
     if (root / "oracle.py").is_file():
         return {
@@ -84,14 +138,102 @@ def propose_fixes(root: Path, hypothesis: str) -> dict[str, Any]:
             "impossible": True,
             "reason": "Requires unavailable external oracle — cannot propose a verified fix.",
             "hypothesis": hypothesis,
+            "source": "deterministic",
         }
+
+    edits = _deterministic_fixture_edits(root)
+    if edits:
+        return {
+            "proposal_only": True,
+            "applied": False,
+            "verified": False,
+            "edits": edits,
+            "impossible": False,
+            "hypothesis": hypothesis,
+            "source": "deterministic",
+        }
+
+    model_step: dict[str, Any] | None = None
+    if allow_model:
+        from mainframe.ai import probe_free_inference, run_ai_step
+        from mainframe.cache.facades import cached_model_response
+
+        probe = probe_free_inference()
+        if probe.status in ("available", "ok"):
+            # Tight context: retrieve top cues before spending tokens
+            try:
+                from mainframe.cache.facades import cached_retrieve
+
+                retrieved = cached_retrieve(
+                    root, issue_text=hypothesis, goal=hypothesis, top_k=4
+                )
+                rows = retrieved.get("results") or retrieved.get("hits") or []
+                cues = [
+                    f"{h.get('path')}:{h.get('score')}"
+                    for h in rows[:4]
+                ]
+            except Exception:  # noqa: BLE001
+                cues = []
+            prompt = (
+                "Return ONLY a JSON array of edits: "
+                '[{"path":"rel/path.py","old":"exact substring","new":"replacement"}]. '
+                "old must match the file exactly. No markdown. "
+                f"Hypothesis: {hypothesis}\nCues: {', '.join(cues) or 'none'}"
+            )
+
+            def _compute() -> dict[str, Any]:
+                return run_ai_step(prompt)
+
+            try:
+                wrapped = cached_model_response(
+                    root,
+                    prompt=prompt,
+                    model={
+                        "provider_id": str(probe.provider or "ollama_local"),
+                        "model_id": str(probe.provider or "ollama_local"),
+                    },
+                    compute_response=_compute,
+                )
+                model_step = dict(wrapped.get("result") or {})
+                model_step["cache_hit"] = wrapped.get("cache_hit")
+            except Exception as exc:  # noqa: BLE001
+                model_step = {"ok": False, "paused": True, "detail": str(exc)}
+
+            if model_step.get("ok") and not model_step.get("paused"):
+                text = (
+                    model_step.get("text")
+                    or model_step.get("response")
+                    or model_step.get("content")
+                    or model_step.get("message")
+                    or ""
+                )
+                model_edits = _parse_model_edits(str(text), root)
+                if model_edits:
+                    return {
+                        "proposal_only": True,
+                        "applied": False,
+                        "verified": False,
+                        "edits": model_edits,
+                        "impossible": False,
+                        "hypothesis": hypothesis,
+                        "source": "local_model",
+                        "model_step": {
+                            "ok": True,
+                            "paused": False,
+                            "fallback_used": False,
+                            "cache_hit": model_step.get("cache_hit"),
+                        },
+                    }
+
     return {
         "proposal_only": True,
         "applied": False,
         "verified": False,
-        "edits": edits,
+        "edits": [],
         "impossible": False,
         "hypothesis": hypothesis,
+        "source": "deterministic",
+        "model_step": model_step,
     }
 
 
@@ -130,7 +272,7 @@ def run_coding_loop(
             if state.get("awaiting_apply") or state.get("phase") == "apply":
                 phase = "apply"
                 if not proposal:
-                    proposal = propose_fixes(workspace, hypothesis)
+                    proposal = propose_fixes(workspace, hypothesis, allow_model=True)
             else:
                 phase = next_phase(state.get("phase")) or "report"
             state["interrupted"] = False
@@ -218,7 +360,7 @@ def run_coding_loop(
             phase = "propose"
 
         elif phase == "propose":
-            proposal = propose_fixes(workspace, hypothesis)
+            proposal = propose_fixes(workspace, hypothesis, allow_model=True)
             phase_log.append(
                 _phase_record(
                     "propose",
