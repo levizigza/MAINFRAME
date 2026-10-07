@@ -61,6 +61,7 @@ from mainframe.costaudit import run_cost_audit, run_costaudit_accept
 from mainframe.release import run_release_accept, run_release_package
 from mainframe.recommend import run_recommend, run_recommend_accept
 from mainframe.surfaces import run_surfaces, run_surfaces_accept
+from mainframe.workbench import mode_b_fitness_report, run_workbench_accept, workbench_status
 from mainframe.discovery import (
     activate_connector,
     list_shortlist_ids,
@@ -1671,6 +1672,82 @@ def cmd_surfaces(args: argparse.Namespace) -> int:
     return 2
 
 
+def cmd_workbench(args: argparse.Namespace) -> int:
+    """FreeForge Workbench — fitness, agent bridge, onboarding, accept."""
+    from pathlib import Path
+
+    ensure_state()
+    cmd = args.workbench_command
+    if cmd == "accept":
+        out = run_workbench_accept()
+        _print_json(out)
+        return 0 if out.get("ok") else 1
+    if cmd == "status":
+        _print_json(workbench_status())
+        return 0
+    if cmd == "fitness":
+        _print_json(mode_b_fitness_report(run_full_doctor=bool(args.full_doctor)))
+        return 0
+    if cmd == "onboarding":
+        from mainframe.workbench.onboarding import onboarding_guide
+
+        _print_json(onboarding_guide())
+        return 0
+    if cmd == "agent-turn":
+        from mainframe.workbench.agent import agent_turn, iter_agent_events
+
+        sel = json.loads(args.selection) if args.selection else None
+        diags = json.loads(args.diagnostics) if args.diagnostics else None
+        open_files = json.loads(args.open_files) if args.open_files else None
+        out = agent_turn(
+            message=args.message,
+            workspace=Path(args.workspace),
+            task_id=args.task,
+            selection=sel,
+            diagnostics=diags,
+            open_files=open_files,
+            active_file=args.active_file,
+            auto_propose=not args.no_propose,
+        )
+        if args.stream:
+            for ev in iter_agent_events(out):
+                print(json.dumps(ev, ensure_ascii=True), flush=True)
+            return 0 if out.get("ok") else 1
+        _print_json(out)
+        return 0 if out.get("ok") else 1
+    if cmd == "apply":
+        from mainframe.workbench.agent import apply_or_reject
+
+        out = apply_or_reject(args.task, accept=True)
+        _print_json(out)
+        return 0 if out.get("ok") else 1
+    if cmd == "reject":
+        from mainframe.workbench.agent import apply_or_reject
+
+        out = apply_or_reject(args.task, accept=False)
+        _print_json(out)
+        return 0 if out.get("ok") else 1
+    if cmd == "chips":
+        from mainframe.workbench.agent import context_chips
+
+        _print_json(context_chips(args.task))
+        return 0
+    if cmd == "cancel":
+        from mainframe.workbench.agent import cancel
+
+        out = cancel(args.task)
+        _print_json(out)
+        return 0 if out.get("ok") else 1
+    if cmd == "resume":
+        from mainframe.workbench.agent import resume
+
+        out = resume(args.task)
+        _print_json(out)
+        return 0 if out.get("ok") else 1
+    print("Unknown workbench subcommand", file=sys.stderr)
+    return 2
+
+
 def cmd_editor(args: argparse.Namespace) -> int:
     """Editor↔CLI shared tasks (extension uses supported VS Code APIs)."""
     from pathlib import Path
@@ -2744,6 +2821,24 @@ def cmd_accept(_: argparse.Namespace) -> int:
     except Exception as exc:  # noqa: BLE001
         checks.append({"id": "reproducible_cost_audit", "ok": False, "detail": str(exc)})
 
+    # 57) FreeForge Workbench — pin/overlay/agent bridge; no Cursor claims
+    try:
+        wb = run_workbench_accept()
+        checks.append(
+            {
+                "id": "freeforge_workbench",
+                "ok": bool(wb.get("ok")),
+                "detail": {
+                    "passed": wb.get("passed"),
+                    "total": wb.get("total"),
+                    "live_eval": wb.get("live_eval"),
+                    "failed_ids": [c.get("id") for c in wb.get("checks", []) if not c.get("ok")],
+                },
+            }
+        )
+    except Exception as exc:  # noqa: BLE001
+        checks.append({"id": "freeforge_workbench", "ok": False, "detail": str(exc)})
+
     passed = sum(1 for c in checks if c["ok"])
     failed = len(checks) - passed
     payload = {
@@ -2807,6 +2902,7 @@ def cmd_accept(_: argparse.Namespace) -> int:
                 "release run/accept (minimal package; smoke; backup; migrate; startup)",
                 "recommend run/accept (FreeForge modes; matrix; coding+automation demos)",
                 "surfaces run/accept (web + application packages; optional Actions/Pages)",
+                "workbench status/fitness/onboarding/agent-turn/accept (vscode pin + Mode B)",
                 "schedule probe/add-report/fire/accept (OpenClaw command-argv; zero model)",
                 "triggers accept (file/repo/webhook/poll; dedupe; bound jobs only)",
             ],
@@ -3948,6 +4044,51 @@ def build_parser() -> argparse.ArgumentParser:
     surf_web.set_defaults(func=cmd_surfaces)
     surf_app = surf_sub.add_parser("build-app", help="Build dist/application desktop surface")
     surf_app.set_defaults(func=cmd_surfaces)
+
+    p_wb = sub.add_parser(
+        "workbench",
+        help="FreeForge Workbench (vscode pin overlay + Mode B fitness + agent bridge)",
+    )
+    wb_sub = p_wb.add_subparsers(dest="workbench_command", required=True)
+    wb_st = wb_sub.add_parser("status", help="Product status, pin, AI paused/available")
+    wb_st.set_defaults(func=cmd_workbench)
+    wb_fit = wb_sub.add_parser("fitness", help="Mode B model fitness (doctor catalog; no auto-download)")
+    wb_fit.add_argument(
+        "--full-doctor",
+        action="store_true",
+        help="Run full doctor (may skip heavy probes under CI=true)",
+    )
+    wb_fit.set_defaults(func=cmd_workbench)
+    wb_on = wb_sub.add_parser("onboarding", help="First-run Ollama → fitness → probe steps")
+    wb_on.set_defaults(func=cmd_workbench)
+    wb_turn = wb_sub.add_parser("agent-turn", help="One agent turn (context chips + optional propose)")
+    wb_turn.add_argument("--message", required=True)
+    wb_turn.add_argument("--workspace", required=True)
+    wb_turn.add_argument("--task", default=None)
+    wb_turn.add_argument("--selection", default=None, help="JSON selection context")
+    wb_turn.add_argument("--diagnostics", default=None, help="JSON diagnostics list")
+    wb_turn.add_argument("--open-files", default=None, help="JSON list of paths")
+    wb_turn.add_argument("--active-file", default=None)
+    wb_turn.add_argument("--no-propose", action="store_true")
+    wb_turn.add_argument("--stream", action="store_true", help="NDJSON event stream")
+    wb_turn.set_defaults(func=cmd_workbench)
+    wb_ap = wb_sub.add_parser("apply", help="Apply reviewable proposal")
+    wb_ap.add_argument("--task", required=True)
+    wb_ap.set_defaults(func=cmd_workbench)
+    wb_rj = wb_sub.add_parser("reject", help="Reject proposal (no silent overwrite)")
+    wb_rj.add_argument("--task", required=True)
+    wb_rj.set_defaults(func=cmd_workbench)
+    wb_ch = wb_sub.add_parser("chips", help="Show context chips for a task")
+    wb_ch.add_argument("--task", required=True)
+    wb_ch.set_defaults(func=cmd_workbench)
+    wb_can = wb_sub.add_parser("cancel", help="Cancel task")
+    wb_can.add_argument("--task", required=True)
+    wb_can.set_defaults(func=cmd_workbench)
+    wb_res = wb_sub.add_parser("resume", help="Resume non-cancelled task")
+    wb_res.add_argument("--task", required=True)
+    wb_res.set_defaults(func=cmd_workbench)
+    wb_acc = wb_sub.add_parser("accept", help="Workbench pin/overlay/agent/propose acceptance")
+    wb_acc.set_defaults(func=cmd_workbench)
 
     return parser
 

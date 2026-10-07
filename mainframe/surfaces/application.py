@@ -14,10 +14,70 @@ from mainframe.release.package import build_release_tree
 from mainframe.surfaces.catalog import APPLICATION_FOCUS, SURFACE_APPLICATION
 
 APP_DIST = ROOT / "dist" / "application"
+WORKBENCH_DIST = APP_DIST / "workbench"
 
 
 def _utc() -> str:
     return datetime.now(timezone.utc).isoformat()
+
+
+def stage_workbench_artifact(dest: Path | None = None) -> dict[str, Any]:
+    """
+    Stage FreeForge Workbench pin/overlay pointers under dist/application/workbench/.
+    Does not require Electron compile (Windows build is separate / may be DOCUMENTED_NOT_TESTED).
+    """
+    out = dest or WORKBENCH_DIST
+    out.mkdir(parents=True, exist_ok=True)
+    wb = ROOT / "freeforge-workbench"
+    pin = wb / "PINS.json"
+    notice = wb / "ThirdPartyNotices.txt"
+    overlay = wb / "overlay" / "src" / "vs" / "workbench" / "contrib" / "freeforge"
+    if pin.is_file():
+        shutil.copy2(pin, out / "PINS.json")
+    if notice.is_file():
+        shutil.copy2(notice, out / "ThirdPartyNotices.txt")
+    (out / "README.md").write_text(
+        f"""# FreeForge Workbench application artifact
+
+Version: `{__version__}`
+Generated: `{_utc()}`
+
+## What this is
+
+Pointer + license staging for the branded workbench (pinned microsoft/vscode + FreeForge overlay).
+Full Electron compile is performed on Windows via `freeforge-workbench/scripts/build-windows.ps1`.
+
+## Overlay
+
+Present in-repo: `{overlay.is_dir()}`
+Path: `freeforge-workbench/overlay/src/vs/workbench/contrib/freeforge/`
+
+## AI
+
+Mode B optional (loopback Ollama). UI must show paused when unavailable.
+Deterministic CLI twin: `python -m mainframe workbench status`
+
+## Honesty
+
+Cold start / live agent success / vs Cursor: see `docs/eval/ide/metrics.json` (unknown until measured).
+""",
+        encoding="utf-8",
+    )
+    manifest = {
+        "surface": "application/workbench",
+        "version": __version__,
+        "generated_at": _utc(),
+        "pin_present": pin.is_file(),
+        "overlay_present": overlay.is_dir(),
+        "electron_build": "documented_not_tested_unless_windows_script_run",
+        "product": "FreeForge Workbench",
+    }
+    (out / "manifest.json").write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
+    return {
+        "ok": bool(pin.is_file() and overlay.is_dir() and (out / "README.md").is_file()),
+        "dest": str(out),
+        "manifest": manifest,
+    }
 
 
 STORE_CHECKLIST = [
@@ -119,15 +179,19 @@ accounts and are not part of MAINFRAME's zero-fee core.
         tip.mkdir(exist_ok=True)
         (tip / "README.md").write_text(
             "VS Code extension sources live at `extensions/freeforge-editor` in the repo.\n"
-            "Package with vsce only if you already have tooling — not required for core.\n",
+            "Package with vsce only if you already have tooling — not required for core.\n"
+            "IDE quality track is FreeForge Workbench (freeforge-workbench/), not extension-only.\n",
             encoding="utf-8",
         )
+
+    wb_art = stage_workbench_artifact(out / "workbench")
 
     manifest = {
         "surface": SURFACE_APPLICATION,
         "version": __version__,
         "generated_at": _utc(),
         "desktop_package": packaged.get("dest"),
+        "workbench": wb_art.get("dest"),
         "store_checklist": "STORE_CHECKLIST.json",
         "app_store_upload_performed": False,
         "code_signing_used": False,
@@ -135,10 +199,11 @@ accounts and are not part of MAINFRAME's zero-fee core.
     (out / "manifest.json").write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
 
     return {
-        "ok": bool(packaged.get("ok")),
+        "ok": bool(packaged.get("ok") and wb_art.get("ok")),
         "surface": SURFACE_APPLICATION,
         "dest": str(out),
         "desktop_package": packaged,
+        "workbench": wb_art,
         "store_checklist": STORE_CHECKLIST,
         "app_store_upload_required": False,
         "documented_not_tested": [

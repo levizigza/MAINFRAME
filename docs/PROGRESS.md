@@ -1444,3 +1444,50 @@ Fix GitHub Actions failure on `recommend accept` (run 37517450106). Harden Windo
 ### Acceptance
 
 Local: `CI=true python -m mainframe recommend accept` and `surfaces accept` exit 0. Push triggers Actions re-run.
+
+## 2026-10-07 — Increment 0.1.52: FreeForge Workbench + Mode B fitness
+
+### Intent
+
+Ship FreeForge Branded Workbench track: product truth (CLI ≠ IDE), Mode B fitness via doctor, vscode pin + thin FreeForge overlay, agent UX bridge (chips/stream/apply/reject/cancel), deterministic-first propose with optional model gate, onboarding + `docs/eval/ide/` evidence gates. No Cursor-parity claims.
+
+### Inspected
+
+- Plan: FreeForge Workbench IDE (shell B / inference Mode B).
+- Existing: `codingloop.propose_fixes` fixture-only; `editor` bridge; `extensions/freeforge-editor`; Void archived reference; Ollama paused on this host.
+
+### Preserved
+
+- No user notes overwritten. Void not vendored. Extension bridge retained.
+
+### Implemented
+
+- Docs: `docs/WORKBENCH.md`, `docs/VOID_FORK_PLAN.md` (workbench product track), `docs/eval/ide/{REPORT,metrics,ABLATIONS}.md`
+- Python: `mainframe/workbench/` (fitness, status, onboarding, agent, accept)
+- `mainframe/codingloop/propose.py` — deterministic-first + cached retrieve + optional model under eligibility/quota
+- CLI: `python -m mainframe workbench status|fitness|onboarding|agent-turn|apply|reject|chips|cancel|resume|accept`
+- `freeforge-workbench/` — PINS.json (vscode 1.140.0), ThirdPartyNotices, overlay contrib (chat + AI status), Windows build scripts
+- Application surface stages `dist/application/workbench/`
+- Rules/DEPENDENCIES/README updated; version `0.1.52`
+
+### Acceptance (observed)
+
+| Check | Result | Notes |
+|-------|--------|-------|
+| `workbench status` | PASS | AI **paused**; claims exceeds_cursor=unknown |
+| `workbench fitness` | PASS | Mode B; auto_download=false; Ollama unreachable |
+| `workbench accept` | PASS **14/14** | Overlay pin, agent chips/stream, apply/reject, artifact |
+| `codingloop accept` | PASS 5/5 | After local `pytest` install (was missing on host) |
+| `editor accept` | PASS | Regression |
+| `ai probe` | paused | Live modeleval/codingbench **not** run — quality stays unknown |
+| Windows Electron build | DOCUMENTED_NOT_TESTED | Linux cloud host; scripts present for Windows |
+
+### Blockers
+
+- Fitted Ollama model not installed → live coding quality **unknown**
+- Full vscode Electron compile not executed on this host
+- vs Cursor **unknown** (no paid trial measurement)
+
+### Honesty
+
+Never invent Cursor parity or live model scores. Fill `docs/eval/ide/metrics.json` only after measured runs.

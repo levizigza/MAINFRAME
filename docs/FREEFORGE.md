@@ -10,6 +10,7 @@ FreeForge sits **beside** MAINFRAME: cost policy, repository tools, and verified
 | **FreeForge** | Cost/eligibility policy (reuses MAINFRAME gate), repo tools, verified workflow runners, Playwright browser checks, **its own** SQLite | Gateway process; competing coding loop |
 | **public-apis** (pinned) | Discovery catalog of public HTTP APIs | Runtime calls; paid APILayer upsell |
 | **Void** (pinned, archived) | Optional **reference** for editor UX/source ideas | Foundation dependency; CI submodule auto-bumps; live product track |
+| **FreeForge Workbench** | Branded vscode-pin desktop shell + Python agent bridge (Mode B) | Paid frontier APIs; Cursor-parity claims without `docs/eval/ide/` |
 
 ## Pinned revisions (observed 2026-09-29)
 

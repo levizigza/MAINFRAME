@@ -28,6 +28,7 @@ python -m mainframe accept
 python -m mainframe release accept
 python -m mainframe recommend accept
 python -m mainframe surfaces accept
+python -m mainframe workbench accept
 cd freeforge-cli; npm install; npm run accept
 ```
 
@@ -36,6 +37,8 @@ TypeScript FreeForge CLI (OpenClaw adapter): see [`freeforge-cli/README.md`](fre
 Minimal local release package (pins, SETUP, uninstall): `python -m mainframe release run` → `dist/release/` + [`docs/RELEASE.md`](docs/RELEASE.md).
 
 **Product surfaces:** web (sites/webapps) vs application (desktop + store markets) — `python -m mainframe surfaces accept` → [`docs/SURFACES.md`](docs/SURFACES.md). Optional GitHub Actions: https://github.com/levizigza/MAINFRAME/actions (not required locally).
+
+**FreeForge Workbench** (VS Code-class shell + local agent): CLI alone is **not** the IDE. See [`docs/WORKBENCH.md`](docs/WORKBENCH.md) and [`freeforge-workbench/`](freeforge-workbench/). Mode B fitness: `python -m mainframe workbench fitness`. Evidence gates: [`docs/eval/ide/`](docs/eval/ide/).
 
 No `pip install` is required for core commands.
 
