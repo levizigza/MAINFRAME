@@ -16,6 +16,7 @@ venv/
 .pytest_cache/
 freeforge-cli/node_modules/
 freeforge-cli/dist/
+freeforge-workbench/.cache/
 
 # OS / editor
 Thumbs.db

@@ -1,0 +1,21 @@
+{
+  "nameShort": "FreeForge",
+  "nameLong": "FreeForge Workbench",
+  "applicationName": "freeforge",
+  "dataFolderName": ".freeforge-workbench",
+  "win32MutexName": "freeforge",
+  "licenseName": "MIT",
+  "licenseUrl": "https://github.com/levizigza/MAINFRAME/blob/main/LICENSE",
+  "serverLicenseUrl": "https://github.com/levizigza/MAINFRAME/blob/main/LICENSE",
+  "reportIssueUrl": "https://github.com/levizigza/MAINFRAME/issues",
+  "urlProtocol": "freeforge",
+  "quality": "stable",
+  "updateUrl": "",
+  "extensionsGallery": null,
+  "linkProtectionTrustedDomains": ["http://127.0.0.1", "http://localhost"],
+  "freeforge": {
+    "ollamaBaseUrlDefault": "http://127.0.0.1:11434",
+    "loopbackOnly": true,
+    "aiPausedWhenUnavailable": true
+  }
+}

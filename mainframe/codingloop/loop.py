@@ -52,47 +52,12 @@ def _phase_record(phase: str, **payload: Any) -> dict[str, Any]:
 
 def propose_fixes(root: Path, hypothesis: str) -> dict[str, Any]:
     """
-    Deterministic proposer for known fixtures — returns a *proposal* only.
-    Never marks applied/verified.
+    Coding-loop proposer — deterministic-first via codingloop.propose.
+    Offline/CI paths keep prefer_model=False so accept stays fixture-stable.
     """
-    edits: list[dict[str, Any]] = []
-    mathutil = root / "mathutil.py"
-    greeter = root / "greeter.py"
-    if mathutil.is_file() and "return a * b" in mathutil.read_text(encoding="utf-8"):
-        edits.append(
-            {
-                "path": "mathutil.py",
-                "old": "    return a * b  # bug: should add\n",
-                "new": "    return a + b\n",
-            }
-        )
-    if greeter.is_file() and '" | "' in greeter.read_text(encoding="utf-8"):
-        edits.append(
-            {
-                "path": "greeter.py",
-                "old": '    return " | ".join(parts)  # expected uses "; "\n',
-                "new": '    return "; ".join(parts)\n',
-            }
-        )
-    # Impossible fixture: no safe deterministic fix without oracle
-    if (root / "oracle.py").is_file():
-        return {
-            "proposal_only": True,
-            "applied": False,
-            "verified": False,
-            "edits": [],
-            "impossible": True,
-            "reason": "Requires unavailable external oracle — cannot propose a verified fix.",
-            "hypothesis": hypothesis,
-        }
-    return {
-        "proposal_only": True,
-        "applied": False,
-        "verified": False,
-        "edits": edits,
-        "impossible": False,
-        "hypothesis": hypothesis,
-    }
+    from mainframe.codingloop.propose import propose_edits
+
+    return propose_edits(root, hypothesis=hypothesis, prefer_model=False)
 
 
 def run_coding_loop(

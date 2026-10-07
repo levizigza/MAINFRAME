@@ -35,3 +35,4 @@ Never invent a successful test, live account check, or availability claim.
 - Deterministic automation must work with AI offline/paused.
 - Prefer additive changes; ask before destructive refactors of user content.
 - Keep increments runnable via `python -m mainframe ...` with no pip install required for core paths.
+- FreeForge Workbench (`freeforge-workbench/` + `python -m mainframe workbench …`) is a first-class free-only surface: vscode-pin overlay + Mode B local Ollama; CLI alone is not the IDE; never claim Cursor parity without `docs/eval/ide/` measurements.

@@ -1,0 +1,13 @@
+{
+  "product": "FreeForge Workbench",
+  "upstream": "microsoft/vscode",
+  "tag": "1.140.0",
+  "commit": "pin-at-clone",
+  "electron": "37.7.1",
+  "node": "22.20.0",
+  "note": "Electron/Node pins match microsoft/vscode 1.140.0 published dependency set. Verify at clone time against upstream package.json; update this file if upstream differs.",
+  "overlay": "overlay/src/vs/workbench/contrib/freeforge",
+  "license_upstream": "MIT",
+  "void_reference_only": true,
+  "void_services_vendored": false
+}

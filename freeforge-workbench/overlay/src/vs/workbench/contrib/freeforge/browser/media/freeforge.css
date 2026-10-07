@@ -1,0 +1,68 @@
+/* FreeForge Workbench chat — minimal; no card clutter in hero-less IDE pane */
+.freeforge-chat {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+	padding: 8px;
+	height: 100%;
+	box-sizing: border-box;
+	background: linear-gradient(165deg, var(--vscode-sideBar-background) 0%, color-mix(in srgb, var(--vscode-sideBar-background) 85%, #1a3a2a) 100%);
+}
+
+.freeforge-chips {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 4px;
+	min-height: 1.2em;
+}
+
+.freeforge-chip {
+	font-size: 11px;
+	padding: 2px 6px;
+	border: 1px solid var(--vscode-panel-border);
+	background: transparent;
+}
+
+.freeforge-log {
+	flex: 1;
+	overflow: auto;
+	font-family: var(--vscode-editor-font-family);
+	font-size: 12px;
+	line-height: 1.45;
+}
+
+.freeforge-msg {
+	margin: 0 0 8px 0;
+	white-space: pre-wrap;
+}
+
+.freeforge-msg-user {
+	opacity: 0.95;
+	border-left: 2px solid var(--vscode-focusBorder);
+	padding-left: 8px;
+}
+
+.freeforge-msg-system {
+	opacity: 0.75;
+	font-style: italic;
+}
+
+.freeforge-actions {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 6px;
+}
+
+.freeforge-actions button {
+	cursor: pointer;
+}
+
+.freeforge-chat textarea {
+	width: 100%;
+	resize: vertical;
+	box-sizing: border-box;
+	background: var(--vscode-input-background);
+	color: var(--vscode-input-foreground);
+	border: 1px solid var(--vscode-input-border, transparent);
+	padding: 6px;
+}

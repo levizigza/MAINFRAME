@@ -1,0 +1,15 @@
+{
+  "product": "FreeForge Workbench",
+  "updated": "2026-10-07",
+  "cold_start_ms": "unknown",
+  "cold_start_host": "unknown",
+  "agent_task_success_live": "unknown",
+  "agent_task_success_mock_fixture": "measured_via_workbench_accept",
+  "apply_safety": "accept_reject_required_no_silent_overwrite",
+  "latency_p50_tool_loop_ms": "unknown",
+  "latency_p50_verify_ms": "unknown",
+  "offline_editing_without_ai": true,
+  "vs_cursor": "unknown",
+  "percentile_rank": "unknown",
+  "note": "Do not invent Cursor parity or live model quality. Fill cells only after measured runs on an installed local model / Windows workbench launch."
+}
