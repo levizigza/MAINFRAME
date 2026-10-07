@@ -1,6 +1,8 @@
-# MAINFRAME
+# MAINFRAME / FreeForge
 
-Open-source **coding and automation** that runs on your existing Windows PC with **zero required** software, API, subscription, or hosting fees.
+Open-source **AI IDE + coding automation** for your Windows PC with **zero required** software, API, subscription, or hosting fees.
+
+**North star:** FreeForge Workbench matches or exceeds Cursor / Claude Code on *measured* coding tasks using **free local inference only** — see [`docs/IDE_GOAL.md`](docs/IDE_GOAL.md). Until that comparison is published, competitor results stay **unknown** (never invented).
 
 Existing hardware, electricity, and internet are physical prerequisites — not things this software makes free. No GPU purchase. No paid accounts, trials, or paid fallbacks.
 
@@ -28,14 +30,15 @@ python -m mainframe accept
 python -m mainframe release accept
 python -m mainframe recommend accept
 python -m mainframe surfaces accept
+python -m mainframe workbench accept
 cd freeforge-cli; npm install; npm run accept
 ```
 
+**Workbench (branded IDE shell):** `python -m mainframe workbench status|model-fit|bootstrap|accept` — pin + overlay under [`workbench/`](workbench/). Mode B onboarding: [`docs/MODE_B_ONBOARDING.md`](docs/MODE_B_ONBOARDING.md).
+
 TypeScript FreeForge CLI (OpenClaw adapter): see [`freeforge-cli/README.md`](freeforge-cli/README.md).
 
-Minimal local release package (pins, SETUP, uninstall): `python -m mainframe release run` → `dist/release/` + [`docs/RELEASE.md`](docs/RELEASE.md).
-
-**Product surfaces:** web (sites/webapps) vs application (desktop + store markets) — `python -m mainframe surfaces accept` → [`docs/SURFACES.md`](docs/SURFACES.md). Optional GitHub Actions: https://github.com/levizigza/MAINFRAME/actions (not required locally).
+Minimal local release package: `python -m mainframe release run` → `dist/release/`. Web vs application surfaces: `python -m mainframe surfaces accept`. Optional Actions: https://github.com/levizigza/MAINFRAME/actions (not required locally).
 
 No `pip install` is required for core commands.
 

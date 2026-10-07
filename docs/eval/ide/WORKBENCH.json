@@ -1,0 +1,113 @@
+{
+  "ok": true,
+  "passed": 8,
+  "failed": 0,
+  "checks": [
+    {
+      "id": "ide_goal_doc",
+      "ok": true,
+      "detail": "docs/IDE_GOAL.md"
+    },
+    {
+      "id": "pin_present",
+      "ok": true,
+      "detail": {
+        "present": true,
+        "tag": "1.95.3",
+        "repo": "https://github.com/microsoft/vscode"
+      }
+    },
+    {
+      "id": "overlay_present",
+      "ok": true,
+      "detail": {
+        "present": true,
+        "path": "workbench/overlay/freeforge",
+        "files": [
+          "aiStatus.ts",
+          "check.mjs",
+          "freeforge.contribution.ts"
+        ]
+      }
+    },
+    {
+      "id": "overlay_check",
+      "ok": true,
+      "detail": {
+        "ok": true,
+        "exit_code": 0,
+        "stdout": "{\"ok\":true,\"overlay\":\"freeforge\"}",
+        "stderr": ""
+      }
+    },
+    {
+      "id": "bootstrap_staging",
+      "ok": true,
+      "detail": {
+        "ok": true,
+        "mode": "overlay_staging_only",
+        "staging": ".workbench-build/overlay-staging/freeforge",
+        "clone_skipped": true,
+        "note": "Pass full bootstrap without --skip-clone to git clone vscode pin."
+      }
+    },
+    {
+      "id": "mode_b_fit_report",
+      "ok": true,
+      "detail": {
+        "recommended_ids": [],
+        "budget_gib": 1.61,
+        "ai_status": "paused"
+      }
+    },
+    {
+      "id": "no_false_cursor_claim",
+      "ok": true,
+      "detail": "Competitor comparison remains unknown until measured"
+    },
+    {
+      "id": "void_services_not_vendored",
+      "ok": true,
+      "detail": "PIN forbids Void workbench service copy"
+    }
+  ],
+  "status": {
+    "product": "FreeForge Workbench",
+    "goal_doc": "docs/IDE_GOAL.md",
+    "goal_doc_present": true,
+    "pin": {
+      "present": true,
+      "tag": "1.95.3",
+      "repo": "https://github.com/microsoft/vscode"
+    },
+    "overlay": {
+      "present": true,
+      "path": "workbench/overlay/freeforge",
+      "files": [
+        "aiStatus.ts",
+        "check.mjs",
+        "freeforge.contribution.ts"
+      ]
+    },
+    "clone": {
+      "path": ".workbench-build/vscode",
+      "exists": false,
+      "overlay_applied": false
+    },
+    "ai": {
+      "status": "paused",
+      "provider": null,
+      "detail": "No free local inference at http://127.0.0.1:11434/api/tags (TCP unreachable for 127.0.0.1:11434). Progress preserved; AI-dependent steps paused.",
+      "ollama_on_path": false
+    },
+    "north_star": "match_or_exceed_cursor_claude_on_measured_suites_free_only",
+    "cursor_claude_comparison": "unknown",
+    "hosted_ci_required": false
+  },
+  "model_fit": {
+    "recommended_ids": [],
+    "note": "Install Ollama, then pull a recommended model explicitly. MAINFRAME does not auto-download weights."
+  },
+  "north_star": "match_or_exceed_cursor_claude_on_measured_suites_free_only",
+  "generated_at": "2026-10-07T03:54:47.998020+00:00"
+}

@@ -1,37 +1,31 @@
-# Optional Void / VS Code full-fork plan
+# FreeForge Workbench — vscode pin + thin overlay
 
-This plan is **optional**. FreeForge’s default editor path is a maintained extension + shared CLI task state (`docs/VOID_EVAL.md`).
+**Product decision (locked):** FreeForge ships a **branded workbench** downstream of pinned `microsoft/vscode`, with a thin overlay at `src/vs/workbench/contrib/freeforge/`. See [`docs/IDE_GOAL.md`](IDE_GOAL.md) and [`workbench/PIN.json`](../workbench/PIN.json).
 
-A full fork of Void (or vscode) is only justified when Extension API limits block required UX. If pursued, treat it as a separate product track.
+Void remains **archived UX reference only** — do **not** copy Void workbench services (`editCodeService`, `voidModelService`, React+Tailwind contrib).
 
-## Concrete requirements before forking
+The maintained extension ([`extensions/freeforge-editor`](../extensions/freeforge-editor)) remains a bridge into Cursor/VS Code while the workbench build matures. Core CLI never requires the workbench.
 
-### 1. Upstream update strategy
+## Upstream update strategy
 
-- Track microsoft/vscode release tags on a schedule (e.g. monthly).
-- Rebase or merge Void-derived patches as a thin overlay under `src/vs/workbench/contrib/freeforge/` — never silent multi-month drift.
-- Pin Electron / Node versions to vscode’s published dependency set for that tag.
-- Document every conflict class (build tooling, CSP, React mount) and an owner.
+- Track microsoft/vscode **release tags** (pin in `workbench/PIN.json`).
+- Thin FreeForge overlay only — never silent multi-month drift of a fat fork.
+- Pin Electron / Node to vscode’s published set for that tag.
+- Bootstrap: `python -m mainframe workbench bootstrap` (clone → `.workbench-build/vscode`, gitignored).
 
-### 2. Security
+## Security
 
-- Inherit vscode security advisories; subscribe to GHSA for Electron and vscode.
-- No auto-update channel that ships unsigned binaries.
-- Secrets stay in FreeForge `LocalSecretFacility` — never in fork settings JSON exported to chat.
-- Renderer CSP: LLM traffic only via main-process IPC (Void pattern) or Extension Host — not ad-hoc `fetch` from untrusted webviews without review.
+- Inherit vscode security advisories.
+- No required auto-update / unsigned binary channel for core.
+- Secrets stay in FreeForge `LocalSecretFacility`.
+- LLM traffic: loopback Ollama/llama.cpp via MAINFRAME eligibility gate — not ad-hoc renderer `fetch` to hosted APIs.
 
-### 3. Build
+## Build / distribution
 
-- Use a public build pipeline (Void’s void-builder is a reference, not a dependency).
-- Reproducible builds: lockfiles, pinned toolchains, SBOM.
-- CI must build Windows (primary MAINFRAME target) without paid cloud GPU / hosted secrets.
+- Primary OS: Windows. Hosted CI and code-signing SaaS are **not required**.
+- License bundle: MIT (vscode + FreeForge overlay) + full ThirdPartyNotices from upstream.
+- App Store / Play uploads remain optional and DOCUMENTED_NOT_TESTED until separately pursued.
 
-### 4. Distribution
+## Inference
 
-- Optional install path only; CORE CLI must work without the fork.
-- License bundle: Apache-2.0 (Void-derived overlay) + MIT (vscode) + full ThirdPartyNotices.
-- Auto-update is opt-in and fee-free; no telemetry SaaS.
-
-### 5. Exit criteria to *not* fork
-
-If chat-to-task, selection context, reviewable diffs, diagnostics, cancel/resume, and shared patch apply work via the Extension API + CLI (acceptance in `editor accept`), **do not fork**.
+Mode B only for agent coding: local Ollama / llama.cpp. When unavailable, workbench editing continues; agent UI shows **paused**.

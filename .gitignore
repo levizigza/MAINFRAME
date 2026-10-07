@@ -14,6 +14,9 @@ venv/
 # MAINFRAME local state (never commit — recreated on first run)
 .mainframe/
 .pytest_cache/
+
+# Workbench vscode clone / Electron build (huge; bootstrap locally)
+.workbench-build/
 freeforge-cli/node_modules/
 freeforge-cli/dist/
 

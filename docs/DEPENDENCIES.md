@@ -62,6 +62,7 @@ Generate live JSON: `python -m mainframe audit`
 | `minimal_local_release` | eligible | Pinned release tree, doctor, backup/restore, migrate, upgrade check, removable startup | MIT | Local dist/ only; no hosted CI, signing service, cloud storage, or public hosting required | n/a | `release` CLI |
 | `freeforge_recommended_config` | eligible | Evidence-based modes A/B/C, capability matrix, measured demos | MIT | Mode C empty until hosted entitlement verified; Mode B pauses without local model | n/a | `recommend` CLI |
 | `dual_product_surfaces` | eligible | Web (sites/webapps) + application (desktop/store checklist) packages | MIT | Optional GH Actions/Pages; store uploads not required; local builds authoritative | n/a | `surfaces` CLI |
+| `freeforge_workbench` | eligible | Branded vscode-pin workbench overlay + Mode B fitness; IDE north star | MIT (overlay); upstream vscode MIT+notices | Local Ollama/llama.cpp only; clone under `.workbench-build/`; no paid IDE APIs | thin extension bridge | `workbench` CLI |
 
 ## Migration notes
 

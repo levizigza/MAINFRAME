@@ -61,6 +61,7 @@ from mainframe.costaudit import run_cost_audit, run_costaudit_accept
 from mainframe.release import run_release_accept, run_release_package
 from mainframe.recommend import run_recommend, run_recommend_accept
 from mainframe.surfaces import run_surfaces, run_surfaces_accept
+from mainframe.workbench import model_fit_report, run_workbench_accept, workbench_status
 from mainframe.discovery import (
     activate_connector,
     list_shortlist_ids,
@@ -1671,6 +1672,30 @@ def cmd_surfaces(args: argparse.Namespace) -> int:
     return 2
 
 
+def cmd_workbench(args: argparse.Namespace) -> int:
+    """FreeForge Workbench bootstrap — branded IDE shell + Mode B fitness."""
+    from mainframe.workbench.status import run_bootstrap
+
+    ensure_state()
+    cmd = args.workbench_command
+    if cmd == "accept":
+        out = run_workbench_accept()
+        _print_json(out)
+        return 0 if out.get("ok") else 1
+    if cmd == "status":
+        _print_json(workbench_status())
+        return 0
+    if cmd == "model-fit":
+        _print_json(model_fit_report())
+        return 0
+    if cmd == "bootstrap":
+        out = run_bootstrap(skip_clone=bool(args.skip_clone))
+        _print_json(out)
+        return 0 if out.get("ok") else 1
+    print("Unknown workbench subcommand", file=sys.stderr)
+    return 2
+
+
 def cmd_editor(args: argparse.Namespace) -> int:
     """Editor↔CLI shared tasks (extension uses supported VS Code APIs)."""
     from pathlib import Path
@@ -2807,6 +2832,7 @@ def cmd_accept(_: argparse.Namespace) -> int:
                 "release run/accept (minimal package; smoke; backup; migrate; startup)",
                 "recommend run/accept (FreeForge modes; matrix; coding+automation demos)",
                 "surfaces run/accept (web + application packages; optional Actions/Pages)",
+                "workbench status/model-fit/bootstrap/accept (branded IDE shell + Mode B)",
                 "schedule probe/add-report/fire/accept (OpenClaw command-argv; zero model)",
                 "triggers accept (file/repo/webhook/poll; dedupe; bound jobs only)",
             ],
@@ -3948,6 +3974,25 @@ def build_parser() -> argparse.ArgumentParser:
     surf_web.set_defaults(func=cmd_surfaces)
     surf_app = surf_sub.add_parser("build-app", help="Build dist/application desktop surface")
     surf_app.set_defaults(func=cmd_surfaces)
+
+    p_wb = sub.add_parser(
+        "workbench",
+        help="FreeForge Workbench: vscode pin overlay, Mode B fit, IDE goal gates",
+    )
+    wb_sub = p_wb.add_subparsers(dest="workbench_command", required=True)
+    wb_st = wb_sub.add_parser("status", help="Pin/overlay/clone/AI status")
+    wb_st.set_defaults(func=cmd_workbench)
+    wb_fit = wb_sub.add_parser("model-fit", help="Recommend local models from measured RAM")
+    wb_fit.set_defaults(func=cmd_workbench)
+    wb_boot = wb_sub.add_parser("bootstrap", help="Clone vscode pin + apply overlay (or --skip-clone)")
+    wb_boot.add_argument(
+        "--skip-clone",
+        action="store_true",
+        help="Stage overlay only (no git clone of vscode)",
+    )
+    wb_boot.set_defaults(func=cmd_workbench)
+    wb_acc = wb_sub.add_parser("accept", help="Gate pin, overlay, Mode B fit, no false Cursor claim")
+    wb_acc.set_defaults(func=cmd_workbench)
 
     return parser
 

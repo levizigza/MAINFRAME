@@ -22,6 +22,13 @@ from mainframe.freeforge import probe_playwright
 # These are catalog estimates for fit math only — doctor never downloads them.
 MODEL_CATALOG: list[dict[str, Any]] = [
     {
+        "id": "qwen2.5-0.5b-instruct-q4",
+        "weights_gib": 0.4,
+        "params_b": 0.5,
+        "default_ctx": 2048,
+        "notes": "Ultra-small CPU fit when available RAM is tight; quality limited — measure on codingbench.",
+    },
+    {
         "id": "tinyllama-1.1b-q4",
         "weights_gib": 0.7,
         "params_b": 1.1,

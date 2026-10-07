@@ -1444,3 +1444,26 @@ Fix GitHub Actions failure on `recommend accept` (run 37517450106). Harden Windo
 ### Acceptance
 
 Local: `CI=true python -m mainframe recommend accept` and `surfaces accept` exit 0. Push triggers Actions re-run.
+
+## 2026-10-06 — Increment 0.1.52: FreeForge Workbench bootstrap (IDE north star)
+
+### Intent
+
+Begin branded VS Code-class workbench toward matching/exceeding Cursor/Claude Code on measured tasks with free local inference only. Phase 0–1: IDE goal docs, Mode B onboarding, vscode pin + FreeForge overlay, workbench CLI accept. No false competitor claims.
+
+### Implemented
+
+- `docs/IDE_GOAL.md`, `docs/MODE_B_ONBOARDING.md`, updated `docs/VOID_FORK_PLAN.md` + README
+- `workbench/PIN.json`, `workbench/overlay/freeforge/`, `workbench/scripts/bootstrap.ps1`
+- `mainframe/workbench/` — status, model-fit, bootstrap (staging), accept
+- CLI: `python -m mainframe workbench status|model-fit|bootstrap|accept`
+- Report: `docs/eval/ide/WORKBENCH.md`
+
+### Acceptance (observed)
+
+`python -m mainframe workbench accept` → **8/8**
+
+### Blockers toward north star
+
+- Ollama not installed on this host — Mode B paused; live codingbench vs Cursor still **unknown**
+- Full Electron vscode build not yet run (overlay staging gated; clone optional via bootstrap)

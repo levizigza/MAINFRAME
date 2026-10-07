@@ -1,0 +1,28 @@
+{
+  "product": "FreeForge Workbench",
+  "upstream": {
+    "repo": "https://github.com/microsoft/vscode",
+    "pin_kind": "release_tag",
+    "tag": "1.95.3",
+    "license": "MIT + ThirdPartyNotices",
+    "note": "Bump deliberately; thin overlay only under src/vs/workbench/contrib/freeforge/"
+  },
+  "void_reference": {
+    "commit": "b3166e7ef2aefbdfeb139445fdf248a561b85d4d",
+    "status": "archived_reference_only",
+    "copy_workbench_services": false
+  },
+  "inference": {
+    "mode": "deterministic_plus_optional_cpu_ai",
+    "providers": ["ollama_local", "llamacpp_local"],
+    "hosted_required": false
+  },
+  "build": {
+    "primary_os": "windows",
+    "clone_dir": ".workbench-build/vscode",
+    "overlay_dir": "workbench/overlay/freeforge",
+    "hosted_ci_required": false,
+    "code_signing_required": false
+  },
+  "goal_doc": "docs/IDE_GOAL.md"
+}
