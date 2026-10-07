@@ -27,7 +27,15 @@ python -m mainframe workbench bootstrap   # clone pin + apply overlay (needs git
 python -m mainframe workbench accept
 ```
 
-Full Electron build of vscode is heavy; bootstrap proves pin + overlay integration. Daily coding still uses MAINFRAME CLI until Phase 2 agent UI lands in the workbench.
+Full Electron build of vscode is heavy; bootstrap proves pin + overlay integration. Agent sessions work via CLI twin today:
+
+```powershell
+python -m mainframe workbench session-start --workspace . --chat "fix mathutil"
+python -m mainframe workbench turn --session <id> --message "repair add" --no-model
+python -m mainframe workbench apply --session <id> --accept
+```
+
+Overlay modules: chat panel, context chips, tool loop, diff review, bridge (loopback-only Ollama URL).
 
 ## License
 

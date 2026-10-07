@@ -123,11 +123,29 @@ accounts and are not part of MAINFRAME's zero-fee core.
             encoding="utf-8",
         )
 
+    # FreeForge Workbench pin + overlay pointer (full Electron build is local opt-in)
+    wb_src = ROOT / "workbench"
+    wb_out = out / "workbench"
+    wb_out.mkdir(exist_ok=True)
+    for name in ("PIN.json", "README.md"):
+        src = wb_src / name
+        if src.is_file():
+            shutil.copy2(src, wb_out / name)
+    (wb_out / "OVERLAY.md").write_text(
+        "# Workbench overlay\n\n"
+        "Sources: `workbench/overlay/freeforge/` in the repo.\n"
+        "Bootstrap: `python -m mainframe workbench bootstrap` "
+        "(or `workbench/scripts/bootstrap.ps1` / `bootstrap.sh`).\n"
+        "Hosted CI and code-signing SaaS are not required.\n",
+        encoding="utf-8",
+    )
+
     manifest = {
         "surface": SURFACE_APPLICATION,
         "version": __version__,
         "generated_at": _utc(),
         "desktop_package": packaged.get("dest"),
+        "workbench": str(wb_out),
         "store_checklist": "STORE_CHECKLIST.json",
         "app_store_upload_performed": False,
         "code_signing_used": False,
@@ -139,6 +157,7 @@ accounts and are not part of MAINFRAME's zero-fee core.
         "surface": SURFACE_APPLICATION,
         "dest": str(out),
         "desktop_package": packaged,
+        "workbench": str(wb_out),
         "store_checklist": STORE_CHECKLIST,
         "app_store_upload_required": False,
         "documented_not_tested": [

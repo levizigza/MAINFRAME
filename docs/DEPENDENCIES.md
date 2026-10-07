@@ -62,6 +62,8 @@ Generate live JSON: `python -m mainframe audit`
 | `minimal_local_release` | eligible | Pinned release tree, doctor, backup/restore, migrate, upgrade check, removable startup | MIT | Local dist/ only; no hosted CI, signing service, cloud storage, or public hosting required | n/a | `release` CLI |
 | `freeforge_recommended_config` | eligible | Evidence-based modes A/B/C, capability matrix, measured demos | MIT | Mode C empty until hosted entitlement verified; Mode B pauses without local model | n/a | `recommend` CLI |
 | `dual_product_surfaces` | eligible | Web (sites/webapps) + application (desktop/store checklist) packages | MIT | Optional GH Actions/Pages; store uploads not required; local builds authoritative | n/a | `surfaces` CLI |
+| `freeforge_workbench` | eligible | Branded vscode-class shell pin + thin FreeForge overlay; agent via MAINFRAME Python | MIT (overlay); vscode MIT + notices | Local clone/build; hosted CI/signing not required; Mode B loopback only | extension-only path | `workbench` CLI + `workbench/` |
+| `void_workbench_services` | disabled | Void editCodeService / voidModelService / React workbench | Apache-2.0 (upstream archived) | Not vendored — UX reference only | FreeForge overlay + patching | Hard refuse to copy |
 
 ## Migration notes
 
@@ -72,3 +74,5 @@ Generate live JSON: `python -m mainframe audit`
 - Hosted Groq/Gemini/Mistral investigated as candidates (see `docs/PROVIDERS.md`); live dispatch remains **disabled** (`unverified_live` fixtures only) until a verified recurring-free entitlement exists.
 - Provider API credentials, if ever stored, live only under `.mainframe/credentials/` (broker) — never in `config.json`.
 - Selecting a disabled provider via config resets active provider to `ollama_local` and records `provider_refused` — the disabled route remains invocable only as an explicit refuse for audit (`python -m mainframe ai refuse openai_api`).
+- FreeForge Workbench: pin `microsoft/vscode` under `workbench/PIN.json`; overlay at `workbench/overlay/freeforge/`; brain remains Python (`editor`, `codingloop`, `retrieve`, `patching`, `verify`). Full Electron build is local opt-in; `workbench accept` proves pin/overlay/agent without requiring Electron.
+- Void is archived reference only (`docs/VOID_EVAL.md`); do not vendor Void workbench services.

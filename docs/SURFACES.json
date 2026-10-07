@@ -1,6 +1,6 @@
 {
   "ok": true,
-  "generated_at": "2026-10-06T19:30:49.803628+00:00",
+  "generated_at": "2026-10-07T02:51:09.669092+00:00",
   "catalog": {
     "objective": "correct_completed_work_per_available_resource",
     "surfaces": {
@@ -82,12 +82,12 @@
   "web": {
     "ok": true,
     "surface": "web",
-    "dest": "C:\\Users\\levyz\\OneDrive\\Microsoft Copilot Chat Files\\Documents\\MAINFRAME\\dist\\web",
-    "index": "C:\\Users\\levyz\\OneDrive\\Microsoft Copilot Chat Files\\Documents\\MAINFRAME\\dist\\web\\index.html",
+    "dest": "/workspace/dist/web",
+    "index": "/workspace/dist/web/index.html",
     "manifest": {
       "surface": "web",
       "version": "0.1.51",
-      "generated_at": "2026-10-06T19:30:48.815513+00:00",
+      "generated_at": "2026-10-07T02:51:09.590075+00:00",
       "focus": {
         "id": "web",
         "title": "Web surface",
@@ -130,47 +130,43 @@
   "application": {
     "ok": true,
     "surface": "application",
-    "dest": "C:\\Users\\levyz\\OneDrive\\Microsoft Copilot Chat Files\\Documents\\MAINFRAME\\dist\\application",
+    "dest": "/workspace/dist/application",
     "desktop_package": {
       "ok": true,
-      "dest": "C:\\Users\\levyz\\OneDrive\\Microsoft Copilot Chat Files\\Documents\\MAINFRAME\\dist\\application\\mainframe-desktop-0.1.51",
-      "file_count": 421,
+      "dest": "/workspace/dist/application/mainframe-desktop-0.1.51",
+      "file_count": 426,
       "missing": [],
       "target": {
         "os": {
-          "sys_platform": "win32",
-          "platform_string": "Windows-11-10.0.26200-SP0",
-          "machine": "AMD64",
+          "sys_platform": "linux",
+          "platform_string": "Linux-6.12.94+-x86_64-with-glibc2.39",
+          "machine": "x86_64",
           "nt_version": {
-            "probe_ok": true,
-            "raw": "{\"ProductName\":\"Windows 10 Home\",\"DisplayVersion\":\"25H2\",\"CurrentBuild\":\"26200\",\"InstallationType\":\"Client\"}",
-            "product_name": "Windows 10 Home",
-            "display_version": "25H2",
-            "current_build": "26200",
-            "installation_type": "Client"
+            "ok": false,
+            "error": "not_windows"
           },
-          "note": "platform.platform()=Windows-11-10.0.26200-SP0; registry ProductName=Windows 10 Home; DisplayVersion=25H2; CurrentBuild=26200. Build 26200 is the Windows 11 25H2 family; registry ProductName may still say 'Windows 10 Home' on some Home SKUs \u2014 document both observed values."
+          "note": "platform.platform()=Linux-6.12.94+-x86_64-with-glibc2.39; registry ProductName=None; DisplayVersion=None; CurrentBuild=None. Build 26200 is the Windows 11 25H2 family; registry ProductName may still say 'Windows 10 Home' on some Home SKUs \u2014 document both observed values."
         },
         "python": {
-          "version": "3.12.4",
-          "executable": "C:\\Users\\levyz\\miniconda3\\python.exe",
+          "version": "3.12.3",
+          "executable": "/usr/bin/python3",
           "implementation": "CPython",
           "meets_3_11": true
         },
         "tools": {
           "node": {
             "present": true,
-            "path": "C:\\Program Files\\nodejs\\node.EXE",
-            "version": "v22.12.0"
+            "path": "/exec-daemon/node",
+            "version": "v22.14.0"
           },
           "git": {
             "present": true,
-            "path": "C:\\Program Files\\Git\\cmd\\git.EXE",
-            "version": "git version 2.47.1.windows.1"
+            "path": "/usr/bin/git",
+            "version": "git version 2.43.0"
           },
           "rg": {
             "present": true,
-            "path": "c:\\Users\\levyz\\Documents\\cursor\\resources\\app\\node_modules\\@vscode\\ripgrep\\bin\\rg.EXE"
+            "path": "/exec-daemon/rg"
           }
         },
         "obsolete_installer_commands_refused": [
@@ -196,9 +192,9 @@
           }
         ],
         "setup_commands_verified_on_this_host": [
-          "\"C:\\Users\\levyz\\miniconda3\\python.exe\" -m mainframe status",
-          "\"C:\\Users\\levyz\\miniconda3\\python.exe\" -m mainframe doctor",
-          "\"C:\\Users\\levyz\\miniconda3\\python.exe\" -m mainframe run echo --param message=hello"
+          "\"/usr/bin/python3\" -m mainframe status",
+          "\"/usr/bin/python3\" -m mainframe doctor",
+          "\"/usr/bin/python3\" -m mainframe run echo --param message=hello"
         ],
         "optional_not_present": {
           "openclaw": true,
@@ -207,6 +203,7 @@
       },
       "manifest": "MANIFEST.json"
     },
+    "workbench": "/workspace/dist/application/workbench",
     "store_checklist": [
       {
         "id": "desktop_windows_local_package",

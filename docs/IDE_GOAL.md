@@ -35,7 +35,7 @@ Cursor/Claude Code remain **unknown** competitors until a side-by-side is run. T
 |-----------|--------|
 | CLI automation + free-only gates | Measured (existing accepts) |
 | Thin editor bridge | Partial (not IDE) |
-| Branded workbench bootstrap | In progress (`workbench/`) |
+| Branded workbench bootstrap | Shipped skeleton (`workbench/` pin + overlay + `workbench accept`) |
 | Mode B local model on this host | Blocked until Ollama installed + fitted pull |
 | Live codingbench vs Cursor/Claude | **unknown** |
 | Goal: match/exceed on measured suites | **not yet achieved** — active north star |

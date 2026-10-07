@@ -1,0 +1,136 @@
+{
+  "ok": true,
+  "passed": 11,
+  "failed": 0,
+  "checks": [
+    {
+      "id": "pin_present",
+      "ok": true,
+      "detail": {
+        "product": "FreeForge Workbench",
+        "tag": "1.95.3",
+        "void_copy_services": false
+      }
+    },
+    {
+      "id": "overlay_contrib_files",
+      "ok": true,
+      "detail": {
+        "files": [
+          "aiStatus.ts",
+          "bridge.ts",
+          "chatPanel.ts",
+          "check.mjs",
+          "contextChips.ts",
+          "diffReview.ts",
+          "freeforge.contribution.ts",
+          "package.json",
+          "toolLoop.ts"
+        ],
+        "missing": []
+      }
+    },
+    {
+      "id": "workbench_status_ok",
+      "ok": true,
+      "detail": {
+        "ai_state": "paused",
+        "overlay_n": 9,
+        "north_star_status": "not_yet_achieved"
+      }
+    },
+    {
+      "id": "model_fit_no_autodownload",
+      "ok": true,
+      "detail": {
+        "recommended_ids": [],
+        "pull_required": true,
+        "docs": "docs/MODE_B_ONBOARDING.md"
+      }
+    },
+    {
+      "id": "overlay_bootstrap_skip_clone",
+      "ok": true,
+      "detail": {
+        "overlay_dest": "/workspace/.workbench-build/overlay-staging/freeforge",
+        "copied_n": 9,
+        "full_electron_build": false
+      }
+    },
+    {
+      "id": "overlay_check_mjs",
+      "ok": true,
+      "detail": {
+        "ok": true,
+        "exit_code": 0,
+        "result": {
+          "ok": true,
+          "overlay": "freeforge",
+          "checks": [
+            "parse_probe",
+            "contrib_id",
+            "files",
+            "loopback",
+            "diff",
+            "bridge"
+          ]
+        }
+      }
+    },
+    {
+      "id": "agent_session_context_and_reviewable_apply",
+      "ok": true,
+      "detail": {
+        "session_id": "wbs_edt_5eec6aa64e30",
+        "edits_n": 1,
+        "rejected": true,
+        "after_reject_has_bug": true,
+        "applied_ok": true,
+        "after_snippet": "def add(a, b):\n    return a + b",
+        "cancel_ok": true,
+        "turn2_ok": true
+      }
+    },
+    {
+      "id": "offline_core_ai_not_required",
+      "ok": true,
+      "detail": {
+        "ai_state": "paused",
+        "code_signing_required": false
+      }
+    },
+    {
+      "id": "product_truth_docs",
+      "ok": true,
+      "detail": {
+        "ide_goal": true,
+        "mode_b": true
+      }
+    },
+    {
+      "id": "bootstrap_scripts",
+      "ok": true,
+      "detail": [
+        "workbench/scripts/bootstrap.ps1",
+        "workbench/scripts/bootstrap.sh"
+      ]
+    },
+    {
+      "id": "application_workbench_artifact",
+      "ok": true,
+      "detail": {
+        "dest": "/workspace/dist/application/workbench",
+        "files": [
+          "OVERLAY.md",
+          "PIN.json",
+          "README.md"
+        ]
+      }
+    }
+  ],
+  "ai_state": "paused",
+  "live_codingbench": "unknown",
+  "competitor_e2e": "unknown",
+  "north_star_status": "not_yet_achieved",
+  "cursor_parity_claimed": false
+}

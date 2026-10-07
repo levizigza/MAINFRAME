@@ -13,6 +13,7 @@
       { "command": "freeforge.chatToTask", "title": "FreeForge: Chat to Task" },
       { "command": "freeforge.attachSelection", "title": "FreeForge: Attach Selection to Task" },
       { "command": "freeforge.syncDirtyBuffers", "title": "FreeForge: Sync Unsaved Buffers" },
+      { "command": "freeforge.proposeApply", "title": "FreeForge: Propose and Apply (reviewable)" },
       { "command": "freeforge.cancelTask", "title": "FreeForge: Cancel Task" },
       { "command": "freeforge.resumeTask", "title": "FreeForge: Resume Task" }
     ],

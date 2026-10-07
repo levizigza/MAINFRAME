@@ -1444,3 +1444,46 @@ Fix GitHub Actions failure on `recommend accept` (run 37517450106). Harden Windo
 ### Acceptance
 
 Local: `CI=true python -m mainframe recommend accept` and `surfaces accept` exit 0. Push triggers Actions re-run.
+
+---
+
+## 2026-10-07 — Increment 0.1.52: FreeForge Workbench + local AI coding track
+
+### Intent
+
+Ship Phase 0–4 of the FreeForge branded workbench plan: product truth + Mode B fitness, vscode pin + thin overlay, agent UX via Python bridges, deterministic-first model-gated propose, polish/docs/eval — without inventing Cursor parity.
+
+### Inspected
+
+- Existing `extensions/freeforge-editor`, `codingloop.propose_fixes` (fixture-only), `docs/VOID_FORK_PLAN.md` (extension-first), surfaces application package.
+- Plan: `/opt/cursor/artifacts/plans/freeforge_workbench_ide_e1274f73.plan.md` (not edited).
+
+### Implemented
+
+- `workbench/PIN.json`, overlay (`chatPanel`, `contextChips`, `diffReview`, `toolLoop`, `bridge`, AI status), `bootstrap.ps1` / `bootstrap.sh`
+- `mainframe/workbench/`: status, model-fit, bootstrap, agent sessions, accept → `docs/eval/ide/`
+- CLI: `python -m mainframe workbench status|model-fit|bootstrap|accept|session-start|context|turn|apply|cancel|resume`
+- `propose_fixes(..., allow_model=)` — deterministic-first; optional local model + exact cache; fixture path preserved
+- Extension: async `spawn` + cancellable propose/apply (no blocking sync CLI)
+- Application surface artifact `dist/application/workbench/`; docs: `IDE_GOAL`, `MODE_B_ONBOARDING`, `VOID_FORK_PLAN`, `DEPENDENCIES`, core rule note
+
+### Acceptance (observed)
+
+| Check | Result | Notes |
+|-------|--------|-------|
+| `workbench accept` | PASS **11/11** | AI paused; live codingbench **unknown**; competitor E2E **unknown** |
+| `codingloop accept` | PASS **5/5** | Required local `pytest` for verify (installed in this env) |
+| `editor accept` | PASS **9/9** | |
+| `surfaces accept` | PASS **7/7** | Includes workbench pin copy under application dist |
+| overlay `check.mjs` | PASS | Node present |
+
+### Blockers
+
+- Ollama not on PATH / not listening — Mode B AI paused; no live modeleval/codingbench cells filled
+- Full vscode Electron build not run here (optional local step); overlay + CLI accept authoritative
+- vs Cursor/Claude Code: **unknown** — no false parity claims
+
+### Next
+
+- User: install Ollama → `workbench model-fit` → explicit pull → live codingbench
+- Windows host: full Electron build from pin when ready for daily-driver cold-start timing

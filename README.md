@@ -37,6 +37,8 @@ Minimal local release package (pins, SETUP, uninstall): `python -m mainframe rel
 
 **Product surfaces:** web (sites/webapps) vs application (desktop + store markets) — `python -m mainframe surfaces accept` → [`docs/SURFACES.md`](docs/SURFACES.md). Optional GitHub Actions: https://github.com/levizigza/MAINFRAME/actions (not required locally).
 
+**FreeForge Workbench** (branded VS Code-class IDE + local AI): pin + overlay under [`workbench/`](workbench/), CLI twin `python -m mainframe workbench status|model-fit|accept`. Goal and honesty gates: [`docs/IDE_GOAL.md`](docs/IDE_GOAL.md). Mode B onboarding: [`docs/MODE_B_ONBOARDING.md`](docs/MODE_B_ONBOARDING.md). Competitor E2E remains **unknown** until measured.
+
 No `pip install` is required for core commands.
 
 ## Principles
@@ -55,6 +57,8 @@ No `pip install` is required for core commands.
 ```
 .cursor/rules/     Persistent agent rules (always apply)
 mainframe/         Stdlib Python package (CLI + automation + optional AI)
+workbench/         FreeForge Workbench pin + thin vscode overlay
+extensions/        freeforge-editor bridge (Extension API)
 docs/              Architecture and progress log
 .mainframe/        Local state (created on first run; user notes preserved)
 ```
