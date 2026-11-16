@@ -34,7 +34,7 @@ Generate live JSON: `python -m mainframe audit`
 | `local_quota_ledger` | eligible | Local admit/reserve/reconcile for requests/tokens/context/concurrency | MIT | Local disk only; no account rotation | n/a | `quota` CLI; persists under `.mainframe/quota_ledger.sqlite` |
 | `model_eval_routing` | eligible | Holdout eval + capability matrix + measured routing | MIT | Local fixtures; live only if eligible runtime | n/a | `modeleval`; routes invalidate on fingerprint change |
 | `adaptive_controller` | eligible | Deterministic / direct / plan-review task control with budgets | MIT | Local; no CoT required | n/a | `controller` CLI |
-| `coding_loop` | eligible | Selected-engine lifecycle: contracts→retrieve→patch→verify | MIT | Local; no nested supervisor | n/a | `codingloop` CLI |
+| `coding_loop` | eligible | Selected-engine lifecycle: contracts→retrieve→propose(gated)→patch→verify | MIT | Local; fixture-first propose; Mode B model gated; no nested supervisor | n/a | `codingloop` CLI |
 | `change_review` | eligible | Deterministic-first gated review; no-gain routes disabled | MIT | Local; model call only when gate justifies | n/a | `review` CLI |
 | `exact_reuse_cache` | eligible | Exact caches for scan/retrieve/tools/workflows/model; project-isolated | MIT | Local SQLite under `.mainframe/cache/` | n/a | `cache` CLI |
 | `durable_tasks` | eligible | Durable transitions/leases/receipts; FreeForge↔engine status reconcile | MIT | Local SQLite; no WS replay assumption | n/a | `durable` CLI |
@@ -54,7 +54,7 @@ Generate live JSON: `python -m mainframe audit`
 | `workflow_promotion` | eligible | Promote accepted traces to deterministic programs; untrusted until tested | MIT | Local only; allowlisted handlers; no training | n/a | `promote` CLI |
 | `visual_bridge` | eligible | Optional loopback form to edit/invoke FreeForge; Node-RED optional export | MIT + Apache-2.0 (NR if used) | Form is stdlib; Node-RED not required; no paid nodes | n/a | `visual` CLI |
 | `fault_injection_matrix` | eligible | Local fault-injection scenarios + published failure matrix; connector gate | MIT | Deterministic fixtures only; no hosted CI | n/a | `faults` CLI |
-| `editor_bridge` | eligible | VS Code extension + shared CLI task state; Void reference only | MIT (ext); Void Apache-2.0 not vendored | No Void workbench copy; completion only if eligible local model | optional Void/vscode fork | `editor` CLI + `extensions/freeforge-editor` |
+| `editor_bridge` | eligible | VS Code extension + shared CLI task state; Phase 2 agent NDJSON stream + apply/reject | MIT (ext); Void Apache-2.0 not vendored | No Void workbench copy; Mode B pause honest; completion only if eligible local model | optional Void/vscode fork | `editor` CLI + `extensions/freeforge-editor` |
 | `local_dashboard` | eligible | Loopback dashboard: status, history, quota, decisions, artifacts, stop/resume | MIT | Local inbox notify; OpenClaw messaging gated off until verified | n/a | `dashboard` CLI |
 | `project_isolation` | eligible | Per-project workspaces, memory, cache, secrets, browser profiles, artifacts, grants | MIT | Explicit project_id binding; local-only pause; export scrub; no secure-erase claim | n/a | `project` CLI |
 | `heldout_workload_eval` | eligible | Held-out repair/site/docreport vs minimal+manual; ablations; Wilson CIs | MIT | Local fixtures only; competitors unmeasured without purchase | n/a | `workload-eval` CLI |
@@ -62,7 +62,7 @@ Generate live JSON: `python -m mainframe audit`
 | `minimal_local_release` | eligible | Pinned release tree, doctor, backup/restore, migrate, upgrade check, removable startup | MIT | Local dist/ only; no hosted CI, signing service, cloud storage, or public hosting required | n/a | `release` CLI |
 | `freeforge_recommended_config` | eligible | Evidence-based modes A/B/C, capability matrix, measured demos | MIT | Mode C empty until hosted entitlement verified; Mode B pauses without local model | n/a | `recommend` CLI |
 | `dual_product_surfaces` | eligible | Web (sites/webapps) + application (desktop/store checklist) packages | MIT | Optional GH Actions/Pages; store uploads not required; local builds authoritative | n/a | `surfaces` CLI |
-| `freeforge_workbench` | eligible | Branded vscode-pin workbench overlay + Mode B fitness; IDE north star | MIT (overlay); upstream vscode MIT+notices | Local Ollama/llama.cpp only; clone under `.workbench-build/`; no paid IDE APIs | thin extension bridge | `workbench` CLI |
+| `freeforge_workbench` | eligible | Branded vscode-pin workbench overlay + Mode B fitness + agentPanel protocol; IDE north star | MIT (overlay); upstream vscode MIT+notices | Local Ollama/llama.cpp only; clone under `.workbench-build/`; no paid IDE APIs | thin extension bridge | `workbench` CLI + `editor agent-accept` |
 
 ## Migration notes
 

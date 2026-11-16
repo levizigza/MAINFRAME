@@ -97,6 +97,16 @@ def run_workbench_accept() -> dict[str, Any]:
             "detail": "PIN forbids Void workbench service copy",
         }
     )
+    agent_panel = OVERLAY / "agentPanel.ts"
+    checks.append(
+        {
+            "id": "phase2_agent_panel_protocol",
+            "ok": agent_panel.is_file()
+            and "agent-run" in agent_panel.read_text(encoding="utf-8")
+            and "AGENT_CLI" in agent_panel.read_text(encoding="utf-8"),
+            "detail": str(agent_panel.relative_to(ROOT)).replace("\\", "/") if agent_panel.is_file() else "missing",
+        }
+    )
 
     passed = sum(1 for c in checks if c.get("ok"))
     failed = len(checks) - passed

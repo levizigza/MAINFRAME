@@ -1467,3 +1467,152 @@ Begin branded VS Code-class workbench toward matching/exceeding Cursor/Claude Co
 
 - Ollama not installed on this host — Mode B paused; live codingbench vs Cursor still **unknown**
 - Full Electron vscode build not yet run (overlay staging gated; clone optional via bootstrap)
+
+## 2026-10-06 — Increment 0.1.53: Phase 2 agent UX (stream + apply/reject)
+
+### Intent
+
+Wire IDE-pattern agent UX to existing Python bridges: streaming events, context chips, tool loop, reviewable apply/reject, async cancel. Deterministic propose when Mode B paused; no paid fallback; no false Cursor claims.
+
+### Implemented
+
+- `mainframe/editor/agent.py` — NDJSON agent turn (`search`/`file_range` → `propose_fixes` → reviewable proposal)
+- `mainframe/editor/agent_accept.py` — held-out multi_repair apply + reject + cancel
+- CLI: `editor agent-run|reject|agent-accept`
+- `extensions/freeforge-editor` v0.2 — async spawn, **Open Agent Panel** webview, Apply/Reject
+- Overlay: `workbench/overlay/freeforge/agentPanel.ts` + workbench accept check
+- Docs: IDE_GOAL, VOID_FORK_PLAN, DEPENDENCIES, AGENT_UX report
+
+### Acceptance (observed)
+
+- `python -m mainframe editor agent-accept` → **8/8**
+- `python -m mainframe workbench accept` → **9/9**
+- `python -m mainframe editor accept` → **9/9** (prior suite unchanged)
+
+### Blockers
+
+- Mode B still paused (no Ollama) — live model agent turns blocked; deterministic path used
+- Phase 3: model-gated propose replacing fixture-only `propose_fixes`; codingbench live vs Cursor still **unknown**
+
+## 2026-10-06 — Increment 0.1.54: Phase 3 gated propose + exact tool cache
+
+### Intent
+
+Deterministic-first propose with eligibility/quota-gated local model path; exact-cache read tools in agent turns; keep offline fixture accept green; no paid fallback.
+
+### Implemented
+
+- `mainframe/codingloop/propose.py` — `propose_fixes_deterministic` / `propose_fixes_model` / router
+- Agent uses `cached_tool_output` for search/file_range; emits `propose_source`
+- Accept extended: model pause honesty + deterministic-first on fresh fixture + cache meta
+
+### Acceptance (observed)
+
+- `python -m mainframe editor agent-accept` → **11/11**
+- `python -m mainframe codingloop accept` → **5/5**
+- `python -m mainframe workbench accept` → **9/9**
+
+### Blockers
+
+- Live model propose untested until Ollama + fitted pull (`workbench model-fit`)
+- codingbench live vs Cursor/Claude still **unknown**
+- Phase 4: onboarding polish, full vscode Electron build, CLI twin daily-driver
+
+## 2026-10-06 — Increment 0.1.55: Phase 2–3 completeness pass
+
+### Intent
+
+Close remaining Phase 2/3 plan items: active-file + diagnostic chips, tests in agent loop, exact-cache hit proof, budgeted completion gate event, extension host context sync.
+
+### Implemented
+
+- `editor active` + chips: selection / active_file / diagnostic / workspace
+- Agent loop: search → cached repeat → file_range → tests (reproduce) → gated propose
+- `completion_gate` NDJSON event (disabled when Mode B paused)
+- Extension syncs active file + VS Code diagnostics before `agent-run`
+- Accept: **14/14** agent-ux; codingloop **5/5**; workbench **9/9**
+
+### Blockers
+
+- Mode B still paused on this host (no Ollama)
+- Live model propose + codingbench vs Cursor remain **unknown** until fitted local model
+
+## 2026-10-08 — Benchmark path (plan, no live weights yet)
+
+### Intent
+
+Reverse-engineer Claude Code and Cursor from public docs/reports. Define a free path to the **same public protocols** (SWE-bench Verified / Multilingual, Terminal-Bench), plus MCP and self-upgrade. Do not copy unpublished CursorBench or unmeasured scores.
+
+### Recorded
+
+- `docs/BENCHMARK_PATH.md` — harness parity, model ladder, ablated retrieval, stdio MCP, verified-patch memory
+- Published reference figures are cited there and marked **not ours**
+- Ollama install held until this path is the spec
+
+### Not run
+
+- No SWE-bench slice on this host yet — MAINFRAME score on those suites remains **unknown**
+
+## 2026-11-08 — Mode B live + living scoreboard
+
+### Observed
+
+- Ollama 0.40.14; pulled `qwen2.5:0.5b`; `ai probe` → **available**
+- CLI: `python -m mainframe scoreboard` → product avg **51%**, O5 **100%**, O10 **0%**
+- Wired `codingbench` live agent (`mainframe/codingbench/live_agent.py`); live holdout run in progress
+
+### Next
+
+- Publish live codingbench rates → bump O6/O9
+- SWE-bench pinned slice runner
+- Multi-turn propose-until-green
+
+## 2026-11-08 � Offline until-green + SWE local slice (no model load)
+
+### Intent
+
+While RAM is held for later Mode B work: ship multi-turn propose-until-green, verified-patch memory replay, and pinned SWE-style fail-to-pass slice � all offline.
+
+### Implemented
+
+- `mainframe/editor/until_green.py` + `until_green_accept.py` � memory ? propose ? apply ? tests
+- `mainframe/memory/verified_patches.py` � goal fingerprint; remember on green; lookup before propose
+- `mainframe/swebench/` � PIN, local fixture `mf_swe_local_add`, runner, accept
+- CLI: `editor until-green` / `until-green-accept`, `swebench run|accept`
+- Agent propose path checks verified memory before Mode B
+- Scoreboard O6/O8/O9 bump from `docs/eval/swe/SLICE.json`
+
+### Acceptance (observed)
+
+| Check | Result |
+|-------|--------|
+| `python -m mainframe editor until-green-accept` | **4/4** PASS (green + memory replay 0 model calls) |
+| `python -m mainframe swebench accept` | **4/4** PASS � local slice **1/1 (100%)** offline |
+| `python -m mainframe scoreboard` | product avg **68%**, O10 **0%**, swe cell `local 1/1 (100.0%) offline` |
+
+### Blockers
+
+- Live codingbench still **0/12**; Mode B model work paused until RAM frees
+- O10 / Cursor parity still **unknown** (no PARITY.json)
+- Official SWE-bench Verified download not run � local fixture only
+
+### Next (when RAM frees)
+
+- Multiturn + fitted model on live holdout
+- Expand SWE pin beyond local fixture
+
+### Follow-up (same day)
+
+- Added second offline fixture `mf_swe_local_greeter`; PIN v2
+- `swebench accept` ? **2/2 (100%)** offline; scoreboard swe cell `local 2/2 (100.0%) offline`; product avg still **68%**, O10 **0%**
+
+## 2026-11-16 � Hand-off: commit + push + chat continuity
+
+### Intent
+
+Push full repo to GitHub and publish `docs/CHAT_CONTINUITY.md` (entire chat so far) so work continues on another PC.
+
+### Recorded
+
+- Continuity doc + README pointer
+- Offline until-green / SWE / scoreboard work included in commit

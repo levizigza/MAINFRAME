@@ -2,6 +2,8 @@
 
 Open-source **AI IDE + coding automation** for your Windows PC with **zero required** software, API, subscription, or hosting fees.
 
+**Continue on another computer:** full chat hand-off + resume checklist → [`docs/CHAT_CONTINUITY.md`](docs/CHAT_CONTINUITY.md). Living board → [`docs/eval/ide/SCOREBOARD.md`](docs/eval/ide/SCOREBOARD.md).
+
 **North star:** FreeForge Workbench matches or exceeds Cursor / Claude Code on *measured* coding tasks using **free local inference only** — see [`docs/IDE_GOAL.md`](docs/IDE_GOAL.md). Until that comparison is published, competitor results stay **unknown** (never invented).
 
 Existing hardware, electricity, and internet are physical prerequisites — not things this software makes free. No GPU purchase. No paid accounts, trials, or paid fallbacks.

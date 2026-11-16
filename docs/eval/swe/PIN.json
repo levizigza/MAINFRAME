@@ -1,0 +1,21 @@
+{
+  "protocol": "swebench_style_resolve",
+  "version": 2,
+  "note": "Local fixtures exercise fail-to-pass resolve. Full SWE-bench Verified download is optional later; scores here are MAINFRAME-measured only.",
+  "upstream_suite": "SWE-bench Verified",
+  "upstream_scores_copied": false,
+  "local_instances": [
+    {
+      "instance_id": "mf_swe_local_add",
+      "fixture": "mf_swe_local_add",
+      "fail_to_pass": ["tests/test_add.py::test_add"],
+      "language": "python"
+    },
+    {
+      "instance_id": "mf_swe_local_greeter",
+      "fixture": "mf_swe_local_greeter",
+      "fail_to_pass": ["tests/test_greet.py::test_greet"],
+      "language": "python"
+    }
+  ]
+}

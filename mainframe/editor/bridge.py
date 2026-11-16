@@ -93,6 +93,27 @@ def set_diagnostics(
     return {"ok": True, "count": len(diagnostics)}
 
 
+def attach_active_file(
+    task_id: str,
+    *,
+    path: str,
+    store: EditorTaskStore | None = None,
+) -> dict[str, Any]:
+    """Record the editor's active file for agent context chips."""
+    store = store or EditorTaskStore()
+    task = store.load(task_id)
+    if not task:
+        return {"ok": False, "error": "task_not_found"}
+    if task.get("cancelled"):
+        return {"ok": False, "error": "task_cancelled"}
+    ctx = dict(task.get("context") or {})
+    rel = path.replace("\\", "/")
+    ctx["active_file"] = {"path": rel}
+    task["context"] = ctx
+    store.save(task)
+    return {"ok": True, "task_id": task_id, "active_file": ctx["active_file"]}
+
+
 def propose_reviewable_diffs(
     task_id: str,
     edits: list[dict[str, Any]],
@@ -257,6 +278,36 @@ def apply_verified_patch(
         "operation_id": op_id,
         "apply": task["apply"],
         "patch_result": result,
+    }
+
+
+def reject_proposal(task_id: str, store: EditorTaskStore | None = None) -> dict[str, Any]:
+    """Clear a pending proposal without writing files (Apply counterpart)."""
+    import uuid
+
+    store = store or EditorTaskStore()
+    task = store.load(task_id)
+    if not task:
+        return {"ok": False, "error": "task_not_found"}
+    if task.get("cancelled"):
+        return {"ok": False, "error": "task_cancelled"}
+    prior = task.get("proposal")
+    task["proposal"] = None
+    task["state"] = "open"
+    ops = dict(task.get("operation_ids") or {})
+    ops["reject"] = f"reject_{uuid.uuid4().hex[:8]}"
+    task["operation_ids"] = ops
+    task["last_reject"] = {
+        "had_proposal": bool(prior),
+        "operation_id": (prior or {}).get("operation_id"),
+    }
+    store.save(task)
+    return {
+        "ok": True,
+        "task_id": task_id,
+        "rejected": True,
+        "prior_operation_id": (prior or {}).get("operation_id"),
+        "state": task["state"],
     }
 
 

@@ -32,4 +32,10 @@ if (!contrib.includes('FREEFORGE_CONTRIB_ID')) {
   console.error('missing FREEFORGE_CONTRIB_ID');
   process.exit(1);
 }
-console.log(JSON.stringify({ ok: true, overlay: 'freeforge' }));
+const agent = readFileSync(join(__dirname, 'agentPanel.ts'), 'utf8');
+if (!agent.includes('agent-run') || !agent.includes('AGENT_CLI')) {
+  console.error('agentPanel protocol missing AGENT_CLI / agent-run');
+  process.exit(1);
+}
+console.log(JSON.stringify({ ok: true, overlay: 'freeforge', agent_panel: true }));
+

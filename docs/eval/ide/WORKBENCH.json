@@ -1,6 +1,6 @@
 {
   "ok": true,
-  "passed": 8,
+  "passed": 9,
   "failed": 0,
   "checks": [
     {
@@ -24,6 +24,7 @@
         "present": true,
         "path": "workbench/overlay/freeforge",
         "files": [
+          "agentPanel.ts",
           "aiStatus.ts",
           "check.mjs",
           "freeforge.contribution.ts"
@@ -36,7 +37,7 @@
       "detail": {
         "ok": true,
         "exit_code": 0,
-        "stdout": "{\"ok\":true,\"overlay\":\"freeforge\"}",
+        "stdout": "{\"ok\":true,\"overlay\":\"freeforge\",\"agent_panel\":true}",
         "stderr": ""
       }
     },
@@ -56,7 +57,7 @@
       "ok": true,
       "detail": {
         "recommended_ids": [],
-        "budget_gib": 1.61,
+        "budget_gib": 1.16,
         "ai_status": "paused"
       }
     },
@@ -69,6 +70,11 @@
       "id": "void_services_not_vendored",
       "ok": true,
       "detail": "PIN forbids Void workbench service copy"
+    },
+    {
+      "id": "phase2_agent_panel_protocol",
+      "ok": true,
+      "detail": "workbench/overlay/freeforge/agentPanel.ts"
     }
   ],
   "status": {
@@ -84,6 +90,7 @@
       "present": true,
       "path": "workbench/overlay/freeforge",
       "files": [
+        "agentPanel.ts",
         "aiStatus.ts",
         "check.mjs",
         "freeforge.contribution.ts"
@@ -109,5 +116,5 @@
     "note": "Install Ollama, then pull a recommended model explicitly. MAINFRAME does not auto-download weights."
   },
   "north_star": "match_or_exceed_cursor_claude_on_measured_suites_free_only",
-  "generated_at": "2026-10-07T03:54:47.998020+00:00"
+  "generated_at": "2026-10-07T04:15:22.079468+00:00"
 }

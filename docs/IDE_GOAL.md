@@ -31,9 +31,11 @@
 |-----------|--------|
 | CLI automation + free-only gates | Measured |
 | Thin editor bridge | Partial (not IDE) |
-| Branded workbench bootstrap | In progress (`workbench/`) |
+| Branded workbench bootstrap | Phase 0–1 measured (`workbench accept`) |
+| Phase 2 agent UX (stream + apply/reject) | Measured — chips, tests tool, async panel (`editor agent-accept` 14/14) |
+| Phase 3 gated model propose + exact tool cache | Measured — fixture-first; cache hit; completion gate; model pauses offline |
 | Mode B on this host | Blocked until Ollama installed + fitted pull |
 | Live codingbench vs Cursor/Claude | **unknown** |
 | Match/exceed on measured suites | **not yet achieved** — north star |
 
-See `docs/MODE_B_ONBOARDING.md` and `python -m mainframe workbench accept`.
+See `docs/MODE_B_ONBOARDING.md`, `docs/BENCHMARK_PATH.md`, and `python -m mainframe workbench accept`.

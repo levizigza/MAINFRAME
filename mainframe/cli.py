@@ -32,7 +32,10 @@ from mainframe.editor import (
     cancel_task,
     chat_to_task,
     propose_reviewable_diffs,
+    reject_proposal,
     resume_task,
+    run_agent_turn,
+    run_agent_ux_accept,
     run_editor_accept,
     void_evaluation_summary,
 )
@@ -62,6 +65,7 @@ from mainframe.release import run_release_accept, run_release_package
 from mainframe.recommend import run_recommend, run_recommend_accept
 from mainframe.surfaces import run_surfaces, run_surfaces_accept
 from mainframe.workbench import model_fit_report, run_workbench_accept, workbench_status
+from mainframe.scoreboard import run_scoreboard
 from mainframe.discovery import (
     activate_connector,
     list_shortlist_ids,
@@ -1672,6 +1676,34 @@ def cmd_surfaces(args: argparse.Namespace) -> int:
     return 2
 
 
+def cmd_scoreboard(_: argparse.Namespace) -> int:
+    """Print living product + north-star percentages."""
+    ensure_state()
+    out = run_scoreboard()
+    _print_json(out)
+    return 0 if out.get("ok") else 1
+
+
+def cmd_swebench(args: argparse.Namespace) -> int:
+    """Pinned SWE-style local slice — offline by default (no model load)."""
+    from mainframe.swebench import run_swe_slice, run_swebench_accept
+
+    ensure_state()
+    if args.swebench_command == "accept":
+        out = run_swebench_accept()
+        _print_json(out)
+        return 0 if out.get("ok") else 1
+    if args.swebench_command == "run":
+        out = run_swe_slice(
+            allow_model=bool(args.allow_model),
+            max_turns=int(args.max_turns),
+        )
+        _print_json(out)
+        return 0 if out.get("ok") else 1
+    print("Unknown swebench subcommand", file=sys.stderr)
+    return 2
+
+
 def cmd_workbench(args: argparse.Namespace) -> int:
     """FreeForge Workbench bootstrap — branded IDE shell + Mode B fitness."""
     from mainframe.workbench.status import run_bootstrap
@@ -1700,7 +1732,12 @@ def cmd_editor(args: argparse.Namespace) -> int:
     """Editor↔CLI shared tasks (extension uses supported VS Code APIs)."""
     from pathlib import Path
 
-    from mainframe.editor.bridge import configure_completion, set_diagnostics
+    from mainframe.editor.agent import stream_agent_turn_ndjson
+    from mainframe.editor.bridge import (
+        attach_active_file,
+        configure_completion,
+        set_diagnostics,
+    )
     from mainframe.editor.state import EditorTaskStore
 
     ensure_state()
@@ -1708,6 +1745,31 @@ def cmd_editor(args: argparse.Namespace) -> int:
         out = run_editor_accept()
         _print_json(out)
         return 0 if out.get("ok") else 1
+    if args.editor_command == "agent-accept":
+        out = run_agent_ux_accept()
+        _print_json(out)
+        return 0 if out.get("ok") else 1
+    if args.editor_command == "until-green-accept":
+        from mainframe.editor.until_green_accept import run_until_green_accept
+
+        out = run_until_green_accept()
+        _print_json(out)
+        return 0 if out.get("ok") else 1
+    if args.editor_command == "until-green":
+        from mainframe.editor.until_green import run_until_green
+
+        ws = Path(args.workspace)
+        goal = args.goal
+        if getattr(args, "goal_file", None):
+            goal = Path(args.goal_file).read_text(encoding="utf-8")
+        out = run_until_green(
+            ws,
+            goal=goal or "",
+            max_turns=int(args.max_turns),
+            allow_model=bool(args.allow_model),
+        )
+        _print_json(out)
+        return 0 if out.get("ok") and out.get("green") else 1
     if args.editor_command == "eval-void":
         _print_json(void_evaluation_summary())
         return 0
@@ -1724,6 +1786,10 @@ def cmd_editor(args: argparse.Namespace) -> int:
             start_line=payload.get("start_line"),
             end_line=payload.get("end_line"),
         )
+        _print_json(out)
+        return 0 if out.get("ok") else 1
+    if args.editor_command == "active":
+        out = attach_active_file(args.task, path=args.path)
         _print_json(out)
         return 0 if out.get("ok") else 1
     if args.editor_command == "buffer":
@@ -1746,6 +1812,21 @@ def cmd_editor(args: argparse.Namespace) -> int:
         out = apply_verified_patch(args.task)
         _print_json(out)
         return 0 if out.get("ok") else 1
+    if args.editor_command == "reject":
+        out = reject_proposal(args.task)
+        _print_json(out)
+        return 0 if out.get("ok") else 1
+    if args.editor_command == "agent-run":
+        # NDJSON stream on stdout for extension; final summary on stderr as JSON line if --summary
+        msg = getattr(args, "message", None)
+        if getattr(args, "stream", True):
+            result = stream_agent_turn_ndjson(args.task, message=msg, fp=sys.stdout)
+            if getattr(args, "summary", False):
+                print(json.dumps({"summary": True, **{k: result.get(k) for k in ("ok", "awaiting_apply", "task_id", "ai")}}, ensure_ascii=True), file=sys.stderr)
+            return 0 if result.get("ok") or result.get("cancelled") else 1
+        out = run_agent_turn(args.task, message=msg)
+        _print_json(out)
+        return 0 if out.get("ok") or out.get("cancelled") else 1
     if args.editor_command == "cancel":
         out = cancel_task(args.task)
         _print_json(out)
@@ -2824,7 +2905,8 @@ def cmd_accept(_: argparse.Namespace) -> int:
                 "promote accept/from-reporting/run (trace→deterministic program; untrusted until tested)",
                 "visual status/serve/accept (optional form bridge; Node-RED optional; removable)",
                 "faults matrix/accept (local fault injection; failure matrix; connector gate)",
-                "editor chat/select/buffer/propose/apply/accept (shared task state; Void eval)",
+                "editor chat/select/buffer/propose/apply/reject/agent-run/accept (shared task state; Void eval)",
+                "editor agent-accept (Phase 2 streaming agent UX)",
                 "dashboard show/serve/stop/resume/accept (local status; evidence; local notify)",
                 "project create/list/export/delete/accept (isolation; egress; retention; no cred export)",
                 "workload-eval run/accept (held-out W1–W3; ablations; evidence-gated claims)",
@@ -3756,12 +3838,16 @@ def build_parser() -> argparse.ArgumentParser:
     ed_chat = ed_sub.add_parser("chat", help="Chat → shared task")
     ed_chat.add_argument("--text", required=True)
     ed_chat.add_argument("--workspace", required=True)
-    ed_chat.add_argument("--source", default="cli", choices=["cli", "editor"])
+    ed_chat.add_argument("--source", default="cli", choices=["cli", "editor", "agent"])
     ed_chat.set_defaults(func=cmd_editor)
     ed_sel = ed_sub.add_parser("select", help="Attach selected-code context")
     ed_sel.add_argument("--task", required=True)
     ed_sel.add_argument("--json", required=True, help="JSON: path,text,start_line,end_line")
     ed_sel.set_defaults(func=cmd_editor)
+    ed_act = ed_sub.add_parser("active", help="Attach active-file context chip")
+    ed_act.add_argument("--task", required=True)
+    ed_act.add_argument("--path", required=True)
+    ed_act.set_defaults(func=cmd_editor)
     ed_buf = ed_sub.add_parser("buffer", help="Preserve unsaved buffer in task state")
     ed_buf.add_argument("--task", required=True)
     ed_buf.add_argument("--json", required=True)
@@ -3773,6 +3859,27 @@ def build_parser() -> argparse.ArgumentParser:
     ed_ap = ed_sub.add_parser("apply", help="Apply verified patch once (deduped by operation_id)")
     ed_ap.add_argument("--task", required=True)
     ed_ap.set_defaults(func=cmd_editor)
+    ed_rej = ed_sub.add_parser("reject", help="Reject pending proposal (no file writes)")
+    ed_rej.add_argument("--task", required=True)
+    ed_rej.set_defaults(func=cmd_editor)
+    ed_ar = ed_sub.add_parser(
+        "agent-run",
+        help="Phase 2 agent turn: NDJSON stream (tools + proposal; no auto-apply)",
+    )
+    ed_ar.add_argument("--task", required=True)
+    ed_ar.add_argument("--message", default=None, help="Optional user message override")
+    ed_ar.add_argument(
+        "--no-stream",
+        dest="stream",
+        action="store_false",
+        help="Emit one JSON summary instead of NDJSON events",
+    )
+    ed_ar.add_argument(
+        "--summary",
+        action="store_true",
+        help="With stream: also print compact summary JSON on stderr",
+    )
+    ed_ar.set_defaults(func=cmd_editor, stream=True)
     ed_can = ed_sub.add_parser("cancel", help="Cancel task (no new effects)")
     ed_can.add_argument("--task", required=True)
     ed_can.set_defaults(func=cmd_editor)
@@ -3792,6 +3899,40 @@ def build_parser() -> argparse.ArgumentParser:
     ed_show.set_defaults(func=cmd_editor)
     ed_acc = ed_sub.add_parser("accept", help="Shared state / buffers / one patch apply")
     ed_acc.set_defaults(func=cmd_editor)
+    ed_aacc = ed_sub.add_parser("agent-accept", help="Phase 2 agent UX accept suite")
+    ed_aacc.set_defaults(func=cmd_editor)
+    ed_uga = ed_sub.add_parser(
+        "until-green-accept",
+        help="Offline propose-until-green + verified-patch memory (no model)",
+    )
+    ed_uga.set_defaults(func=cmd_editor)
+    ed_ug = ed_sub.add_parser("until-green", help="Multi-turn propose→apply→test until green")
+    ed_ug.add_argument("--workspace", required=True)
+    ed_ug.add_argument("--goal", default="")
+    ed_ug.add_argument("--goal-file", default=None)
+    ed_ug.add_argument("--max-turns", type=int, default=3)
+    ed_ug.add_argument(
+        "--allow-model",
+        action="store_true",
+        help="Permit Mode B propose when deterministic/memory miss (loads local model)",
+    )
+    ed_ug.set_defaults(func=cmd_editor)
+
+    p_swe = sub.add_parser(
+        "swebench",
+        help="Pinned SWE-bench-style local slice (fail-to-pass; offline default)",
+    )
+    swe_sub = p_swe.add_subparsers(dest="swebench_command", required=True)
+    swe_run = swe_sub.add_parser("run", help="Run local pinned fixtures")
+    swe_run.add_argument("--max-turns", type=int, default=3)
+    swe_run.add_argument(
+        "--allow-model",
+        action="store_true",
+        help="Permit Mode B (loads RAM) — default offline deterministic/memory only",
+    )
+    swe_run.set_defaults(func=cmd_swebench)
+    swe_acc = swe_sub.add_parser("accept", help="Pin + offline resolve + memory replay")
+    swe_acc.set_defaults(func=cmd_swebench)
 
     p_dash = sub.add_parser(
         "dashboard",
@@ -3993,6 +4134,12 @@ def build_parser() -> argparse.ArgumentParser:
     wb_boot.set_defaults(func=cmd_workbench)
     wb_acc = wb_sub.add_parser("accept", help="Gate pin, overlay, Mode B fit, no false Cursor claim")
     wb_acc.set_defaults(func=cmd_workbench)
+
+    p_sb = sub.add_parser(
+        "scoreboard",
+        help="Living IDE completion %% (O1–O10) + bench cells — evidence only",
+    )
+    p_sb.set_defaults(func=cmd_scoreboard)
 
     return parser
 

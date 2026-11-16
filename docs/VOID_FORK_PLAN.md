@@ -29,3 +29,12 @@ The maintained extension ([`extensions/freeforge-editor`](../extensions/freeforg
 ## Inference
 
 Mode B only for agent coding: local Ollama / llama.cpp. When unavailable, workbench editing continues; agent UI shows **paused**.
+
+## Phase 2–3 agent UX (shipped)
+
+- Python: `editor agent-run` (NDJSON) → search/file_range/tests → gated propose; `apply` / `reject` / `cancel`.
+- Context: selection, active file, diagnostics chips; `editor active`.
+- Phase 3: deterministic-first propose + Mode B model path; exact tool cache; budgeted completion gate.
+- Extension: `extensions/freeforge-editor` webview (async spawn); host diagnostics sync.
+- Overlay types: `workbench/overlay/freeforge/agentPanel.ts`.
+- Accept: `python -m mainframe editor agent-accept`.

@@ -1,0 +1,186 @@
+{
+  "ok": true,
+  "passed": 14,
+  "failed": 0,
+  "checks": [
+    {
+      "id": "context_chips_selection_workspace",
+      "ok": true,
+      "detail": {
+        "kinds": [
+          "selection",
+          "active_file",
+          "diagnostic",
+          "workspace"
+        ]
+      }
+    },
+    {
+      "id": "stream_events_protocol",
+      "ok": true,
+      "detail": {
+        "types": [
+          "status",
+          "ai_status",
+          "completion_gate",
+          "context_chips",
+          "message_delta",
+          "message_delta",
+          "message_delta",
+          "message_delta",
+          "message_done",
+          "tool_call",
+          "tool_result",
+          "tool_result",
+          "tool_call",
+          "tool_result",
+          "tool_call",
+          "tool_result",
+          "status",
+          "propose_source",
+          "message_delta",
+          "message_delta",
+          "message_done",
+          "proposal",
+          "done"
+        ],
+        "awaiting": true
+      }
+    },
+    {
+      "id": "tests_tool_in_agent_loop",
+      "ok": true,
+      "detail": {
+        "ok": true,
+        "error": null,
+        "exit_code": 1,
+        "passed": false,
+        "reproduced_failure": true
+      }
+    },
+    {
+      "id": "exact_cache_hit_on_repeat_search",
+      "ok": true,
+      "detail": {
+        "ok": true,
+        "exact_cache": {
+          "hit": true,
+          "work_units": 0,
+          "stored": false,
+          "policy": {
+            "allowed": true,
+            "reason": "exact_reuse_valid",
+            "exact": true,
+            "approximate": false
+          },
+          "cache_key": "60fc9c6af49bab00ae7544b854894fec4c12eb09f0501db5209b98ee3462769d"
+        },
+        "cache_probe": true
+      }
+    },
+    {
+      "id": "completion_budgeted_gate_honest",
+      "ok": true,
+      "detail": {
+        "ts": 1791346485.2058253,
+        "type": "completion_gate",
+        "enabled": false,
+        "reason": "no_eligible_local_model",
+        "budgeted": true,
+        "eligible_model": false,
+        "id": "ev_e7b6c4f8cd"
+      }
+    },
+    {
+      "id": "proposal_awaiting_apply_not_auto",
+      "ok": true,
+      "detail": {
+        "awaiting": true,
+        "applied": false,
+        "op": "op_ed_2a4912c014db27b3"
+      }
+    },
+    {
+      "id": "reject_clears_proposal",
+      "ok": true,
+      "detail": {
+        "ok": true,
+        "task_id": "edt_cf4543d10a81",
+        "rejected": true,
+        "prior_operation_id": "op_ed_2a4912c014db27b3",
+        "state": "open"
+      }
+    },
+    {
+      "id": "held_out_multi_repair_apply",
+      "ok": true,
+      "detail": {
+        "apply_ok": true,
+        "math_ok": true,
+        "greet_ok": true
+      }
+    },
+    {
+      "id": "cancel_blocks_agent_turn",
+      "ok": true,
+      "detail": {
+        "error": "task_cancelled",
+        "cancelled": null
+      }
+    },
+    {
+      "id": "mode_b_honest_status",
+      "ok": true,
+      "detail": {
+        "state": "paused",
+        "provider": null
+      }
+    },
+    {
+      "id": "live_model_or_explicit_blocker",
+      "ok": true,
+      "detail": {
+        "ai_state": "paused",
+        "blocker": "Mode B paused \u2014 install Ollama + fitted model for live model agent turns",
+        "deterministic_path_used": true
+      }
+    },
+    {
+      "id": "model_propose_pauses_or_edits_free_only",
+      "ok": true,
+      "detail": {
+        "paused": true,
+        "edits_n": 0,
+        "reason": "Mode B paused \u2014 no local model; fixture path remains available"
+      }
+    },
+    {
+      "id": "deterministic_first_still_wins_on_fixture",
+      "ok": true,
+      "detail": {
+        "source": "deterministic_fixture",
+        "n": 2
+      }
+    },
+    {
+      "id": "agent_search_exact_cache_meta",
+      "ok": true,
+      "detail": {
+        "hit": false,
+        "work_units": 1,
+        "stored": true,
+        "policy": {
+          "allowed": true,
+          "reason": "exact_reuse_valid",
+          "exact": true,
+          "approximate": false
+        },
+        "cache_key": "60fc9c6af49bab00ae7544b854894fec4c12eb09f0501db5209b98ee3462769d"
+      }
+    }
+  ],
+  "phase": "2-3",
+  "north_star": "match_or_exceed_cursor_claude_on_measured_suites_free_only",
+  "cursor_claude_comparison": "unknown",
+  "generated_at": "2026-10-07T04:14:55.704989+00:00"
+}
