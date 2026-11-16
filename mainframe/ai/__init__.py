@@ -157,7 +157,23 @@ def run_ai_step(prompt: str) -> dict[str, Any]:
             "message": "No local model to run; AI step paused.",
         }
 
-    model_name = str(models[0])
+    # Prefer config pin when installed; else RAM-aware pick (never models[0] alone —
+    # Ollama list order often surfaces the largest tag first).
+    preferred = str(cfg.get("ai", {}).get("preferred_model") or "").strip() or None
+    avail_gib: float | None = None
+    try:
+        from mainframe.doctor import measure_memory
+
+        mem = measure_memory()
+        if mem.get("measured"):
+            avail_gib = float(mem.get("available_gib") or 0)
+    except Exception:  # noqa: BLE001
+        avail_gib = None
+
+    from mainframe.local_model.select import pick_runtime_model
+
+    pick = pick_runtime_model(list(models), available_gib=avail_gib, preferred=preferred)
+    model_name = str(pick.get("model") or models[0])
     alias_gate = authorize(
         "inference",
         "ollama_local",
@@ -177,7 +193,10 @@ def run_ai_step(prompt: str) -> dict[str, Any]:
             "message": alias_gate.reason,
         }
 
-    return generate_ollama(base, prompt, model=model_name)
+    out = generate_ollama(base, prompt, model=model_name)
+    if isinstance(out, dict):
+        out["runtime_pick"] = pick
+    return out
 
 def provider_audit() -> dict[str, Any]:
     """Visible catalog: eligible retained adapters + disabled routes (not hidden)."""

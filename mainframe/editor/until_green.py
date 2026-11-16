@@ -69,9 +69,20 @@ def run_until_green(
             prop = propose_fixes(workspace, goal, allow_model=allow_model)
             edits = list(prop.get("edits") or [])
             source = str(prop.get("source") or "propose")
-            model_calls = 0 if source.startswith("deterministic") or source == "verified_patch_memory" else 1
+            # Only pure offline sources are zero-cost. "deterministic_then_model"
+            # and "model_gated" both invoke Mode B and must count.
+            offline_sources = {"deterministic_fixture", "verified_patch_memory"}
+            model_calls = 0 if source in offline_sources else 1
             if prop.get("impossible"):
-                turns.append({"turn": turn, "source": source, "impossible": True, "prop": prop})
+                turns.append(
+                    {
+                        "turn": turn,
+                        "source": source,
+                        "impossible": True,
+                        "model_calls": model_calls,
+                        "prop": prop,
+                    }
+                )
                 _emit(sink, {"type": "done", "green": False, "impossible": True, "turns": turn})
                 return {
                     "ok": True,
@@ -79,9 +90,18 @@ def run_until_green(
                     "impossible": True,
                     "turns": turns,
                     "reason": prop.get("reason"),
+                    "model_calls_total": sum(int(t.get("model_calls") or 0) for t in turns),
                 }
             if not edits:
-                turns.append({"turn": turn, "source": source, "no_edits": True})
+                turns.append(
+                    {
+                        "turn": turn,
+                        "source": source,
+                        "no_edits": True,
+                        "model_calls": model_calls,
+                        "paused": bool(prop.get("paused")),
+                    }
+                )
                 _emit(sink, {"type": "done", "green": False, "no_edits": True, "turns": turn})
                 return {
                     "ok": True,
@@ -90,6 +110,7 @@ def run_until_green(
                     "turns": turns,
                     "paused": bool(prop.get("paused")),
                     "reason": prop.get("reason"),
+                    "model_calls_total": sum(int(t.get("model_calls") or 0) for t in turns),
                 }
 
         snap = inspect_and_snapshot(workspace, [e["path"] for e in edits])

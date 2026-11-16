@@ -15,6 +15,111 @@ from mainframe.local_model.catalog import CANDIDATES, candidate_by_id
 from mainframe.local_model.cloud_guard import is_cloud_model_name
 from mainframe.local_model.ollama_native import list_local_models
 
+# Rough runtime working-set GiB (weights + KV + overhead) for installed tags.
+# Order-of-magnitude only — used to avoid picking a 3B first when free RAM is ~1 GiB.
+_RUNTIME_GIB_BY_HINT: list[tuple[str, float]] = [
+    ("0.5b", 0.7),
+    ("1.1b", 1.1),
+    ("1.5b", 1.4),
+    ("3b", 2.4),
+    ("7b", 5.0),
+    ("8b", 5.5),
+    ("14b", 9.0),
+    ("27b", 17.0),
+    ("32b", 20.0),
+]
+
+
+def estimate_runtime_gib(model_name: str) -> float:
+    """Estimate load cost from the tag name; unknown tags treated as mid-size."""
+    low = (model_name or "").lower()
+    for hint, gib in _RUNTIME_GIB_BY_HINT:
+        if hint in low:
+            return gib
+    # Bare family tags without a size suffix — assume mid-small, not frontier.
+    return 2.5
+
+
+def pick_runtime_model(
+    installed: list[str],
+    *,
+    available_gib: float | None = None,
+    preferred: str | None = None,
+) -> dict[str, Any]:
+    """
+    Pick an installed local model for inference.
+
+    Prefer an explicit preferred tag when installed. Otherwise pick the *largest*
+    installed model that fits a conservative fraction of measured free RAM.
+    If none fit, pick the *smallest* installed and label ``unverified_fit``
+    (still free/local — do not invent a successful large-model load).
+    """
+    local = [n for n in installed if n and not is_cloud_model_name(n)]
+    if not local:
+        return {
+            "ok": False,
+            "model": None,
+            "verified_fit": False,
+            "reason": "no_installed_local_models",
+        }
+
+    if preferred and preferred in local:
+        est = estimate_runtime_gib(preferred)
+        fits = available_gib is None or available_gib >= est
+        return {
+            "ok": True,
+            "model": preferred,
+            "verified_fit": bool(fits),
+            "estimated_runtime_gib": est,
+            "available_gib": available_gib,
+            "reason": "preferred_installed" if fits else "preferred_unverified_fit",
+            "candidates": local,
+        }
+
+    ranked = sorted(local, key=estimate_runtime_gib)
+    if available_gib is None:
+        # No measurement: prefer smallest (safest on constrained hosts).
+        chosen = ranked[0]
+        return {
+            "ok": True,
+            "model": chosen,
+            "verified_fit": False,
+            "estimated_runtime_gib": estimate_runtime_gib(chosen),
+            "available_gib": None,
+            "reason": "smallest_no_ram_measurement",
+            "candidates": ranked,
+        }
+
+    # Leave headroom for OS + IDE (~40% of free RAM for model working set).
+    budget = max(0.0, float(available_gib) * 0.6)
+    fitting = [n for n in ranked if estimate_runtime_gib(n) <= budget]
+    if fitting:
+        # Largest that still fits.
+        chosen = fitting[-1]
+        return {
+            "ok": True,
+            "model": chosen,
+            "verified_fit": True,
+            "estimated_runtime_gib": estimate_runtime_gib(chosen),
+            "available_gib": available_gib,
+            "budget_gib": round(budget, 2),
+            "reason": "largest_verified_fit",
+            "candidates": ranked,
+        }
+
+    chosen = ranked[0]
+    return {
+        "ok": True,
+        "model": chosen,
+        "verified_fit": False,
+        "estimated_runtime_gib": estimate_runtime_gib(chosen),
+        "available_gib": available_gib,
+        "budget_gib": round(budget, 2),
+        "reason": "smallest_unverified_fit",
+        "candidates": ranked,
+        "note": "No installed model verified against measured free RAM; measuring anyway.",
+    }
+
 
 def select_candidate(
     *,
@@ -80,6 +185,11 @@ def select_candidate(
         }
         selection_reason = "doctor_fit_not_installed"
 
+    runtime = pick_runtime_model(
+        installed,
+        available_gib=float(mem.get("available_gib") or 0) if mem.get("measured") else None,
+    )
+
     return {
         "ok": True,
         "memory": {
@@ -91,6 +201,7 @@ def select_candidate(
         "installed_local_models": installed,
         "selected": selected,
         "selection_reason": selection_reason,
+        "runtime_pick": runtime,
         "download_required": bool(selected) and not selected.get("installed"),
         "auto_download": False,
         "coding_quality_assumed": False,

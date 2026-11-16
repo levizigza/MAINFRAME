@@ -92,14 +92,13 @@ def _extract_edits_json(text: str) -> list[dict[str, Any]]:
     return []
 
 
-def _build_model_prompt(root: Path, hypothesis: str, *, max_files: int = 6) -> str:
+def _build_model_prompt(root: Path, hypothesis: str, *, max_files: int = 8) -> str:
     snippets: list[str] = []
-    for p in sorted(root.rglob("*.py")):
+    # Prefer tests first so the model sees the failing assertion, then sources.
+    paths = sorted(root.rglob("*.py"), key=lambda p: (0 if "test" in p.name.lower() else 1, str(p)))
+    for p in paths:
         if any(part.startswith(".") for part in p.parts):
             continue
-        if "test" in p.name.lower() and "tests" in p.parts:
-            # still include tests briefly
-            pass
         rel = str(p.relative_to(root)).replace("\\", "/")
         try:
             body = p.read_text(encoding="utf-8")
@@ -110,11 +109,21 @@ def _build_model_prompt(root: Path, hypothesis: str, *, max_files: int = 6) -> s
         snippets.append(f"### {rel}\n{body}")
         if len(snippets) >= max_files:
             break
+    # Also surface TASK.md / PROBLEM.md when present.
+    for name in ("TASK.md", "PROBLEM.md"):
+        tp = root / name
+        if tp.is_file():
+            snippets.insert(0, f"### {name}\n{tp.read_text(encoding='utf-8')[:2000]}")
+            break
     files_blob = "\n\n".join(snippets) if snippets else "(no python files)"
     return (
-        "You are a local coding assistant. Propose minimal text edits as JSON only.\n"
-        'Schema: {"edits":[{"path":"rel/path.py","old":"exact old substring","new":"replacement"}]}\n'
-        "Rules: old must match file contents exactly; no markdown outside JSON; no apply claims.\n"
+        "You are a local coding assistant. Fix the failing tests with minimal edits.\n"
+        "Reply with JSON only (no markdown fences):\n"
+        '{"edits":[{"path":"rel/path.py","old":"exact old substring","new":"replacement"}]}\n'
+        "Rules:\n"
+        "- old must be copied exactly from the file contents below\n"
+        "- prefer changing the buggy implementation, not deleting tests\n"
+        "- one or few small edits; no apply/verified claims\n"
         f"Goal/hypothesis: {hypothesis}\n\n"
         f"Workspace files:\n{files_blob}\n"
     )
@@ -154,9 +163,12 @@ def propose_fixes_model(root: Path, hypothesis: str) -> dict[str, Any]:
             "probe": {"status": pd.get("status"), "detail": pd.get("detail")},
         }
 
-    # Light quota admit (never evade; on deny pause)
+    # Light quota admit (never evade; on deny pause). Always reconcile/release.
+    ctrl = None
+    reservation_id: str | None = None
+    admit_d: dict[str, Any] = {}
     try:
-        from mainframe.quota import AdmissionController, UsageEstimate
+        from mainframe.quota import AdmissionController, ActualUsage, UsageEstimate
 
         ctrl = AdmissionController()
         admit = ctrl.admit(
@@ -166,6 +178,7 @@ def propose_fixes_model(root: Path, hypothesis: str) -> dict[str, Any]:
             require_cost_gate=True,
         )
         admit_d = admit.to_dict() if hasattr(admit, "to_dict") else dict(admit or {})
+        reservation_id = admit_d.get("reservation_id") or getattr(admit, "reservation_id", None)
         if not admit_d.get("allowed", True):
             return {
                 "proposal_only": True,
@@ -181,55 +194,71 @@ def propose_fixes_model(root: Path, hypothesis: str) -> dict[str, Any]:
     except Exception as exc:  # noqa: BLE001
         admit_d = {"note": f"quota_skipped:{exc}"}
 
-    prompt = _build_model_prompt(root, hypothesis)
-    model_meta = {"provider_id": "ollama_local", "route": "propose_fixes_model"}
+    try:
+        prompt = _build_model_prompt(root, hypothesis)
+        model_meta = {"provider_id": "ollama_local", "route": "propose_fixes_model"}
 
-    def compute() -> dict[str, Any]:
-        step = run_ai_step(prompt)
-        text = ""
-        if isinstance(step, dict):
-            text = step.get("response") or step.get("text") or ""
-            if not text and isinstance(step.get("message"), dict):
-                text = step["message"].get("content") or ""
-            elif not text and isinstance(step.get("message"), str) and step.get("ok"):
-                text = step["message"]
-            if step.get("paused") and not text:
-                return {"text": "", "raw": step, "paused": True}
-        return {"text": str(text or ""), "raw": step}
+        def compute() -> dict[str, Any]:
+            step = run_ai_step(prompt)
+            text = ""
+            if isinstance(step, dict):
+                text = step.get("response") or step.get("text") or ""
+                if not text and isinstance(step.get("message"), dict):
+                    text = step["message"].get("content") or ""
+                elif not text and isinstance(step.get("message"), str) and step.get("ok"):
+                    text = step["message"]
+                if step.get("paused") and not text:
+                    return {"text": "", "raw": step, "paused": True}
+            return {"text": str(text or ""), "raw": step}
 
-    cached = cached_model_response(
-        root,
-        prompt=prompt,
-        model=model_meta,
-        compute_response=compute,
-    )
-    body = cached.get("result") or {}
-    text = str(body.get("text") or "")
-    edits = _extract_edits_json(text)
-    # Validate old substrings exist
-    valid: list[dict[str, Any]] = []
-    for e in edits:
-        path = root / e["path"]
-        if not path.is_file():
-            continue
-        disk = path.read_text(encoding="utf-8")
-        if e["old"] in disk:
-            valid.append(e)
-    return {
-        "proposal_only": True,
-        "applied": False,
-        "verified": False,
-        "edits": valid,
-        "impossible": False,
-        "paused": False,
-        "source": "model_gated",
-        "hypothesis": hypothesis,
-        "cache_hit": cached.get("cache_hit"),
-        "quota": admit_d,
-        "parse_edits_raw": len(edits),
-        "parse_edits_valid": len(valid),
-        "fallback_used": False,
-    }
+        cached = cached_model_response(
+            root,
+            prompt=prompt,
+            model=model_meta,
+            compute_response=compute,
+        )
+        body = cached.get("result") or {}
+        text = str(body.get("text") or "")
+        edits = _extract_edits_json(text)
+        # Validate old substrings exist
+        valid: list[dict[str, Any]] = []
+        for e in edits:
+            path = root / e["path"]
+            if not path.is_file():
+                continue
+            disk = path.read_text(encoding="utf-8")
+            if e["old"] in disk:
+                valid.append(e)
+        paused = bool(body.get("paused"))
+        return {
+            "proposal_only": True,
+            "applied": False,
+            "verified": False,
+            "edits": valid,
+            "impossible": False,
+            "paused": paused,
+            "source": "model_gated",
+            "hypothesis": hypothesis,
+            "cache_hit": cached.get("cache_hit"),
+            "quota": admit_d,
+            "parse_edits_raw": len(edits),
+            "parse_edits_valid": len(valid),
+            "fallback_used": False,
+        }
+    finally:
+        if ctrl is not None and reservation_id:
+            try:
+                from mainframe.quota import ActualUsage
+
+                ctrl.reconcile(
+                    reservation_id,
+                    ActualUsage(requests=1, tokens=400, context_tokens=800),
+                )
+            except Exception:  # noqa: BLE001
+                try:
+                    ctrl.release(reservation_id, reason="propose_cleanup")
+                except Exception:  # noqa: BLE001
+                    pass
 
 
 def propose_fixes(

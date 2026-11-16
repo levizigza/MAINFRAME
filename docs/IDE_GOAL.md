@@ -34,8 +34,9 @@
 | Branded workbench bootstrap | Phase 0–1 measured (`workbench accept`) |
 | Phase 2 agent UX (stream + apply/reject) | Measured — chips, tests tool, async panel (`editor agent-accept` 14/14) |
 | Phase 3 gated model propose + exact tool cache | Measured — fixture-first; cache hit; completion gate; model pauses offline |
-| Mode B on this host | Blocked until Ollama installed + fitted pull |
-| Live codingbench vs Cursor/Claude | **unknown** |
+| Mode B on this host | Measured — Ollama + local models; RAM-aware pick |
+| Live codingbench (MAINFRAME holdout) | Measured **6/12 (50%)** with `qwen2.5-coder:1.5b` (2026-11-16) |
+| Live codingbench vs Cursor/Claude | **unknown** — no competitor purchase |
 | Match/exceed on measured suites | **not yet achieved** — north star |
 
 See `docs/MODE_B_ONBOARDING.md`, `docs/BENCHMARK_PATH.md`, and `python -m mainframe workbench accept`.

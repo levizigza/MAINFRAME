@@ -1,4 +1,8 @@
-"""Live Ollama codingbench agent — Mode B only; no paid fallback."""
+"""Live Ollama codingbench agent — Mode B only; no paid fallback.
+
+Repair tasks use multi-turn propose→apply→test (until_green) with allow_model.
+Decline / clarify tasks stay single-turn so the model can honor the action.
+"""
 
 from __future__ import annotations
 
@@ -10,6 +14,7 @@ from typing import Any
 from mainframe.ai import probe_free_inference, run_ai_step
 from mainframe.codingloop.propose import _extract_edits_json
 from mainframe.demos.broker import Broker
+from mainframe.editor.until_green import run_until_green
 
 
 def _list_workspace_files(root: Path, limit: int = 12) -> list[Path]:
@@ -58,8 +63,8 @@ def _build_prompt(task: dict[str, Any], ws: Path) -> str:
     )
 
 
-def agent_ollama_live(task: dict[str, Any], broker: Broker, budget: dict[str, Any]) -> dict[str, Any]:
-    """Single-turn (budgeted) live propose via eligible Ollama."""
+def _single_turn_policy(task: dict[str, Any], broker: Broker, budget: dict[str, Any]) -> dict[str, Any]:
+    """Decline / clarify (and fallback edit) via one model call."""
     probe = probe_free_inference()
     pd = probe.to_dict() if hasattr(probe, "to_dict") else {}
     if pd.get("status") != "available":
@@ -78,7 +83,6 @@ def agent_ollama_live(task: dict[str, Any], broker: Broker, budget: dict[str, An
     tool_calls = 0
     ws = Path(broker.workspace)
 
-    # Decline / clarify tasks: ask model once, honor action
     prompt = _build_prompt(task, ws)
     model_calls += 1
     if model_calls > max_model:
@@ -95,10 +99,11 @@ def agent_ollama_live(task: dict[str, Any], broker: Broker, budget: dict[str, An
                 "tool_calls": tool_calls,
                 "error": step.get("message") or "paused",
                 "prompt_preserved": True,
+                "runtime_pick": step.get("runtime_pick"),
             }
 
-    # Parse action
     action = "edit"
+    data: dict[str, Any] = {}
     try:
         m = re.search(r"\{.*\}", text, re.DOTALL)
         data = json.loads(m.group(0) if m else text)
@@ -112,6 +117,8 @@ def agent_ollama_live(task: dict[str, Any], broker: Broker, budget: dict[str, An
                     "tool_calls": tool_calls,
                     "reason": data.get("reason"),
                     "human_intervention": True,
+                    "loop": "single_turn",
+                    "runtime_pick": step.get("runtime_pick") if isinstance(step, dict) else None,
                 }
             if action == "clarify":
                 return {
@@ -121,6 +128,8 @@ def agent_ollama_live(task: dict[str, Any], broker: Broker, budget: dict[str, An
                     "tool_calls": tool_calls,
                     "question": data.get("question"),
                     "human_intervention": True,
+                    "loop": "single_turn",
+                    "runtime_pick": step.get("runtime_pick") if isinstance(step, dict) else None,
                 }
     except json.JSONDecodeError:
         data = {}
@@ -138,7 +147,6 @@ def agent_ollama_live(task: dict[str, Any], broker: Broker, budget: dict[str, An
         rel = str(e["path"]).replace("\\", "/")
         path = ws / rel
         if not path.is_file():
-            # allow create if old empty
             if e.get("old"):
                 continue
             path.parent.mkdir(parents=True, exist_ok=True)
@@ -167,5 +175,64 @@ def agent_ollama_live(task: dict[str, Any], broker: Broker, budget: dict[str, An
         "edits_applied": applied,
         "human_intervention": False,
         "provider": "ollama_local",
+        "loop": "single_turn",
         "raw_tail": text[-500:] if text else "",
+        "runtime_pick": step.get("runtime_pick") if isinstance(step, dict) else None,
     }
+
+
+def _multiturn_repair(task: dict[str, Any], broker: Broker, budget: dict[str, Any]) -> dict[str, Any]:
+    """Shared IDE/bench loop: memory → propose → apply → tests until green."""
+    probe = probe_free_inference()
+    pd = probe.to_dict() if hasattr(probe, "to_dict") else {}
+    if pd.get("status") != "available":
+        return {
+            "declined": False,
+            "clarified": False,
+            "model_calls": 0,
+            "tool_calls": 0,
+            "paused": True,
+            "error": "mode_b_paused",
+            "detail": pd.get("detail"),
+            "loop": "until_green",
+        }
+
+    ws = Path(broker.workspace)
+    goal = ""
+    tp = ws / (task.get("prompt_file") or "TASK.md")
+    if tp.is_file():
+        goal = tp.read_text(encoding="utf-8")
+    else:
+        goal = str(task.get("id") or "repair")
+
+    max_model = int(budget.get("max_model_calls") or 6)
+    max_turns = max(1, min(max_model, 4))
+    loop = run_until_green(ws, goal=goal, max_turns=max_turns, allow_model=True)
+    turns = list(loop.get("turns") or [])
+    model_calls = int(loop.get("model_calls_total") or 0)
+    # Count apply+test as tool activity for harness budgets.
+    tool_calls = sum(1 for t in turns if t.get("apply_ok") or t.get("tests_passed") is not None)
+
+    return {
+        "declined": False,
+        "clarified": False,
+        "model_calls": model_calls,
+        "tool_calls": tool_calls,
+        "green": bool(loop.get("green")),
+        "source": loop.get("source"),
+        "turns": len(turns),
+        "turn_detail": turns,
+        "human_intervention": False,
+        "provider": "ollama_local",
+        "loop": "until_green",
+        "paused": bool(loop.get("paused")),
+        "no_edits": bool(loop.get("no_edits")),
+        "impossible": bool(loop.get("impossible")),
+    }
+
+
+def agent_ollama_live(task: dict[str, Any], broker: Broker, budget: dict[str, Any]) -> dict[str, Any]:
+    """Budgeted live agent — multiturn repair; single-turn decline/clarify."""
+    if task.get("decline_expected") or task.get("clarify_expected"):
+        return _single_turn_policy(task, broker, budget)
+    return _multiturn_repair(task, broker, budget)

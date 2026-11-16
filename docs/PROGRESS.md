@@ -1567,17 +1567,17 @@ Reverse-engineer Claude Code and Cursor from public docs/reports. Define a free 
 - SWE-bench pinned slice runner
 - Multi-turn propose-until-green
 
-## 2026-11-08 — Offline until-green + SWE local slice (no model load)
+## 2026-11-08 ï¿½ Offline until-green + SWE local slice (no model load)
 
 ### Intent
 
-While RAM is held for later Mode B work: ship multi-turn propose-until-green, verified-patch memory replay, and pinned SWE-style fail-to-pass slice — all offline.
+While RAM is held for later Mode B work: ship multi-turn propose-until-green, verified-patch memory replay, and pinned SWE-style fail-to-pass slice ï¿½ all offline.
 
 ### Implemented
 
-- `mainframe/editor/until_green.py` + `until_green_accept.py` — memory ? propose ? apply ? tests
-- `mainframe/memory/verified_patches.py` — goal fingerprint; remember on green; lookup before propose
-- `mainframe/swebench/` — PIN, local fixture `mf_swe_local_add`, runner, accept
+- `mainframe/editor/until_green.py` + `until_green_accept.py` ï¿½ memory ? propose ? apply ? tests
+- `mainframe/memory/verified_patches.py` ï¿½ goal fingerprint; remember on green; lookup before propose
+- `mainframe/swebench/` ï¿½ PIN, local fixture `mf_swe_local_add`, runner, accept
 - CLI: `editor until-green` / `until-green-accept`, `swebench run|accept`
 - Agent propose path checks verified memory before Mode B
 - Scoreboard O6/O8/O9 bump from `docs/eval/swe/SLICE.json`
@@ -1587,14 +1587,14 @@ While RAM is held for later Mode B work: ship multi-turn propose-until-green, ve
 | Check | Result |
 |-------|--------|
 | `python -m mainframe editor until-green-accept` | **4/4** PASS (green + memory replay 0 model calls) |
-| `python -m mainframe swebench accept` | **4/4** PASS — local slice **1/1 (100%)** offline |
+| `python -m mainframe swebench accept` | **4/4** PASS ï¿½ local slice **1/1 (100%)** offline |
 | `python -m mainframe scoreboard` | product avg **68%**, O10 **0%**, swe cell `local 1/1 (100.0%) offline` |
 
 ### Blockers
 
 - Live codingbench still **0/12**; Mode B model work paused until RAM frees
 - O10 / Cursor parity still **unknown** (no PARITY.json)
-- Official SWE-bench Verified download not run — local fixture only
+- Official SWE-bench Verified download not run ï¿½ local fixture only
 
 ### Next (when RAM frees)
 
@@ -1606,7 +1606,7 @@ While RAM is held for later Mode B work: ship multi-turn propose-until-green, ve
 - Added second offline fixture `mf_swe_local_greeter`; PIN v2
 - `swebench accept` ? **2/2 (100%)** offline; scoreboard swe cell `local 2/2 (100.0%) offline`; product avg still **68%**, O10 **0%**
 
-## 2026-11-16 — Hand-off: commit + push + chat continuity
+## 2026-11-16 â€” Hand-off: commit + push + chat continuity
 
 ### Intent
 
@@ -1616,3 +1616,72 @@ Push full repo to GitHub and publish `docs/CHAT_CONTINUITY.md` (entire chat so f
 
 - Continuity doc + README pointer
 - Offline until-green / SWE / scoreboard work included in commit
+
+---
+
+## 2026-11-16 â€” Increment 0.1.56: resume PC bootstrap + live codingbench 50%
+
+### Intent
+
+Continue on a new Windows PC with more disk: install toolchain, Mode B models, vscode pin clone; unlock live holdout measurement; fix blockers that zeroed Mode B proposes.
+
+### Inspected / host
+
+- Cloned https://github.com/levizigza/MAINFRAME.git into `C:\Users\Admin\Documents\MAINFRAME`
+- Hardware (measured): **~7.9 GiB RAM**, often **&lt;1 GiB free** with IDE open; **C:~51 GiB** free; **D:~466 GiB** free
+- Missing at start: Python, Ollama, pytest, ripgrep; freeforge-cli npm deps absent
+
+### Installed / downloaded (free local)
+
+| Item | Result |
+|------|--------|
+| Python 3.12.10 (winget) | OK |
+| Ollama 0.40.16 (winget) | OK; loopback `:11434` |
+| pytest 9.2.0 (pip) | OK â€” offline SWE/until-green needed it |
+| ripgrep 15.2.0 (winget) | OK |
+| freeforge-cli `npm install` | OK |
+| `qwen2.5:0.5b` | pulled (~397 MB) |
+| `qwen2.5-coder:1.5b` | pulled (~986 MB) |
+| `qwen2.5-coder:3b` | pulled (~1.9 GB) |
+| vscode pin `1.95.3` + FreeForge overlay | `.workbench-build/vscode` clone OK |
+
+Models directed toward `D:\ollama-models` via user `OLLAMA_MODELS` where set.
+
+### Implemented
+
+- `pick_runtime_model` â€” RAM-aware Ollama tag selection (no longer blind `models[0]`)
+- `run_ai_step` uses runtime pick + optional `ai.preferred_model`
+- Live codingbench agent: **until_green multiturn** for repair; single-turn for decline/clarify
+- Quota leak fix: `propose_fixes_model` always reconciles/releases reservations
+- until_green model_calls counting: `deterministic_then_model` no longer zeroed
+- Stronger propose prompt (tests first + TASK.md)
+- Scoreboard: O4 bump when vscode clone+overlay present; live cell â†’ O6/O9
+
+### Acceptance (observed)
+
+| Check | Result |
+|-------|--------|
+| `ai probe` | **available** â€” models listed |
+| `editor until-green-accept` | **4/4** (after pytest) |
+| `swebench accept` | **4/4** â€” local **2/2 (100%)** offline |
+| `local-model accept` | PASS |
+| `codingloop accept` | PASS |
+| `workbench accept` | PASS â€” clone+overlay present |
+| Live codingbench (`--live`, preferred `qwen2.5-coder:1.5b`) | **6/12 (50%)** â€” report `.mainframe/runs/codingbench-20261116T201851Z.json` |
+| Pass categories | logic, dep_trap, decline (both harnesses) |
+| Fail categories | multifile, ui_behavior, clarify |
+| Scoreboard | product **72%**, O10 **0%**, codingbench_live `6/12 (50%)` |
+
+### Claims discipline
+
+- Competitor Cursor/Claude cells remain **unknown**
+- 50% is MAINFRAME holdout only â€” not SWE-bench Verified / CursorBench
+- 3B pulled but not used for the published live cell (RAM)
+
+### Blockers / next
+
+- Free RAM often &lt;1 GiB â€” close browsers before 3B live climb
+- Next failures: multifile + UI + clarify prompts/tools
+- O7 MCP stdio in agent loop still open
+- Full Electron workbench build not yet run
+

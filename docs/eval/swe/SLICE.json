@@ -8,7 +8,7 @@
     {
       "instance_id": "mf_swe_local_add",
       "fixture": "mf_swe_local_add",
-      "started_at": "2026-11-09T02:46:49.752605+00:00",
+      "started_at": "2026-11-16T20:05:58.166482+00:00",
       "ok": true,
       "resolved": true,
       "pre_failed": true,
@@ -25,7 +25,7 @@
     {
       "instance_id": "mf_swe_local_greeter",
       "fixture": "mf_swe_local_greeter",
-      "started_at": "2026-11-09T02:46:58.192515+00:00",
+      "started_at": "2026-11-16T20:06:00.092865+00:00",
       "ok": true,
       "resolved": true,
       "pre_failed": true,
@@ -43,6 +43,6 @@
   "resolved": 2,
   "total": 2,
   "resolve_rate": 100.0,
-  "generated_at": "2026-11-09T02:47:04.979423+00:00",
+  "generated_at": "2026-11-16T20:06:02.012850+00:00",
   "note": "MAINFRAME-measured local slice only \u2014 not an official SWE-bench leaderboard submission."
 }

@@ -1,7 +1,7 @@
 {
   "ok": true,
-  "generated_at": "2026-11-09T03:22:40.526534+00:00",
-  "product_avg_pct": 68,
+  "generated_at": "2026-11-16T20:19:03.547716+00:00",
+  "product_avg_pct": 72,
   "north_star_pct": 0,
   "objectives": [
     {
@@ -26,8 +26,9 @@
     {
       "id": "O4",
       "name": "Workbench shell",
-      "pct": 35,
-      "gate": "workbench accept + Electron"
+      "pct": 55,
+      "gate": "workbench accept + Electron",
+      "status": "vscode_pin_cloned_overlay"
     },
     {
       "id": "O5",
@@ -35,14 +36,14 @@
       "pct": 100,
       "gate": "ollama + model",
       "status": "available",
-      "detail": "models=['qwen2.5:0.5b']"
+      "detail": "models=['qwen2.5-coder:3b', 'qwen2.5-coder:1.5b', 'qwen2.5:0.5b']"
     },
     {
       "id": "O6",
       "name": "Multi-turn harness parity",
-      "pct": 70,
+      "pct": 80,
       "gate": "propose-until-green",
-      "status": "until_green_offline"
+      "status": "until_green_live"
     },
     {
       "id": "O7",
@@ -60,14 +61,13 @@
     {
       "id": "O9",
       "name": "Public bench protocol wired",
-      "pct": 55,
+      "pct": 60,
       "gate": "SWE slice runner",
-      "status": "local_slice_measured",
+      "status": "codingbench_live_cell",
       "detail": {
-        "resolved": 2,
-        "total": 2,
-        "resolve_rate": 100.0,
-        "allow_model": false
+        "live_ok": 6,
+        "live_n": 12,
+        "rate_pct": 50
       }
     },
     {
@@ -83,12 +83,14 @@
     "ai_status": "available",
     "ollama_on_path": true,
     "models": [
+      "qwen2.5-coder:3b",
+      "qwen2.5-coder:1.5b",
       "qwen2.5:0.5b"
     ],
-    "probe_detail": "Local Ollama responded with models: qwen2.5:0.5b"
+    "probe_detail": "Local Ollama responded with models: qwen2.5-coder:3b, qwen2.5-coder:1.5b, qwen2.5:0.5b"
   },
   "benches": {
-    "codingbench_live": "0/12 (0%)",
+    "codingbench_live": "6/12 (50%)",
     "swe_verified_slice": "local 2/2 (100.0%) offline",
     "swe_multilingual": "unknown",
     "terminal_bench": "unknown",

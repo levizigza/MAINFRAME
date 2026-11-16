@@ -85,6 +85,7 @@ def default_config() -> dict[str, Any]:
             "mode": "optional_free_only",
             "provider": "ollama_local",
             "ollama_base_url": "http://127.0.0.1:11434",
+            "preferred_model": "",  # optional installed Ollama tag; empty → RAM-aware pick
             "pause_when_unavailable": True,
             # Disabled providers are not selectable; listed for audit visibility only.
             "disabled_providers_note": "See python -m mainframe audit — cannot enable paid routes via config",

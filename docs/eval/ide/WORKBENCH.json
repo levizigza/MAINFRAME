@@ -57,8 +57,8 @@
       "ok": true,
       "detail": {
         "recommended_ids": [],
-        "budget_gib": 1.16,
-        "ai_status": "paused"
+        "budget_gib": 0.0,
+        "ai_status": "available"
       }
     },
     {
@@ -98,14 +98,14 @@
     },
     "clone": {
       "path": ".workbench-build/vscode",
-      "exists": false,
-      "overlay_applied": false
+      "exists": true,
+      "overlay_applied": true
     },
     "ai": {
-      "status": "paused",
-      "provider": null,
-      "detail": "No free local inference at http://127.0.0.1:11434/api/tags (TCP unreachable for 127.0.0.1:11434). Progress preserved; AI-dependent steps paused.",
-      "ollama_on_path": false
+      "status": "available",
+      "provider": "ollama_local",
+      "detail": "Local Ollama responded with models: qwen2.5-coder:3b, qwen2.5-coder:1.5b, qwen2.5:0.5b",
+      "ollama_on_path": true
     },
     "north_star": "match_or_exceed_cursor_claude_on_measured_suites_free_only",
     "cursor_claude_comparison": "unknown",
@@ -113,8 +113,8 @@
   },
   "model_fit": {
     "recommended_ids": [],
-    "note": "Install Ollama, then pull a recommended model explicitly. MAINFRAME does not auto-download weights."
+    "note": "Local inference available \u2014 run modeleval/codingbench --live for quality cells."
   },
   "north_star": "match_or_exceed_cursor_claude_on_measured_suites_free_only",
-  "generated_at": "2026-10-07T04:15:22.079468+00:00"
+  "generated_at": "2026-11-16T20:19:16.252436+00:00"
 }

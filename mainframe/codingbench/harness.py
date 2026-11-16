@@ -117,7 +117,11 @@ def run_task_attempt(
         "timed_out": timed_out,
         "unavailable_provider": unavailable_provider,
         "verify": verified,
-        "agent": {k: agent_out.get(k) for k in ("declined", "clarified", "error")},
+        "agent": {
+            k: agent_out.get(k)
+            for k in ("declined", "clarified", "error", "loop", "source", "green", "turns")
+            if k in agent_out or agent_out.get(k) is not None
+        },
         "freeforge_preflight": preflight or None,
         "workspace_digest": prep.get("workspace_digest"),
         "attempt": 1,

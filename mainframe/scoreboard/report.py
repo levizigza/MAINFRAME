@@ -109,6 +109,15 @@ def _live_adjustments(rows: list[dict[str, Any]]) -> tuple[list[dict[str, Any]],
     if agent_ux.is_file():
         by_id["O3"]["status"] = "measured"
 
+    # O4: overlay-only = 35; pinned vscode clone + overlay applied = 55 (Electron build still open)
+    clone = ROOT / ".workbench-build" / "vscode"
+    overlay_applied = clone / "src" / "vs" / "workbench" / "contrib" / "freeforge"
+    if clone.is_dir() and (clone / ".git").exists() and overlay_applied.is_dir():
+        by_id["O4"]["pct"] = max(int(by_id["O4"]["pct"]), 55)
+        by_id["O4"]["status"] = "vscode_pin_cloned_overlay"
+    elif (ROOT / "workbench" / "overlay" / "freeforge").is_dir():
+        by_id["O4"]["status"] = "overlay_only"
+
     # O10 stays 0 until explicit measured parity file
     parity = ROOT / "docs" / "eval" / "ide" / "PARITY.json"
     if parity.is_file():
@@ -171,13 +180,18 @@ def scoreboard_payload() -> dict[str, Any]:
             by_id = {r["id"]: r for r in rows}
             # Partial credit only — do not clobber higher offline/SWE status labels
             o9_before = int(by_id["O9"]["pct"])
-            by_id["O9"]["pct"] = max(o9_before, 15)
-            if o9_before < 15:
-                by_id["O9"]["status"] = "codingbench_live_cell"
+            by_id["O9"]["pct"] = max(o9_before, 60 if live_n else 15)
+            by_id["O9"]["status"] = "codingbench_live_cell"
+            by_id["O9"]["detail"] = {"live_ok": live_ok, "live_n": live_n, "rate_pct": rate}
             o6_before = int(by_id["O6"]["pct"])
-            by_id["O6"]["pct"] = max(o6_before, 40)
-            if o6_before < 40:
-                by_id["O6"]["status"] = "live_agent_wired"
+            # Live multiturn wired when any attempt used until_green loop
+            used_until = any(
+                (a.get("agent") or {}).get("loop") == "until_green"
+                or (a.get("verify") or {}).get("agent_meta", {}).get("loop") == "until_green"
+                for a in attempts
+            )
+            by_id["O6"]["pct"] = max(o6_before, 80 if used_until else 40)
+            by_id["O6"]["status"] = "until_green_live" if used_until else "live_agent_wired"
             rows[:] = list(by_id.values())
             break
     swe = ROOT / "docs" / "eval" / "swe"
