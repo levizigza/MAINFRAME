@@ -1685,3 +1685,36 @@ Models directed toward `D:\ollama-models` via user `OLLAMA_MODELS` where set.
 - O7 MCP stdio in agent loop still open
 - Full Electron workbench build not yet run
 
+---
+
+## 2026-11-16 — Increment 0.1.57: multifile import-align + stdio MCP loop
+
+### Intent
+
+Fix largest live failure category (multifile) via deterministic cross-file symbol alignment; ship local stdio MCP verified-patch memory into the agent loop; refuse paid/remote MCP.
+
+### Implemented
+
+- `mainframe/codingloop/import_align.py` — camelCase/snake_case import↔def near-miss → rename definition to match import
+- Wired into `propose_fixes_deterministic` (`source=import_symbol_align`)
+- `mainframe/mcp/` — newline JSON-RPC stdio client; `servers/verified_memory` MCP server; registry register + invoke; paid/remote refuse
+- `until_green` memory path: MCP lookup first, direct store fallback
+- CLI: `python -m mainframe mcp accept|register|call`
+- Scoreboard O7 → 70% when MCP server present
+
+### Acceptance (observed)
+
+| Check | Result |
+|-------|--------|
+| `mcp accept` | **7/7** |
+| Offline multifile until-green | **green** via `import_symbol_align` (0 model calls) |
+| `editor until-green-accept` | **4/4** — replay via `verified_patch_memory_mcp` |
+| Live codingbench | **8/12 (67%)** — multifile now passes both harnesses |
+| Remaining fails | ui_behavior, should_clarify |
+| Scoreboard | product **77%**, O7 **70%**, O10 **0%**, live `8/12 (67%)` |
+
+### Claims discipline
+
+- Still not Cursor/Claude parity; holdout-only sample
+- MCP is local stdio only; `https://…` MCP refused with `entitlement_missing`
+

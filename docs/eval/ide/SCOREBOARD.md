@@ -1,7 +1,7 @@
 # FreeForge IDE scoreboard
 
-Generated: `2026-11-16T20:19:03.547716+00:00`
-**Product avg (O1–O9): 72%**
+Generated: `2026-11-16T20:33:06.312376+00:00`
+**Product avg (O1–O9): 77%**
 **North star (O10): 0%**
 
 AI: `available` · models: `['qwen2.5-coder:3b', 'qwen2.5-coder:1.5b', 'qwen2.5:0.5b']`
@@ -14,7 +14,7 @@ AI: `available` · models: `['qwen2.5-coder:3b', 'qwen2.5-coder:1.5b', 'qwen2.5:
 | O4 | Workbench shell | **55%** | vscode_pin_cloned_overlay |
 | O5 | Mode B local inference | **100%** | available |
 | O6 | Multi-turn harness parity | **80%** | until_green_live |
-| O7 | MCP in agent loop | **20%** |  |
+| O7 | MCP in agent loop | **70%** | stdio_mcp_verified_memory |
 | O8 | Self-upgrade memory | **70%** | verified_patch_memory_offline |
 | O9 | Public bench protocol wired | **60%** | codingbench_live_cell |
 | O10 | Match/exceed Cursor & Claude Code | **0%** | unknown |

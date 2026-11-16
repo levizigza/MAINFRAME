@@ -109,6 +109,13 @@ def _live_adjustments(rows: list[dict[str, Any]]) -> tuple[list[dict[str, Any]],
     if agent_ux.is_file():
         by_id["O3"]["status"] = "measured"
 
+    # O7: stdio MCP live when accept artifact / module present
+    mcp_server = ROOT / "mainframe" / "mcp" / "servers" / "verified_memory.py"
+    if mcp_server.is_file():
+        by_id["O7"]["pct"] = max(int(by_id["O7"]["pct"]), 70)
+        by_id["O7"]["status"] = "stdio_mcp_verified_memory"
+        by_id["O7"]["detail"] = "local verified-patch memory MCP; paid/remote refused"
+
     # O4: overlay-only = 35; pinned vscode clone + overlay applied = 55 (Electron build still open)
     clone = ROOT / ".workbench-build" / "vscode"
     overlay_applied = clone / "src" / "vs" / "workbench" / "contrib" / "freeforge"

@@ -58,12 +58,46 @@ def run_until_green(
     for turn in range(1, max_turns + 1):
         _emit(sink, {"type": "status", "phase": "turn", "turn": turn})
 
-        mem = lookup_verified(goal=goal)
-        _emit(sink, {"type": "memory_lookup", "hit": mem.get("hit"), "fingerprint": mem.get("fingerprint")})
+        # Memory via local stdio MCP first (agent-loop path); direct store fallback.
+        mem: dict[str, Any] = {"hit": False}
+        try:
+            from mainframe.mcp.loop import lookup_via_mcp
+
+            mcp_mem = lookup_via_mcp(goal)
+            _emit(
+                sink,
+                {
+                    "type": "mcp_tool",
+                    "tool": "verified_patch_lookup",
+                    "hit": mcp_mem.get("hit"),
+                    "endpoint": mcp_mem.get("endpoint"),
+                },
+            )
+            if mcp_mem.get("hit") and mcp_mem.get("edits"):
+                mem = {
+                    "hit": True,
+                    "edits": mcp_mem["edits"],
+                    "fingerprint": mcp_mem.get("fingerprint"),
+                    "source": "verified_patch_memory_mcp",
+                }
+        except Exception as exc:  # noqa: BLE001
+            _emit(sink, {"type": "mcp_tool", "tool": "verified_patch_lookup", "error": str(exc)})
+
+        if not mem.get("hit"):
+            mem = lookup_verified(goal=goal)
+            _emit(
+                sink,
+                {
+                    "type": "memory_lookup",
+                    "hit": mem.get("hit"),
+                    "fingerprint": mem.get("fingerprint"),
+                    "via": "direct_fallback",
+                },
+            )
 
         if mem.get("hit") and mem.get("edits"):
             edits = list(mem["edits"])
-            source = "verified_patch_memory"
+            source = str(mem.get("source") or "verified_patch_memory")
             model_calls = 0
         else:
             prop = propose_fixes(workspace, goal, allow_model=allow_model)
@@ -71,7 +105,12 @@ def run_until_green(
             source = str(prop.get("source") or "propose")
             # Only pure offline sources are zero-cost. "deterministic_then_model"
             # and "model_gated" both invoke Mode B and must count.
-            offline_sources = {"deterministic_fixture", "verified_patch_memory"}
+            offline_sources = {
+                "deterministic_fixture",
+                "verified_patch_memory",
+                "verified_patch_memory_mcp",
+                "import_symbol_align",
+            }
             model_calls = 0 if source in offline_sources else 1
             if prop.get("impossible"):
                 turns.append(

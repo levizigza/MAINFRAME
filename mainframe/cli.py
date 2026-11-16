@@ -1704,6 +1704,32 @@ def cmd_swebench(args: argparse.Namespace) -> int:
     return 2
 
 
+def cmd_mcp(args: argparse.Namespace) -> int:
+    """Local stdio MCP — verified-patch memory server; paid/remote refused."""
+    from mainframe.mcp import run_mcp_accept
+    from mainframe.mcp.loop import mcp_tools_for_agent
+    from mainframe.mcp.stdio_client import call_local_server
+
+    ensure_state()
+    if args.mcp_command == "accept":
+        out = run_mcp_accept()
+        _print_json(out)
+        return 0 if out.get("ok") else 1
+    if args.mcp_command == "register":
+        _print_json(mcp_tools_for_agent(register=True))
+        return 0
+    if args.mcp_command == "call":
+        out = call_local_server(
+            str(args.server),
+            tool=str(args.tool),
+            arguments={"goal": args.goal} if args.goal else {},
+        )
+        _print_json(out)
+        return 0 if out.get("ok") else 1
+    print("Unknown mcp subcommand", file=sys.stderr)
+    return 2
+
+
 def cmd_workbench(args: argparse.Namespace) -> int:
     """FreeForge Workbench bootstrap — branded IDE shell + Mode B fitness."""
     from mainframe.workbench.status import run_bootstrap
@@ -2850,6 +2876,25 @@ def cmd_accept(_: argparse.Namespace) -> int:
     except Exception as exc:  # noqa: BLE001
         checks.append({"id": "reproducible_cost_audit", "ok": False, "detail": str(exc)})
 
+    # 57) stdio MCP in agent loop + import-symbol align (multifile)
+    try:
+        from mainframe.mcp import run_mcp_accept
+
+        mcp = run_mcp_accept()
+        checks.append(
+            {
+                "id": "stdio_mcp_agent_loop",
+                "ok": bool(mcp.get("ok")),
+                "detail": {
+                    "passed": mcp.get("passed"),
+                    "failed": mcp.get("failed"),
+                    "failed_ids": [c.get("id") for c in mcp.get("checks", []) if not c.get("ok")],
+                },
+            }
+        )
+    except Exception as exc:  # noqa: BLE001
+        checks.append({"id": "stdio_mcp_agent_loop", "ok": False, "detail": str(exc)})
+
     passed = sum(1 for c in checks if c["ok"])
     failed = len(checks) - passed
     payload = {
@@ -2917,6 +2962,7 @@ def cmd_accept(_: argparse.Namespace) -> int:
                 "workbench status/model-fit/bootstrap/accept (branded IDE shell + Mode B)",
                 "schedule probe/add-report/fire/accept (OpenClaw command-argv; zero model)",
                 "triggers accept (file/repo/webhook/poll; dedupe; bound jobs only)",
+                "mcp accept/call (stdio MCP; verified-patch memory; paid refuse)",
             ],
             "requires_eligible_free_inference": [
                 "ai ask with local Ollama + installed model",
@@ -3933,6 +3979,25 @@ def build_parser() -> argparse.ArgumentParser:
     swe_run.set_defaults(func=cmd_swebench)
     swe_acc = swe_sub.add_parser("accept", help="Pin + offline resolve + memory replay")
     swe_acc.set_defaults(func=cmd_swebench)
+
+    p_mcp = sub.add_parser(
+        "mcp",
+        help="Local stdio MCP — verified-patch memory; refuse paid/remote",
+    )
+    mcp_sub = p_mcp.add_subparsers(dest="mcp_command", required=True)
+    mcp_acc = mcp_sub.add_parser("accept", help="Stdio client + memory server + paid refuse")
+    mcp_acc.set_defaults(func=cmd_mcp)
+    mcp_reg = mcp_sub.add_parser("register", help="Register local MCP tools into agent registry")
+    mcp_reg.set_defaults(func=cmd_mcp)
+    mcp_call = mcp_sub.add_parser("call", help="Call one tool on a local stdio MCP server module")
+    mcp_call.add_argument(
+        "--server",
+        default="mainframe.mcp.servers.verified_memory",
+        help="Python module path for stdio server",
+    )
+    mcp_call.add_argument("--tool", default="verified_patch_lookup")
+    mcp_call.add_argument("--goal", default="")
+    mcp_call.set_defaults(func=cmd_mcp)
 
     p_dash = sub.add_parser(
         "dashboard",

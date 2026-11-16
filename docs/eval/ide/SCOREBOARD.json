@@ -1,7 +1,7 @@
 {
   "ok": true,
-  "generated_at": "2026-11-16T20:19:03.547716+00:00",
-  "product_avg_pct": 72,
+  "generated_at": "2026-11-16T20:33:06.312376+00:00",
+  "product_avg_pct": 77,
   "north_star_pct": 0,
   "objectives": [
     {
@@ -48,8 +48,10 @@
     {
       "id": "O7",
       "name": "MCP in agent loop",
-      "pct": 20,
-      "gate": "stdio MCP live"
+      "pct": 70,
+      "gate": "stdio MCP live",
+      "status": "stdio_mcp_verified_memory",
+      "detail": "local verified-patch memory MCP; paid/remote refused"
     },
     {
       "id": "O8",
@@ -65,9 +67,9 @@
       "gate": "SWE slice runner",
       "status": "codingbench_live_cell",
       "detail": {
-        "live_ok": 6,
+        "live_ok": 8,
         "live_n": 12,
-        "rate_pct": 50
+        "rate_pct": 67
       }
     },
     {
@@ -90,7 +92,7 @@
     "probe_detail": "Local Ollama responded with models: qwen2.5-coder:3b, qwen2.5-coder:1.5b, qwen2.5:0.5b"
   },
   "benches": {
-    "codingbench_live": "6/12 (50%)",
+    "codingbench_live": "8/12 (67%)",
     "swe_verified_slice": "local 2/2 (100.0%) offline",
     "swe_multilingual": "unknown",
     "terminal_bench": "unknown",

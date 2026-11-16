@@ -13,6 +13,7 @@ from typing import Any
 
 from mainframe.ai import probe_free_inference, run_ai_step
 from mainframe.cache import cached_model_response
+from mainframe.codingloop.import_align import propose_import_align_edits
 from mainframe.eligibility import decide_provider
 
 
@@ -48,6 +49,23 @@ def propose_fixes_deterministic(root: Path, hypothesis: str) -> dict[str, Any]:
             "hypothesis": hypothesis,
             "source": "deterministic_fixture",
         }
+
+    # Cross-file import ↔ definition alignment (camelCase/snake_case near-miss).
+    if not edits:
+        align = propose_import_align_edits(root)
+        if align.get("edits"):
+            return {
+                "proposal_only": True,
+                "applied": False,
+                "verified": False,
+                "edits": list(align["edits"]),
+                "impossible": False,
+                "hypothesis": hypothesis,
+                "source": "import_symbol_align",
+                "evidence": align.get("evidence"),
+                "model_service_used": False,
+            }
+
     return {
         "proposal_only": True,
         "applied": False,
