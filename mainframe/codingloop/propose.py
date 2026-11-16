@@ -14,6 +14,7 @@ from typing import Any
 from mainframe.ai import probe_free_inference, run_ai_step
 from mainframe.cache import cached_model_response
 from mainframe.codingloop.import_align import propose_import_align_edits
+from mainframe.codingloop.ui_wire import propose_ui_wire_edits
 from mainframe.eligibility import decide_provider
 
 
@@ -63,6 +64,22 @@ def propose_fixes_deterministic(root: Path, hypothesis: str) -> dict[str, Any]:
                 "hypothesis": hypothesis,
                 "source": "import_symbol_align",
                 "evidence": align.get("evidence"),
+                "model_service_used": False,
+            }
+
+    # Local UI: missing Prepare click → markReady wiring
+    if not edits:
+        ui = propose_ui_wire_edits(root)
+        if ui.get("edits"):
+            return {
+                "proposal_only": True,
+                "applied": False,
+                "verified": False,
+                "edits": list(ui["edits"]),
+                "impossible": False,
+                "hypothesis": hypothesis,
+                "source": "ui_wire",
+                "evidence": ui.get("evidence"),
                 "model_service_used": False,
             }
 

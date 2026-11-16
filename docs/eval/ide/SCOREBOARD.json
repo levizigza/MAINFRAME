@@ -1,7 +1,7 @@
 {
   "ok": true,
-  "generated_at": "2026-11-16T20:33:06.312376+00:00",
-  "product_avg_pct": 77,
+  "generated_at": "2026-11-16T21:28:36.470995+00:00",
+  "product_avg_pct": 79,
   "north_star_pct": 0,
   "objectives": [
     {
@@ -63,13 +63,13 @@
     {
       "id": "O9",
       "name": "Public bench protocol wired",
-      "pct": 60,
+      "pct": 75,
       "gate": "SWE slice runner",
-      "status": "codingbench_live_cell",
+      "status": "codingbench_live_full_green",
       "detail": {
-        "live_ok": 8,
+        "live_ok": 12,
         "live_n": 12,
-        "rate_pct": 67
+        "rate_pct": 100
       }
     },
     {
@@ -92,7 +92,7 @@
     "probe_detail": "Local Ollama responded with models: qwen2.5-coder:3b, qwen2.5-coder:1.5b, qwen2.5:0.5b"
   },
   "benches": {
-    "codingbench_live": "8/12 (67%)",
+    "codingbench_live": "12/12 (100%)",
     "swe_verified_slice": "local 2/2 (100.0%) offline",
     "swe_multilingual": "unknown",
     "terminal_bench": "unknown",

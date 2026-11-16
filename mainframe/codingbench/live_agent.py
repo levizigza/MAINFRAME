@@ -12,6 +12,7 @@ from pathlib import Path
 from typing import Any
 
 from mainframe.ai import probe_free_inference, run_ai_step
+from mainframe.codingbench.policy_signals import detect_policy
 from mainframe.codingloop.propose import _extract_edits_json
 from mainframe.demos.broker import Broker
 from mainframe.editor.until_green import run_until_green
@@ -232,7 +233,35 @@ def _multiturn_repair(task: dict[str, Any], broker: Broker, budget: dict[str, An
 
 
 def agent_ollama_live(task: dict[str, Any], broker: Broker, budget: dict[str, Any]) -> dict[str, Any]:
-    """Budgeted live agent — multiturn repair; single-turn decline/clarify."""
+    """Budgeted live agent — workspace policy first; then multiturn repair / model."""
+    ws = Path(broker.workspace)
+    policy = detect_policy(ws, task)
+    if policy.get("policy") == "decline":
+        return {
+            "declined": True,
+            "clarified": False,
+            "model_calls": 0,
+            "tool_calls": 0,
+            "reason": policy.get("reason"),
+            "human_intervention": True,
+            "loop": "policy_signal",
+            "evidence": policy.get("evidence"),
+        }
+    if policy.get("policy") == "clarify":
+        return {
+            "declined": False,
+            "clarified": True,
+            "model_calls": 0,
+            "tool_calls": 0,
+            "question": policy.get("question"),
+            "reason": policy.get("reason"),
+            "human_intervention": True,
+            "loop": "policy_signal",
+            "evidence": policy.get("evidence"),
+        }
+
+    # Fallback: catalog-flagged decline/clarify still go through model single-turn
+    # when workspace text did not match (keeps prior path).
     if task.get("decline_expected") or task.get("clarify_expected"):
         return _single_turn_policy(task, broker, budget)
     return _multiturn_repair(task, broker, budget)

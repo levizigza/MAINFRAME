@@ -35,7 +35,7 @@
 | Phase 2 agent UX (stream + apply/reject) | Measured — chips, tests tool, async panel (`editor agent-accept` 14/14) |
 | Phase 3 gated model propose + exact tool cache | Measured — fixture-first; cache hit; completion gate; model pauses offline |
 | Mode B on this host | Measured — Ollama + local models; RAM-aware pick |
-| Live codingbench (MAINFRAME holdout) | Measured **8/12 (67%)** (2026-11-16) — multifile via import-align + MCP memory |
+| Live codingbench (MAINFRAME holdout) | Measured **12/12 (100%)** (2026-11-16) — UI wire + clarify/decline policy + MCP memory |
 | Stdio MCP in agent loop | Measured — verified-patch memory server; paid/remote refused (`mcp accept` 7/7) |
 | Live codingbench vs Cursor/Claude | **unknown** — no competitor purchase |
 | Match/exceed on measured suites | **not yet achieved** — north star |

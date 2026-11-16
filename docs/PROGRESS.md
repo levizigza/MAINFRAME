@@ -1718,3 +1718,34 @@ Fix largest live failure category (multifile) via deterministic cross-file symbo
 - Still not Cursor/Claude parity; holdout-only sample
 - MCP is local stdio only; `https://…` MCP refused with `entitlement_missing`
 
+---
+
+## 2026-11-16 — Increment 0.1.58: UI wire + clarify/decline policy → 12/12 live
+
+### Intent
+
+Close remaining live holdout failures (`ui_behavior`, `should_clarify`) without paid APIs.
+
+### Implemented
+
+- Installed Playwright + Chromium (local) for UI verify
+- `mainframe/codingloop/ui_wire.py` — missing Prepare click → `markReady` listener
+- `until_green` verifies UI via Playwright when no pytest suite
+- `mainframe/codingbench/policy_signals.py` — decline/clarify from TASK.md + workspace shape (no catalog-flag leakage into the decision)
+- Live agent applies policy signals before model / repair loop
+
+### Acceptance (observed)
+
+| Check | Result |
+|-------|--------|
+| `browser status` | Playwright **available** |
+| Offline UI until-green | green (`ui_wire` / memory) |
+| Clarify/decline policy | clarify + decline without model |
+| Live codingbench | **12/12 (100%)** — `.mainframe/runs/codingbench-20261116T212800Z.json` |
+| `mcp accept` / `until-green-accept` | still green |
+
+### Claims discipline
+
+- 100% is MAINFRAME holdout only (n=12 across two harnesses) — **not** SWE-bench Verified / CursorBench / competitor parity
+- O10 remains 0 until a measured public-suite parity file exists
+

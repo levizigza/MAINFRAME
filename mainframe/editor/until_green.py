@@ -24,6 +24,31 @@ def _emit(sink: EventSink | None, ev: dict[str, Any]) -> None:
 
 
 def _tests_passed(workspace: Path) -> dict[str, Any]:
+    # UI fixtures: no pytest suite — verify Prepare → ready via Playwright when present.
+    has_tests = (workspace / "tests").is_dir() or any(workspace.glob("test_*.py"))
+    if not has_tests and (workspace / "index.html").is_file() and (workspace / "app.js").is_file():
+        try:
+            from mainframe.codingbench.verify import verify_ui_page
+
+            ui = verify_ui_page(workspace)
+            return {
+                "ok": bool(ui.get("ok")),
+                "passed": bool(ui.get("ok")),
+                "exit_code": 0 if ui.get("ok") else 1,
+                "call_id": f"call_ui_{uuid.uuid4().hex[:8]}",
+                "result": ui,
+                "mode": "ui",
+            }
+        except Exception as exc:  # noqa: BLE001
+            return {
+                "ok": False,
+                "passed": False,
+                "exit_code": 1,
+                "call_id": f"call_ui_{uuid.uuid4().hex[:8]}",
+                "result": {"error": str(exc)},
+                "mode": "ui",
+            }
+
     target = "tests" if (workspace / "tests").is_dir() else "."
     call_id = f"call_{uuid.uuid4().hex[:10]}"
     res = invoke("tests", {"target": target}, call_id=call_id, root=workspace)
@@ -110,6 +135,7 @@ def run_until_green(
                 "verified_patch_memory",
                 "verified_patch_memory_mcp",
                 "import_symbol_align",
+                "ui_wire",
             }
             model_calls = 0 if source in offline_sources else 1
             if prop.get("impossible"):

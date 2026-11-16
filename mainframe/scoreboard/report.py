@@ -187,8 +187,11 @@ def scoreboard_payload() -> dict[str, Any]:
             by_id = {r["id"]: r for r in rows}
             # Partial credit only — do not clobber higher offline/SWE status labels
             o9_before = int(by_id["O9"]["pct"])
-            by_id["O9"]["pct"] = max(o9_before, 60 if live_n else 15)
-            by_id["O9"]["status"] = "codingbench_live_cell"
+            live_floor = 75 if live_n and live_ok == live_n else (60 if live_n else 15)
+            by_id["O9"]["pct"] = max(o9_before, live_floor)
+            by_id["O9"]["status"] = (
+                "codingbench_live_full_green" if live_n and live_ok == live_n else "codingbench_live_cell"
+            )
             by_id["O9"]["detail"] = {"live_ok": live_ok, "live_n": live_n, "rate_pct": rate}
             o6_before = int(by_id["O6"]["pct"])
             # Live multiturn wired when any attempt used until_green loop
